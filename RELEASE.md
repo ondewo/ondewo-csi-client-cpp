@@ -2,7 +2,7 @@
 
 *****************
 
-## Release ONDEWO CSI C++ Client 0.1.0
+## Release ONDEWO CSI C++ Client 5.5.0
 
 ### New Features
 
