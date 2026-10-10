@@ -72,6 +72,8 @@ const std::vector<ExpectedMethod> kExpectedMethods = {
     {"ondewo.csi.Conversations", "S2sStream"},
     {"ondewo.csi.Conversations", "GetControlStream"},
     {"ondewo.csi.Conversations", "SetControlStatus"},
+    // ... the call-scoped bot media control of API 5.6.0 ...
+    {"ondewo.csi.Conversations", "SetCallMediaControl"},
     {"ondewo.csi.Conversations", "CheckUpstreamHealth"},
     // ... and one RPC from each of the three upstream packages the same library carries, so a
     // .proto that silently stops being generated cannot go unnoticed.
@@ -84,7 +86,7 @@ const std::string kScalarMessageFullName = "ondewo.csi.S2sPipeline";
 
 const std::string kEnumFullName = "ondewo.csi.ControlStatus";
 
-// ONDEWO CSI API 5.5.0 generates 846 messages (map entries excluded), 98 enums and 2542
+// ONDEWO CSI API 5.6.0 generates 848 messages (map entries excluded), 98 enums and 2550
 // singular scalar fields across the files listed above. The floors sit just below that.
 const int kMinimumMessageCount = 830;
 const int kMinimumEnumCount = 95;

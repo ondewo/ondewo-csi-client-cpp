@@ -153,7 +153,8 @@ struct ControlStreamRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ControlStreamRequestDefaultTypeInternal _ControlStreamRequest_default_instance_;
 PROTOBUF_CONSTEXPR ControlStreamResponse::ControlStreamResponse(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.epoch_)*/uint64_t{0u}
+    /*decltype(_impl_.media_control_)*/nullptr
+  , /*decltype(_impl_.epoch_)*/uint64_t{0u}
   , /*decltype(_impl_.control_status_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ControlStreamResponseDefaultTypeInternal {
@@ -192,6 +193,39 @@ struct SetControlStatusResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetControlStatusResponseDefaultTypeInternal _SetControlStatusResponse_default_instance_;
+PROTOBUF_CONSTEXPR CallMediaControlLevel::CallMediaControlLevel(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.reason_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.generation_)*/uint64_t{0u}
+  , /*decltype(_impl_.bot_muted_)*/false
+  , /*decltype(_impl_.listening_paused_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct CallMediaControlLevelDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR CallMediaControlLevelDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~CallMediaControlLevelDefaultTypeInternal() {}
+  union {
+    CallMediaControlLevel _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CallMediaControlLevelDefaultTypeInternal _CallMediaControlLevel_default_instance_;
+PROTOBUF_CONSTEXPR SetCallMediaControlResponse::SetCallMediaControlResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.refusal_reason_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.applied_)*/nullptr
+  , /*decltype(_impl_.changed_)*/false
+  , /*decltype(_impl_.stale_)*/false
+  , /*decltype(_impl_.bot_playback_in_flight_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct SetCallMediaControlResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SetCallMediaControlResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SetCallMediaControlResponseDefaultTypeInternal() {}
+  union {
+    SetCallMediaControlResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetCallMediaControlResponseDefaultTypeInternal _SetCallMediaControlResponse_default_instance_;
 PROTOBUF_CONSTEXPR Condition::Condition(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.value_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -245,7 +279,7 @@ struct ControlMessageDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ControlMessageDefaultTypeInternal _ControlMessage_default_instance_;
 }  // namespace csi
 }  // namespace ondewo
-static ::_pb::Metadata file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[15];
+static ::_pb::Metadata file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[17];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[5];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_ondewo_2fcsi_2fconversation_2eproto = nullptr;
 
@@ -337,6 +371,7 @@ const uint32_t TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets[] PROTOB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::ControlStreamResponse, _impl_.control_status_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::ControlStreamResponse, _impl_.epoch_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::ControlStreamResponse, _impl_.media_control_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -352,6 +387,27 @@ const uint32_t TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets[] PROTOB
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusResponse, _impl_.old_control_status_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusResponse, _impl_.new_control_status_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallMediaControlLevel, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallMediaControlLevel, _impl_.bot_muted_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallMediaControlLevel, _impl_.listening_paused_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallMediaControlLevel, _impl_.generation_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallMediaControlLevel, _impl_.reason_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.applied_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.changed_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.stale_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.bot_playback_in_flight_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.refusal_reason_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::Condition, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -398,11 +454,13 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 64, -1, -1, sizeof(::ondewo::csi::CheckUpstreamHealthResponse)},
   { 73, -1, -1, sizeof(::ondewo::csi::ControlStreamRequest)},
   { 79, -1, -1, sizeof(::ondewo::csi::ControlStreamResponse)},
-  { 87, -1, -1, sizeof(::ondewo::csi::SetControlStatusRequest)},
-  { 94, -1, -1, sizeof(::ondewo::csi::SetControlStatusResponse)},
-  { 102, -1, -1, sizeof(::ondewo::csi::Condition)},
-  { 110, -1, -1, sizeof(::ondewo::csi::ControlMessageServiceParameters)},
-  { 127, -1, -1, sizeof(::ondewo::csi::ControlMessage)},
+  { 88, -1, -1, sizeof(::ondewo::csi::SetControlStatusRequest)},
+  { 95, -1, -1, sizeof(::ondewo::csi::SetControlStatusResponse)},
+  { 103, -1, -1, sizeof(::ondewo::csi::CallMediaControlLevel)},
+  { 113, -1, -1, sizeof(::ondewo::csi::SetCallMediaControlResponse)},
+  { 124, -1, -1, sizeof(::ondewo::csi::Condition)},
+  { 132, -1, -1, sizeof(::ondewo::csi::ControlMessageServiceParameters)},
+  { 149, -1, -1, sizeof(::ondewo::csi::ControlMessage)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -418,6 +476,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::ondewo::csi::_ControlStreamResponse_default_instance_._instance,
   &::ondewo::csi::_SetControlStatusRequest_default_instance_._instance,
   &::ondewo::csi::_SetControlStatusResponse_default_instance_._instance,
+  &::ondewo::csi::_CallMediaControlLevel_default_instance_._instance,
+  &::ondewo::csi::_SetCallMediaControlResponse_default_instance_._instance,
   &::ondewo::csi::_Condition_default_instance_._instance,
   &::ondewo::csi::_ControlMessageServiceParameters_default_instance_._instance,
   &::ondewo::csi::_ControlMessage_default_instance_._instance,
@@ -459,71 +519,82 @@ const char descriptor_table_protodef_ondewo_2fcsi_2fconversation_2eproto[] PROTO
   "atus\030\001 \001(\0132\022.google.rpc.Status\022&\n\nnlu_st"
   "atus\030\002 \001(\0132\022.google.rpc.Status\022&\n\nt2s_st"
   "atus\030\003 \001(\0132\022.google.rpc.Status\"\026\n\024Contro"
-  "lStreamRequest\"Y\n\025ControlStreamResponse\022"
-  "1\n\016control_status\030\001 \001(\0162\031.ondewo.csi.Con"
-  "trolStatus\022\r\n\005epoch\030\002 \001(\004\"L\n\027SetControlS"
-  "tatusRequest\0221\n\016control_status\030\001 \001(\0162\031.o"
-  "ndewo.csi.ControlStatus\"\210\001\n\030SetControlSt"
-  "atusResponse\0225\n\022old_control_status\030\001 \001(\016"
-  "2\031.ondewo.csi.ControlStatus\0225\n\022new_contr"
-  "ol_status\030\002 \001(\0162\031.ondewo.csi.ControlStat"
-  "us\"C\n\tCondition\022\'\n\004type\030\001 \001(\0162\031.ondewo.c"
-  "si.ConditionType\022\r\n\005value\030\002 \001(\t\"\373\002\n\037Cont"
-  "rolMessageServiceParameters\022/\n\nt2s_confi"
-  "g\030\001 \001(\0132\031.ondewo.t2s.RequestConfigH\000\0229\n\n"
-  "s2t_config\030\002 \001(\0132#.ondewo.s2t.Transcribe"
-  "RequestConfigH\000\022\023\n\013transfer_id\030\003 \001(\t\022\021\n\t"
-  "wav_files\030\004 \003(\014\022\014\n\004text\030\005 \001(\t\022$\n\007context"
-  "\030\006 \001(\0132\023.ondewo.nlu.Context\022\022\n\nsession_i"
-  "d\030\007 \001(\t\022\024\n\014context_name\030\010 \001(\t\022.\n\017conditi"
-  "on_start\030\t \001(\0132\025.ondewo.csi.Condition\022,\n"
-  "\rcondition_end\030\n \001(\0132\025.ondewo.csi.Condit"
-  "ionB\010\n\006config\"\302\001\n\016ControlMessage\0226\n\007serv"
-  "ice\030\001 \001(\0162%.ondewo.csi.ControlMessageSer"
-  "viceName\0227\n\006method\030\002 \001(\0162\'.ondewo.csi.Co"
-  "ntrolMessageServiceMethod\022\?\n\nparameters\030"
-  "\003 \001(\0132+.ondewo.csi.ControlMessageService"
-  "Parameters*\267\001\n\rControlStatus\022\006\n\002OK\020\000\022\022\n\016"
-  "EMERGENCY_STOP\020\001\022\027\n\023VAD_START_OF_SPEECH\020"
-  "\002\022\014\n\010BARGE_IN\020\003\022\023\n\017RESUME_PLAYBACK\020\004\022\025\n\021"
-  "DISCARD_REMAINDER\020\005\022\024\n\020PLAYBACK_RESUMED\020"
-  "\006\022\021\n\rPLAYBACK_DONE\020\007\022\016\n\nCALL_ENDED\020\010*\240\001\n"
-  "\031ControlMessageServiceName\022\017\n\013UNKNOWNNAM"
-  "E\020\000\022\016\n\nondewo_s2t\020\001\022\016\n\nondewo_t2s\020\002\022\016\n\no"
-  "ndewo_nlu\020\003\022\016\n\nondewo_sip\020\004\022\017\n\013ondewo_vt"
-  "si\020\005\022\016\n\nondewo_csi\020\006\022\021\n\rondewo_survey\020\007*"
-  "\205\003\n\033ControlMessageServiceMethod\022\021\n\rUNKNO"
-  "WNMETHOD\020\000\022\021\n\rupdate_config\020\001\022\017\n\013undo_co"
-  "nfig\020\002\022\020\n\014reset_config\020\003\022\014\n\010end_call\020\004\022\021"
-  "\n\rtransfer_call\020\005\022\022\n\016play_wav_files\020\006\022\r\n"
-  "\tplay_text\020\007\022\010\n\004mute\020\010\022\013\n\007un_mute\020\t\022\035\n\031s"
-  "top_all_control_messages\020\n\022\017\n\013train_agen"
-  "t\020\013\022\026\n\022cancel_train_agent\020\014\022\022\n\016delete_se"
-  "ssion\020\r\022\027\n\023delete_all_contexts\020\016\022\022\n\016crea"
-  "te_context\020\017\022\022\n\016update_context\020\020\022\022\n\016dele"
-  "te_context\020\021\022\021\n\rdetect_intent\020\022*\\\n\rCondi"
-  "tionType\022\016\n\nUNKNOWTYPE\020\000\022\r\n\timmediate\020\001\022"
-  "\014\n\010duration\020\002\022\014\n\010datetime\020\003\022\020\n\014interacti"
-  "ons\020\0042\372\005\n\rConversations\022F\n\021CreateS2sPipe"
-  "line\022\027.ondewo.csi.S2sPipeline\032\026.google.p"
-  "rotobuf.Empty\"\000\022F\n\016GetS2sPipeline\022\031.onde"
-  "wo.csi.S2sPipelineId\032\027.ondewo.csi.S2sPip"
-  "eline\"\000\022F\n\021UpdateS2sPipeline\022\027.ondewo.cs"
-  "i.S2sPipeline\032\026.google.protobuf.Empty\"\000\022"
-  "H\n\021DeleteS2sPipeline\022\031.ondewo.csi.S2sPip"
-  "elineId\032\026.google.protobuf.Empty\"\000\022_\n\020Lis"
-  "tS2sPipelines\022#.ondewo.csi.ListS2sPipeli"
-  "nesRequest\032$.ondewo.csi.ListS2sPipelines"
-  "Response\"\000\022N\n\tS2sStream\022\034.ondewo.csi.S2s"
-  "StreamRequest\032\035.ondewo.csi.S2sStreamResp"
-  "onse\"\000(\0010\001\022X\n\023CheckUpstreamHealth\022\026.goog"
-  "le.protobuf.Empty\032\'.ondewo.csi.CheckUpst"
-  "reamHealthResponse\"\000\022[\n\020GetControlStream"
-  "\022 .ondewo.csi.ControlStreamRequest\032!.ond"
-  "ewo.csi.ControlStreamResponse\"\0000\001\022_\n\020Set"
-  "ControlStatus\022#.ondewo.csi.SetControlSta"
-  "tusRequest\032$.ondewo.csi.SetControlStatus"
-  "Response\"\000b\006proto3"
+  "lStreamRequest\"\223\001\n\025ControlStreamResponse"
+  "\0221\n\016control_status\030\001 \001(\0162\031.ondewo.csi.Co"
+  "ntrolStatus\022\r\n\005epoch\030\002 \001(\004\0228\n\rmedia_cont"
+  "rol\030\003 \001(\0132!.ondewo.csi.CallMediaControlL"
+  "evel\"L\n\027SetControlStatusRequest\0221\n\016contr"
+  "ol_status\030\001 \001(\0162\031.ondewo.csi.ControlStat"
+  "us\"\210\001\n\030SetControlStatusResponse\0225\n\022old_c"
+  "ontrol_status\030\001 \001(\0162\031.ondewo.csi.Control"
+  "Status\0225\n\022new_control_status\030\002 \001(\0162\031.ond"
+  "ewo.csi.ControlStatus\"h\n\025CallMediaContro"
+  "lLevel\022\021\n\tbot_muted\030\001 \001(\010\022\030\n\020listening_p"
+  "aused\030\002 \001(\010\022\022\n\ngeneration\030\003 \001(\004\022\016\n\006reaso"
+  "n\030\004 \001(\t\"\251\001\n\033SetCallMediaControlResponse\022"
+  "2\n\007applied\030\001 \001(\0132!.ondewo.csi.CallMediaC"
+  "ontrolLevel\022\017\n\007changed\030\002 \001(\010\022\r\n\005stale\030\003 "
+  "\001(\010\022\036\n\026bot_playback_in_flight\030\004 \001(\010\022\026\n\016r"
+  "efusal_reason\030\005 \001(\t\"C\n\tCondition\022\'\n\004type"
+  "\030\001 \001(\0162\031.ondewo.csi.ConditionType\022\r\n\005val"
+  "ue\030\002 \001(\t\"\373\002\n\037ControlMessageServiceParame"
+  "ters\022/\n\nt2s_config\030\001 \001(\0132\031.ondewo.t2s.Re"
+  "questConfigH\000\0229\n\ns2t_config\030\002 \001(\0132#.onde"
+  "wo.s2t.TranscribeRequestConfigH\000\022\023\n\013tran"
+  "sfer_id\030\003 \001(\t\022\021\n\twav_files\030\004 \003(\014\022\014\n\004text"
+  "\030\005 \001(\t\022$\n\007context\030\006 \001(\0132\023.ondewo.nlu.Con"
+  "text\022\022\n\nsession_id\030\007 \001(\t\022\024\n\014context_name"
+  "\030\010 \001(\t\022.\n\017condition_start\030\t \001(\0132\025.ondewo"
+  ".csi.Condition\022,\n\rcondition_end\030\n \001(\0132\025."
+  "ondewo.csi.ConditionB\010\n\006config\"\302\001\n\016Contr"
+  "olMessage\0226\n\007service\030\001 \001(\0162%.ondewo.csi."
+  "ControlMessageServiceName\0227\n\006method\030\002 \001("
+  "\0162\'.ondewo.csi.ControlMessageServiceMeth"
+  "od\022\?\n\nparameters\030\003 \001(\0132+.ondewo.csi.Cont"
+  "rolMessageServiceParameters*\267\001\n\rControlS"
+  "tatus\022\006\n\002OK\020\000\022\022\n\016EMERGENCY_STOP\020\001\022\027\n\023VAD"
+  "_START_OF_SPEECH\020\002\022\014\n\010BARGE_IN\020\003\022\023\n\017RESU"
+  "ME_PLAYBACK\020\004\022\025\n\021DISCARD_REMAINDER\020\005\022\024\n\020"
+  "PLAYBACK_RESUMED\020\006\022\021\n\rPLAYBACK_DONE\020\007\022\016\n"
+  "\nCALL_ENDED\020\010*\240\001\n\031ControlMessageServiceN"
+  "ame\022\017\n\013UNKNOWNNAME\020\000\022\016\n\nondewo_s2t\020\001\022\016\n\n"
+  "ondewo_t2s\020\002\022\016\n\nondewo_nlu\020\003\022\016\n\nondewo_s"
+  "ip\020\004\022\017\n\013ondewo_vtsi\020\005\022\016\n\nondewo_csi\020\006\022\021\n"
+  "\rondewo_survey\020\007*\205\003\n\033ControlMessageServi"
+  "ceMethod\022\021\n\rUNKNOWNMETHOD\020\000\022\021\n\rupdate_co"
+  "nfig\020\001\022\017\n\013undo_config\020\002\022\020\n\014reset_config\020"
+  "\003\022\014\n\010end_call\020\004\022\021\n\rtransfer_call\020\005\022\022\n\016pl"
+  "ay_wav_files\020\006\022\r\n\tplay_text\020\007\022\010\n\004mute\020\010\022"
+  "\013\n\007un_mute\020\t\022\035\n\031stop_all_control_message"
+  "s\020\n\022\017\n\013train_agent\020\013\022\026\n\022cancel_train_age"
+  "nt\020\014\022\022\n\016delete_session\020\r\022\027\n\023delete_all_c"
+  "ontexts\020\016\022\022\n\016create_context\020\017\022\022\n\016update_"
+  "context\020\020\022\022\n\016delete_context\020\021\022\021\n\rdetect_"
+  "intent\020\022*\\\n\rConditionType\022\016\n\nUNKNOWTYPE\020"
+  "\000\022\r\n\timmediate\020\001\022\014\n\010duration\020\002\022\014\n\010dateti"
+  "me\020\003\022\020\n\014interactions\020\0042\337\006\n\rConversations"
+  "\022F\n\021CreateS2sPipeline\022\027.ondewo.csi.S2sPi"
+  "peline\032\026.google.protobuf.Empty\"\000\022F\n\016GetS"
+  "2sPipeline\022\031.ondewo.csi.S2sPipelineId\032\027."
+  "ondewo.csi.S2sPipeline\"\000\022F\n\021UpdateS2sPip"
+  "eline\022\027.ondewo.csi.S2sPipeline\032\026.google."
+  "protobuf.Empty\"\000\022H\n\021DeleteS2sPipeline\022\031."
+  "ondewo.csi.S2sPipelineId\032\026.google.protob"
+  "uf.Empty\"\000\022_\n\020ListS2sPipelines\022#.ondewo."
+  "csi.ListS2sPipelinesRequest\032$.ondewo.csi"
+  ".ListS2sPipelinesResponse\"\000\022N\n\tS2sStream"
+  "\022\034.ondewo.csi.S2sStreamRequest\032\035.ondewo."
+  "csi.S2sStreamResponse\"\000(\0010\001\022X\n\023CheckUpst"
+  "reamHealth\022\026.google.protobuf.Empty\032\'.ond"
+  "ewo.csi.CheckUpstreamHealthResponse\"\000\022[\n"
+  "\020GetControlStream\022 .ondewo.csi.ControlSt"
+  "reamRequest\032!.ondewo.csi.ControlStreamRe"
+  "sponse\"\0000\001\022_\n\020SetControlStatus\022#.ondewo."
+  "csi.SetControlStatusRequest\032$.ondewo.csi"
+  ".SetControlStatusResponse\"\000\022c\n\023SetCallMe"
+  "diaControl\022!.ondewo.csi.CallMediaControl"
+  "Level\032\'.ondewo.csi.SetCallMediaControlRe"
+  "sponse\"\000b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_ondewo_2fcsi_2fconversation_2eproto_deps[9] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -538,9 +609,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_ondewo_2fcsi_2fconv
 };
 static ::_pbi::once_flag descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_ondewo_2fcsi_2fconversation_2eproto = {
-    false, false, 3978, descriptor_table_protodef_ondewo_2fcsi_2fconversation_2eproto,
+    false, false, 4416, descriptor_table_protodef_ondewo_2fcsi_2fconversation_2eproto,
     "ondewo/csi/conversation.proto",
-    &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once, descriptor_table_ondewo_2fcsi_2fconversation_2eproto_deps, 9, 15,
+    &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once, descriptor_table_ondewo_2fcsi_2fconversation_2eproto_deps, 9, 17,
     schemas, file_default_instances, TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets,
     file_level_metadata_ondewo_2fcsi_2fconversation_2eproto, file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto,
     file_level_service_descriptors_ondewo_2fcsi_2fconversation_2eproto,
@@ -2974,8 +3045,13 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ControlStreamRequest::GetClass
 
 class ControlStreamResponse::_Internal {
  public:
+  static const ::ondewo::csi::CallMediaControlLevel& media_control(const ControlStreamResponse* msg);
 };
 
+const ::ondewo::csi::CallMediaControlLevel&
+ControlStreamResponse::_Internal::media_control(const ControlStreamResponse* msg) {
+  return *msg->_impl_.media_control_;
+}
 ControlStreamResponse::ControlStreamResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -2986,11 +3062,15 @@ ControlStreamResponse::ControlStreamResponse(const ControlStreamResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   ControlStreamResponse* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.epoch_){}
+      decltype(_impl_.media_control_){nullptr}
+    , decltype(_impl_.epoch_){}
     , decltype(_impl_.control_status_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_media_control()) {
+    _this->_impl_.media_control_ = new ::ondewo::csi::CallMediaControlLevel(*from._impl_.media_control_);
+  }
   ::memcpy(&_impl_.epoch_, &from._impl_.epoch_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.control_status_) -
     reinterpret_cast<char*>(&_impl_.epoch_)) + sizeof(_impl_.control_status_));
@@ -3002,7 +3082,8 @@ inline void ControlStreamResponse::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.epoch_){uint64_t{0u}}
+      decltype(_impl_.media_control_){nullptr}
+    , decltype(_impl_.epoch_){uint64_t{0u}}
     , decltype(_impl_.control_status_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -3019,6 +3100,7 @@ ControlStreamResponse::~ControlStreamResponse() {
 
 inline void ControlStreamResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.media_control_;
 }
 
 void ControlStreamResponse::SetCachedSize(int size) const {
@@ -3031,6 +3113,10 @@ void ControlStreamResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  if (GetArenaForAllocation() == nullptr && _impl_.media_control_ != nullptr) {
+    delete _impl_.media_control_;
+  }
+  _impl_.media_control_ = nullptr;
   ::memset(&_impl_.epoch_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.control_status_) -
       reinterpret_cast<char*>(&_impl_.epoch_)) + sizeof(_impl_.control_status_));
@@ -3056,6 +3142,14 @@ const char* ControlStreamResponse::_InternalParse(const char* ptr, ::_pbi::Parse
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           _impl_.epoch_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .ondewo.csi.CallMediaControlLevel media_control = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_media_control(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -3102,6 +3196,13 @@ uint8_t* ControlStreamResponse::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_epoch(), target);
   }
 
+  // .ondewo.csi.CallMediaControlLevel media_control = 3;
+  if (this->_internal_has_media_control()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, _Internal::media_control(this),
+        _Internal::media_control(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -3117,6 +3218,13 @@ size_t ControlStreamResponse::ByteSizeLong() const {
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // .ondewo.csi.CallMediaControlLevel media_control = 3;
+  if (this->_internal_has_media_control()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.media_control_);
+  }
 
   // uint64 epoch = 2;
   if (this->_internal_epoch() != 0) {
@@ -3147,6 +3255,10 @@ void ControlStreamResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, 
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from._internal_has_media_control()) {
+    _this->_internal_mutable_media_control()->::ondewo::csi::CallMediaControlLevel::MergeFrom(
+        from._internal_media_control());
+  }
   if (from._internal_epoch() != 0) {
     _this->_internal_set_epoch(from._internal_epoch());
   }
@@ -3173,9 +3285,9 @@ void ControlStreamResponse::InternalSwap(ControlStreamResponse* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(ControlStreamResponse, _impl_.control_status_)
       + sizeof(ControlStreamResponse::_impl_.control_status_)
-      - PROTOBUF_FIELD_OFFSET(ControlStreamResponse, _impl_.epoch_)>(
-          reinterpret_cast<char*>(&_impl_.epoch_),
-          reinterpret_cast<char*>(&other->_impl_.epoch_));
+      - PROTOBUF_FIELD_OFFSET(ControlStreamResponse, _impl_.media_control_)>(
+          reinterpret_cast<char*>(&_impl_.media_control_),
+          reinterpret_cast<char*>(&other->_impl_.media_control_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ControlStreamResponse::GetMetadata() const {
@@ -3584,6 +3696,621 @@ void SetControlStatusResponse::InternalSwap(SetControlStatusResponse* other) {
 
 // ===================================================================
 
+class CallMediaControlLevel::_Internal {
+ public:
+};
+
+CallMediaControlLevel::CallMediaControlLevel(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ondewo.csi.CallMediaControlLevel)
+}
+CallMediaControlLevel::CallMediaControlLevel(const CallMediaControlLevel& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  CallMediaControlLevel* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.reason_){}
+    , decltype(_impl_.generation_){}
+    , decltype(_impl_.bot_muted_){}
+    , decltype(_impl_.listening_paused_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_reason().empty()) {
+    _this->_impl_.reason_.Set(from._internal_reason(), 
+      _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.generation_, &from._impl_.generation_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.listening_paused_) -
+    reinterpret_cast<char*>(&_impl_.generation_)) + sizeof(_impl_.listening_paused_));
+  // @@protoc_insertion_point(copy_constructor:ondewo.csi.CallMediaControlLevel)
+}
+
+inline void CallMediaControlLevel::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.reason_){}
+    , decltype(_impl_.generation_){uint64_t{0u}}
+    , decltype(_impl_.bot_muted_){false}
+    , decltype(_impl_.listening_paused_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+CallMediaControlLevel::~CallMediaControlLevel() {
+  // @@protoc_insertion_point(destructor:ondewo.csi.CallMediaControlLevel)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void CallMediaControlLevel::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.reason_.Destroy();
+}
+
+void CallMediaControlLevel::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void CallMediaControlLevel::Clear() {
+// @@protoc_insertion_point(message_clear_start:ondewo.csi.CallMediaControlLevel)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.reason_.ClearToEmpty();
+  ::memset(&_impl_.generation_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.listening_paused_) -
+      reinterpret_cast<char*>(&_impl_.generation_)) + sizeof(_impl_.listening_paused_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* CallMediaControlLevel::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool bot_muted = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.bot_muted_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool listening_paused = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.listening_paused_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 generation = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.generation_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string reason = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          auto str = _internal_mutable_reason();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.CallMediaControlLevel.reason"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* CallMediaControlLevel::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ondewo.csi.CallMediaControlLevel)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool bot_muted = 1;
+  if (this->_internal_bot_muted() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_bot_muted(), target);
+  }
+
+  // bool listening_paused = 2;
+  if (this->_internal_listening_paused() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_listening_paused(), target);
+  }
+
+  // uint64 generation = 3;
+  if (this->_internal_generation() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_generation(), target);
+  }
+
+  // string reason = 4;
+  if (!this->_internal_reason().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_reason().data(), static_cast<int>(this->_internal_reason().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.CallMediaControlLevel.reason");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_reason(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ondewo.csi.CallMediaControlLevel)
+  return target;
+}
+
+size_t CallMediaControlLevel::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ondewo.csi.CallMediaControlLevel)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string reason = 4;
+  if (!this->_internal_reason().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_reason());
+  }
+
+  // uint64 generation = 3;
+  if (this->_internal_generation() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_generation());
+  }
+
+  // bool bot_muted = 1;
+  if (this->_internal_bot_muted() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool listening_paused = 2;
+  if (this->_internal_listening_paused() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CallMediaControlLevel::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    CallMediaControlLevel::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CallMediaControlLevel::GetClassData() const { return &_class_data_; }
+
+
+void CallMediaControlLevel::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<CallMediaControlLevel*>(&to_msg);
+  auto& from = static_cast<const CallMediaControlLevel&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ondewo.csi.CallMediaControlLevel)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_reason().empty()) {
+    _this->_internal_set_reason(from._internal_reason());
+  }
+  if (from._internal_generation() != 0) {
+    _this->_internal_set_generation(from._internal_generation());
+  }
+  if (from._internal_bot_muted() != 0) {
+    _this->_internal_set_bot_muted(from._internal_bot_muted());
+  }
+  if (from._internal_listening_paused() != 0) {
+    _this->_internal_set_listening_paused(from._internal_listening_paused());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void CallMediaControlLevel::CopyFrom(const CallMediaControlLevel& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ondewo.csi.CallMediaControlLevel)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CallMediaControlLevel::IsInitialized() const {
+  return true;
+}
+
+void CallMediaControlLevel::InternalSwap(CallMediaControlLevel* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.reason_, lhs_arena,
+      &other->_impl_.reason_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(CallMediaControlLevel, _impl_.listening_paused_)
+      + sizeof(CallMediaControlLevel::_impl_.listening_paused_)
+      - PROTOBUF_FIELD_OFFSET(CallMediaControlLevel, _impl_.generation_)>(
+          reinterpret_cast<char*>(&_impl_.generation_),
+          reinterpret_cast<char*>(&other->_impl_.generation_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata CallMediaControlLevel::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[12]);
+}
+
+// ===================================================================
+
+class SetCallMediaControlResponse::_Internal {
+ public:
+  static const ::ondewo::csi::CallMediaControlLevel& applied(const SetCallMediaControlResponse* msg);
+};
+
+const ::ondewo::csi::CallMediaControlLevel&
+SetCallMediaControlResponse::_Internal::applied(const SetCallMediaControlResponse* msg) {
+  return *msg->_impl_.applied_;
+}
+SetCallMediaControlResponse::SetCallMediaControlResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ondewo.csi.SetCallMediaControlResponse)
+}
+SetCallMediaControlResponse::SetCallMediaControlResponse(const SetCallMediaControlResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  SetCallMediaControlResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.refusal_reason_){}
+    , decltype(_impl_.applied_){nullptr}
+    , decltype(_impl_.changed_){}
+    , decltype(_impl_.stale_){}
+    , decltype(_impl_.bot_playback_in_flight_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.refusal_reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.refusal_reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_refusal_reason().empty()) {
+    _this->_impl_.refusal_reason_.Set(from._internal_refusal_reason(), 
+      _this->GetArenaForAllocation());
+  }
+  if (from._internal_has_applied()) {
+    _this->_impl_.applied_ = new ::ondewo::csi::CallMediaControlLevel(*from._impl_.applied_);
+  }
+  ::memcpy(&_impl_.changed_, &from._impl_.changed_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.bot_playback_in_flight_) -
+    reinterpret_cast<char*>(&_impl_.changed_)) + sizeof(_impl_.bot_playback_in_flight_));
+  // @@protoc_insertion_point(copy_constructor:ondewo.csi.SetCallMediaControlResponse)
+}
+
+inline void SetCallMediaControlResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.refusal_reason_){}
+    , decltype(_impl_.applied_){nullptr}
+    , decltype(_impl_.changed_){false}
+    , decltype(_impl_.stale_){false}
+    , decltype(_impl_.bot_playback_in_flight_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.refusal_reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.refusal_reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+SetCallMediaControlResponse::~SetCallMediaControlResponse() {
+  // @@protoc_insertion_point(destructor:ondewo.csi.SetCallMediaControlResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void SetCallMediaControlResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.refusal_reason_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.applied_;
+}
+
+void SetCallMediaControlResponse::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void SetCallMediaControlResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:ondewo.csi.SetCallMediaControlResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.refusal_reason_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.applied_ != nullptr) {
+    delete _impl_.applied_;
+  }
+  _impl_.applied_ = nullptr;
+  ::memset(&_impl_.changed_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.bot_playback_in_flight_) -
+      reinterpret_cast<char*>(&_impl_.changed_)) + sizeof(_impl_.bot_playback_in_flight_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SetCallMediaControlResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .ondewo.csi.CallMediaControlLevel applied = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_applied(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool changed = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.changed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool stale = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.stale_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool bot_playback_in_flight = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.bot_playback_in_flight_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string refusal_reason = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          auto str = _internal_mutable_refusal_reason();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.SetCallMediaControlResponse.refusal_reason"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* SetCallMediaControlResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ondewo.csi.SetCallMediaControlResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .ondewo.csi.CallMediaControlLevel applied = 1;
+  if (this->_internal_has_applied()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::applied(this),
+        _Internal::applied(this).GetCachedSize(), target, stream);
+  }
+
+  // bool changed = 2;
+  if (this->_internal_changed() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_changed(), target);
+  }
+
+  // bool stale = 3;
+  if (this->_internal_stale() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(3, this->_internal_stale(), target);
+  }
+
+  // bool bot_playback_in_flight = 4;
+  if (this->_internal_bot_playback_in_flight() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_bot_playback_in_flight(), target);
+  }
+
+  // string refusal_reason = 5;
+  if (!this->_internal_refusal_reason().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_refusal_reason().data(), static_cast<int>(this->_internal_refusal_reason().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.SetCallMediaControlResponse.refusal_reason");
+    target = stream->WriteStringMaybeAliased(
+        5, this->_internal_refusal_reason(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ondewo.csi.SetCallMediaControlResponse)
+  return target;
+}
+
+size_t SetCallMediaControlResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ondewo.csi.SetCallMediaControlResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string refusal_reason = 5;
+  if (!this->_internal_refusal_reason().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_refusal_reason());
+  }
+
+  // .ondewo.csi.CallMediaControlLevel applied = 1;
+  if (this->_internal_has_applied()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.applied_);
+  }
+
+  // bool changed = 2;
+  if (this->_internal_changed() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool stale = 3;
+  if (this->_internal_stale() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool bot_playback_in_flight = 4;
+  if (this->_internal_bot_playback_in_flight() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetCallMediaControlResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    SetCallMediaControlResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetCallMediaControlResponse::GetClassData() const { return &_class_data_; }
+
+
+void SetCallMediaControlResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<SetCallMediaControlResponse*>(&to_msg);
+  auto& from = static_cast<const SetCallMediaControlResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ondewo.csi.SetCallMediaControlResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_refusal_reason().empty()) {
+    _this->_internal_set_refusal_reason(from._internal_refusal_reason());
+  }
+  if (from._internal_has_applied()) {
+    _this->_internal_mutable_applied()->::ondewo::csi::CallMediaControlLevel::MergeFrom(
+        from._internal_applied());
+  }
+  if (from._internal_changed() != 0) {
+    _this->_internal_set_changed(from._internal_changed());
+  }
+  if (from._internal_stale() != 0) {
+    _this->_internal_set_stale(from._internal_stale());
+  }
+  if (from._internal_bot_playback_in_flight() != 0) {
+    _this->_internal_set_bot_playback_in_flight(from._internal_bot_playback_in_flight());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SetCallMediaControlResponse::CopyFrom(const SetCallMediaControlResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ondewo.csi.SetCallMediaControlResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SetCallMediaControlResponse::IsInitialized() const {
+  return true;
+}
+
+void SetCallMediaControlResponse::InternalSwap(SetCallMediaControlResponse* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.refusal_reason_, lhs_arena,
+      &other->_impl_.refusal_reason_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SetCallMediaControlResponse, _impl_.bot_playback_in_flight_)
+      + sizeof(SetCallMediaControlResponse::_impl_.bot_playback_in_flight_)
+      - PROTOBUF_FIELD_OFFSET(SetCallMediaControlResponse, _impl_.applied_)>(
+          reinterpret_cast<char*>(&_impl_.applied_),
+          reinterpret_cast<char*>(&other->_impl_.applied_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SetCallMediaControlResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[13]);
+}
+
+// ===================================================================
+
 class Condition::_Internal {
  public:
 };
@@ -3812,7 +4539,7 @@ void Condition::InternalSwap(Condition* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Condition::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[12]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[14]);
 }
 
 // ===================================================================
@@ -4506,7 +5233,7 @@ void ControlMessageServiceParameters::InternalSwap(ControlMessageServiceParamete
 ::PROTOBUF_NAMESPACE_ID::Metadata ControlMessageServiceParameters::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[13]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[15]);
 }
 
 // ===================================================================
@@ -4764,7 +5491,7 @@ void ControlMessage::InternalSwap(ControlMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ControlMessage::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[14]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[16]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -4818,6 +5545,14 @@ Arena::CreateMaybeMessage< ::ondewo::csi::SetControlStatusRequest >(Arena* arena
 template<> PROTOBUF_NOINLINE ::ondewo::csi::SetControlStatusResponse*
 Arena::CreateMaybeMessage< ::ondewo::csi::SetControlStatusResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ondewo::csi::SetControlStatusResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ondewo::csi::CallMediaControlLevel*
+Arena::CreateMaybeMessage< ::ondewo::csi::CallMediaControlLevel >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ondewo::csi::CallMediaControlLevel >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ondewo::csi::SetCallMediaControlResponse*
+Arena::CreateMaybeMessage< ::ondewo::csi::SetCallMediaControlResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ondewo::csi::SetCallMediaControlResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::ondewo::csi::Condition*
 Arena::CreateMaybeMessage< ::ondewo::csi::Condition >(Arena* arena) {

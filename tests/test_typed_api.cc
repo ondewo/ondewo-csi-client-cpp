@@ -174,6 +174,47 @@ TEST(TypedApi, UnaryRpcAgainstADeadEndpointFailsCleanly) {
       << "unexpected status " << status.error_code() << ": " << status.error_message();
 }
 
+// SetCallMediaControl (API 5.6.0) carries the FULL effective media-control level of a call.
+// Dispatching it against a dead endpoint proves the new request/response types and method
+// descriptor link; the level itself has to survive the wire, including the uint64 generation
+// the server orders pushes by.
+TEST(TypedApi, CallMediaControlRpcAgainstADeadEndpointFailsCleanly) {
+  ondewo::csi::CallMediaControlLevel level;
+  level.set_bot_muted(true);
+  level.set_listening_paused(true);
+  level.set_generation(42);
+  level.set_reason("operator");
+
+  ondewo::csi::CallMediaControlLevel parsed;
+  ASSERT_TRUE(parsed.ParseFromString(level.SerializeAsString()));
+  EXPECT_TRUE(parsed.bot_muted());
+  EXPECT_TRUE(parsed.listening_paused());
+  EXPECT_EQ(parsed.generation(), 42u);
+  EXPECT_EQ(parsed.reason(), "operator");
+
+  ondewo::csi::ControlStreamResponse control;
+  *control.mutable_media_control() = level;
+  ondewo::csi::ControlStreamResponse parsed_control;
+  ASSERT_TRUE(parsed_control.ParseFromString(control.SerializeAsString()));
+  ASSERT_TRUE(parsed_control.has_media_control());
+  EXPECT_EQ(parsed_control.media_control().generation(), 42u);
+
+  std::unique_ptr<ondewo::csi::Conversations::Stub> conversations =
+      ondewo::csi::Conversations::NewStub(DeadChannel());
+
+  grpc::ClientContext client_context;
+  client_context.set_deadline(std::chrono::system_clock::now() + std::chrono::seconds(5));
+  ondewo::csi::SetCallMediaControlResponse response;
+
+  const grpc::Status status =
+      conversations->SetCallMediaControl(&client_context, level, &response);
+
+  EXPECT_FALSE(status.ok()) << "an RPC to a dead endpoint reported success";
+  EXPECT_TRUE(status.error_code() == grpc::StatusCode::UNAVAILABLE ||
+              status.error_code() == grpc::StatusCode::DEADLINE_EXCEEDED)
+      << "unexpected status " << status.error_code() << ": " << status.error_message();
+}
+
 // S2sStream is bidirectional, so it gets its own generated ClientReaderWriter type. Driving
 // one proves that half of the generated service compiled and dispatches too.
 TEST(TypedApi, BidiStreamingRpcStubIsUsable) {

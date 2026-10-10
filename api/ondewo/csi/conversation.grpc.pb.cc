@@ -32,6 +32,7 @@ static const char* Conversations_method_names[] = {
   "/ondewo.csi.Conversations/CheckUpstreamHealth",
   "/ondewo.csi.Conversations/GetControlStream",
   "/ondewo.csi.Conversations/SetControlStatus",
+  "/ondewo.csi.Conversations/SetCallMediaControl",
 };
 
 std::unique_ptr< Conversations::Stub> Conversations::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -50,6 +51,7 @@ Conversations::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_CheckUpstreamHealth_(Conversations_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetControlStream_(Conversations_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SetControlStatus_(Conversations_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetCallMediaControl_(Conversations_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status Conversations::Stub::CreateS2sPipeline(::grpc::ClientContext* context, const ::ondewo::csi::S2sPipeline& request, ::google::protobuf::Empty* response) {
@@ -245,6 +247,29 @@ void Conversations::Stub::async::SetControlStatus(::grpc::ClientContext* context
   return result;
 }
 
+::grpc::Status Conversations::Stub::SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::ondewo::csi::SetCallMediaControlResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SetCallMediaControl_, context, request, response);
+}
+
+void Conversations::Stub::async::SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetCallMediaControl_, context, request, response, std::move(f));
+}
+
+void Conversations::Stub::async::SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetCallMediaControl_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>* Conversations::Stub::PrepareAsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ondewo::csi::SetCallMediaControlResponse, ::ondewo::csi::CallMediaControlLevel, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SetCallMediaControl_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>* Conversations::Stub::AsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSetCallMediaControlRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 Conversations::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Conversations_method_names[0],
@@ -336,6 +361,16 @@ Conversations::Service::Service() {
              ::ondewo::csi::SetControlStatusResponse* resp) {
                return service->SetControlStatus(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Conversations_method_names[9],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Conversations::Service, ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Conversations::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ondewo::csi::CallMediaControlLevel* req,
+             ::ondewo::csi::SetCallMediaControlResponse* resp) {
+               return service->SetCallMediaControl(ctx, req, resp);
+             }, this)));
 }
 
 Conversations::Service::~Service() {
@@ -397,6 +432,13 @@ Conversations::Service::~Service() {
 }
 
 ::grpc::Status Conversations::Service::SetControlStatus(::grpc::ServerContext* context, const ::ondewo::csi::SetControlStatusRequest* request, ::ondewo::csi::SetControlStatusResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Conversations::Service::SetCallMediaControl(::grpc::ServerContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response) {
   (void) context;
   (void) request;
   (void) response;

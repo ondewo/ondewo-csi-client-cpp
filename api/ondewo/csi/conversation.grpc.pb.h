@@ -217,6 +217,26 @@ class Conversations final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetControlStatusResponse>> PrepareAsyncSetControlStatus(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetControlStatusResponse>>(PrepareAsyncSetControlStatusRaw(context, request, cq));
     }
+    // <p>Set the per-call operator media control level: mute the bot and/or pause its listening.</p>
+    //
+    // <p>Pushed by ondewo-sip only, which owns the per-call level and authenticates with its in-container token
+    // (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused.</p>
+    //
+    // <p>The request carries the FULL effective level, never a toggle. The server applies it only when its
+    // <code>generation</code> is strictly greater than the last applied generation and otherwise answers
+    // <code>stale=true</code> without changing anything, so a push that arrives after the next call's resync can
+    // never re-apply an old call's level. The level is cleared at <code>CALL_ENDED</code>; the generation is kept.</p>
+    //
+    // <p>This RPC never changes the control status of <code>GetControlStream</code> / <code>SetControlStatus</code>
+    // (the barge-in slot). A level change is announced on the control stream as a
+    // <code>ControlStreamResponse</code> with <code>media_control</code> set.</p>
+    virtual ::grpc::Status SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::ondewo::csi::SetCallMediaControlResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>> AsyncSetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>>(AsyncSetCallMediaControlRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>> PrepareAsyncSetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>>(PrepareAsyncSetCallMediaControlRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -334,6 +354,21 @@ class Conversations final {
       // <p>Send a message on the control stream to control sip, t2s, s2t etc. during a conversation.</p>
       virtual void SetControlStatus(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest* request, ::ondewo::csi::SetControlStatusResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void SetControlStatus(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest* request, ::ondewo::csi::SetControlStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // <p>Set the per-call operator media control level: mute the bot and/or pause its listening.</p>
+      //
+      // <p>Pushed by ondewo-sip only, which owns the per-call level and authenticates with its in-container token
+      // (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused.</p>
+      //
+      // <p>The request carries the FULL effective level, never a toggle. The server applies it only when its
+      // <code>generation</code> is strictly greater than the last applied generation and otherwise answers
+      // <code>stale=true</code> without changing anything, so a push that arrives after the next call's resync can
+      // never re-apply an old call's level. The level is cleared at <code>CALL_ENDED</code>; the generation is kept.</p>
+      //
+      // <p>This RPC never changes the control status of <code>GetControlStream</code> / <code>SetControlStatus</code>
+      // (the barge-in slot). A level change is announced on the control stream as a
+      // <code>ControlStreamResponse</code> with <code>media_control</code> set.</p>
+      virtual void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -359,6 +394,8 @@ class Conversations final {
     virtual ::grpc::ClientAsyncReaderInterface< ::ondewo::csi::ControlStreamResponse>* PrepareAsyncGetControlStreamRaw(::grpc::ClientContext* context, const ::ondewo::csi::ControlStreamRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetControlStatusResponse>* AsyncSetControlStatusRaw(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetControlStatusResponse>* PrepareAsyncSetControlStatusRaw(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>* AsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>* PrepareAsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -430,6 +467,13 @@ class Conversations final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetControlStatusResponse>> PrepareAsyncSetControlStatus(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetControlStatusResponse>>(PrepareAsyncSetControlStatusRaw(context, request, cq));
     }
+    ::grpc::Status SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::ondewo::csi::SetCallMediaControlResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>> AsyncSetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>>(AsyncSetCallMediaControlRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>> PrepareAsyncSetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>>(PrepareAsyncSetCallMediaControlRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -449,6 +493,8 @@ class Conversations final {
       void GetControlStream(::grpc::ClientContext* context, const ::ondewo::csi::ControlStreamRequest* request, ::grpc::ClientReadReactor< ::ondewo::csi::ControlStreamResponse>* reactor) override;
       void SetControlStatus(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest* request, ::ondewo::csi::SetControlStatusResponse* response, std::function<void(::grpc::Status)>) override;
       void SetControlStatus(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest* request, ::ondewo::csi::SetControlStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -480,6 +526,8 @@ class Conversations final {
     ::grpc::ClientAsyncReader< ::ondewo::csi::ControlStreamResponse>* PrepareAsyncGetControlStreamRaw(::grpc::ClientContext* context, const ::ondewo::csi::ControlStreamRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetControlStatusResponse>* AsyncSetControlStatusRaw(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetControlStatusResponse>* PrepareAsyncSetControlStatusRaw(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>* AsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>* PrepareAsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_CreateS2sPipeline_;
     const ::grpc::internal::RpcMethod rpcmethod_GetS2sPipeline_;
     const ::grpc::internal::RpcMethod rpcmethod_UpdateS2sPipeline_;
@@ -489,6 +537,7 @@ class Conversations final {
     const ::grpc::internal::RpcMethod rpcmethod_CheckUpstreamHealth_;
     const ::grpc::internal::RpcMethod rpcmethod_GetControlStream_;
     const ::grpc::internal::RpcMethod rpcmethod_SetControlStatus_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetCallMediaControl_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -603,6 +652,20 @@ class Conversations final {
     virtual ::grpc::Status GetControlStream(::grpc::ServerContext* context, const ::ondewo::csi::ControlStreamRequest* request, ::grpc::ServerWriter< ::ondewo::csi::ControlStreamResponse>* writer);
     // <p>Send a message on the control stream to control sip, t2s, s2t etc. during a conversation.</p>
     virtual ::grpc::Status SetControlStatus(::grpc::ServerContext* context, const ::ondewo::csi::SetControlStatusRequest* request, ::ondewo::csi::SetControlStatusResponse* response);
+    // <p>Set the per-call operator media control level: mute the bot and/or pause its listening.</p>
+    //
+    // <p>Pushed by ondewo-sip only, which owns the per-call level and authenticates with its in-container token
+    // (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused.</p>
+    //
+    // <p>The request carries the FULL effective level, never a toggle. The server applies it only when its
+    // <code>generation</code> is strictly greater than the last applied generation and otherwise answers
+    // <code>stale=true</code> without changing anything, so a push that arrives after the next call's resync can
+    // never re-apply an old call's level. The level is cleared at <code>CALL_ENDED</code>; the generation is kept.</p>
+    //
+    // <p>This RPC never changes the control status of <code>GetControlStream</code> / <code>SetControlStatus</code>
+    // (the barge-in slot). A level change is announced on the control stream as a
+    // <code>ControlStreamResponse</code> with <code>media_control</code> set.</p>
+    virtual ::grpc::Status SetCallMediaControl(::grpc::ServerContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_CreateS2sPipeline : public BaseClass {
@@ -784,7 +847,27 @@ class Conversations final {
       ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_CreateS2sPipeline<WithAsyncMethod_GetS2sPipeline<WithAsyncMethod_UpdateS2sPipeline<WithAsyncMethod_DeleteS2sPipeline<WithAsyncMethod_ListS2sPipelines<WithAsyncMethod_S2sStream<WithAsyncMethod_CheckUpstreamHealth<WithAsyncMethod_GetControlStream<WithAsyncMethod_SetControlStatus<Service > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SetCallMediaControl : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetCallMediaControl() {
+      ::grpc::Service::MarkMethodAsync(9);
+    }
+    ~WithAsyncMethod_SetCallMediaControl() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallMediaControl(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetCallMediaControl(::grpc::ServerContext* context, ::ondewo::csi::CallMediaControlLevel* request, ::grpc::ServerAsyncResponseWriter< ::ondewo::csi::SetCallMediaControlResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_CreateS2sPipeline<WithAsyncMethod_GetS2sPipeline<WithAsyncMethod_UpdateS2sPipeline<WithAsyncMethod_DeleteS2sPipeline<WithAsyncMethod_ListS2sPipelines<WithAsyncMethod_S2sStream<WithAsyncMethod_CheckUpstreamHealth<WithAsyncMethod_GetControlStream<WithAsyncMethod_SetControlStatus<WithAsyncMethod_SetCallMediaControl<Service > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_CreateS2sPipeline : public BaseClass {
    private:
@@ -1019,7 +1102,34 @@ class Conversations final {
     virtual ::grpc::ServerUnaryReactor* SetControlStatus(
       ::grpc::CallbackServerContext* /*context*/, const ::ondewo::csi::SetControlStatusRequest* /*request*/, ::ondewo::csi::SetControlStatusResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_CreateS2sPipeline<WithCallbackMethod_GetS2sPipeline<WithCallbackMethod_UpdateS2sPipeline<WithCallbackMethod_DeleteS2sPipeline<WithCallbackMethod_ListS2sPipelines<WithCallbackMethod_S2sStream<WithCallbackMethod_CheckUpstreamHealth<WithCallbackMethod_GetControlStream<WithCallbackMethod_SetControlStatus<Service > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_SetCallMediaControl : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SetCallMediaControl() {
+      ::grpc::Service::MarkMethodCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response) { return this->SetCallMediaControl(context, request, response); }));}
+    void SetMessageAllocatorFor_SetCallMediaControl(
+        ::grpc::MessageAllocator< ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SetCallMediaControl() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallMediaControl(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetCallMediaControl(
+      ::grpc::CallbackServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_CreateS2sPipeline<WithCallbackMethod_GetS2sPipeline<WithCallbackMethod_UpdateS2sPipeline<WithCallbackMethod_DeleteS2sPipeline<WithCallbackMethod_ListS2sPipelines<WithCallbackMethod_S2sStream<WithCallbackMethod_CheckUpstreamHealth<WithCallbackMethod_GetControlStream<WithCallbackMethod_SetControlStatus<WithCallbackMethod_SetCallMediaControl<Service > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_CreateS2sPipeline : public BaseClass {
@@ -1170,6 +1280,23 @@ class Conversations final {
     }
     // disable synchronous version of this method
     ::grpc::Status SetControlStatus(::grpc::ServerContext* /*context*/, const ::ondewo::csi::SetControlStatusRequest* /*request*/, ::ondewo::csi::SetControlStatusResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetCallMediaControl : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetCallMediaControl() {
+      ::grpc::Service::MarkMethodGeneric(9);
+    }
+    ~WithGenericMethod_SetCallMediaControl() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallMediaControl(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1352,6 +1479,26 @@ class Conversations final {
     }
     void RequestSetControlStatus(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetCallMediaControl : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetCallMediaControl() {
+      ::grpc::Service::MarkMethodRaw(9);
+    }
+    ~WithRawMethod_SetCallMediaControl() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallMediaControl(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetCallMediaControl(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1554,6 +1701,28 @@ class Conversations final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_SetCallMediaControl : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SetCallMediaControl() {
+      ::grpc::Service::MarkMethodRawCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetCallMediaControl(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SetCallMediaControl() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallMediaControl(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetCallMediaControl(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_CreateS2sPipeline : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -1742,7 +1911,34 @@ class Conversations final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedSetControlStatus(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ondewo::csi::SetControlStatusRequest,::ondewo::csi::SetControlStatusResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithStreamedUnaryMethod_SetControlStatus<Service > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetCallMediaControl : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetCallMediaControl() {
+      ::grpc::Service::MarkMethodStreamed(9,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::ondewo::csi::CallMediaControlLevel, ::ondewo::csi::SetCallMediaControlResponse>* streamer) {
+                       return this->StreamedSetCallMediaControl(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SetCallMediaControl() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetCallMediaControl(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetCallMediaControl(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ondewo::csi::CallMediaControlLevel,::ondewo::csi::SetCallMediaControlResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithStreamedUnaryMethod_SetControlStatus<WithStreamedUnaryMethod_SetCallMediaControl<Service > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_GetControlStream : public BaseClass {
    private:
@@ -1771,7 +1967,7 @@ class Conversations final {
     virtual ::grpc::Status StreamedGetControlStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::ondewo::csi::ControlStreamRequest,::ondewo::csi::ControlStreamResponse>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_GetControlStream<Service > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithSplitStreamingMethod_GetControlStream<WithStreamedUnaryMethod_SetControlStatus<Service > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithSplitStreamingMethod_GetControlStream<WithStreamedUnaryMethod_SetControlStatus<WithStreamedUnaryMethod_SetCallMediaControl<Service > > > > > > > > > StreamedService;
 };
 
 }  // namespace csi
