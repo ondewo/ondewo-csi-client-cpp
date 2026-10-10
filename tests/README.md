@@ -34,11 +34,11 @@ it imports) and all **19** services must be in the descriptor pool.
 
 - Every `.proto` listed in `product_config.cc` is registered, every service exists and declares
   RPCs, and a representative slice of method names is present — the full `S2sPipeline` CRUD
-  surface, `S2sStream` / `GetControlStream` / `SetControlStatus`, and one RPC from each of the
+  surface, `S2sStream` / `GetControlStream` / `SetControlStatus` / `SetCallMediaControl`, and one RPC from each of the
   `ondewo.s2t`, `ondewo.t2s` and `ondewo.nlu` packages the same archive carries.
 - **Every** generated message is instantiated, has each of its singular scalar fields set to a
   non-default value, and is pushed through `SerializeToString` → `ParseFromString` → compare:
-  **846** messages and **2542** singular scalar fields at ONDEWO CSI API 5.5.0. A writer that
+  **848** messages and **2550** singular scalar fields at ONDEWO CSI API 5.6.0. A writer that
   drops a field, a reader that ignores one, or a field-number mismatch between the two fails here.
 - All **98** generated enums declare `0` as their first value, as proto3 requires.
 - `FillScalarFields` handles every protobuf scalar type. No single product uses all of them, so
@@ -49,7 +49,8 @@ it imports) and all **19** services must be in the descriptor pool.
   plain `s2t_pipeline_id` correctly keeps its zero value off the wire. This is the bug class that
   broke the Angular client.
 - The `S2sStreamResponse` `oneof` keeps the arm it was given across the wire.
-- Service stubs are constructed against a channel, and a unary RPC (`GetS2sPipeline`), a
+- Service stubs are constructed against a channel, and two unary RPCs (`GetS2sPipeline` and
+  `SetCallMediaControl`), a
   **bidirectional** streaming RPC (`S2sStream`, a `ClientReaderWriter`) and a **server**-streaming
   RPC (`GetControlStream`, a `ClientReader`) are actually issued against a dead endpoint: each
   must come back as `UNAVAILABLE` / `DEADLINE_EXCEEDED`, which proves the stubs, the

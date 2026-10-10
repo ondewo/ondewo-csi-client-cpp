@@ -2,6 +2,35 @@
 
 *****************
 
+## Release ONDEWO CSI C++ Client 5.6.0
+
+### New Features
+
+* Tracks [ONDEWO CSI API 5.6.0](https://github.com/ondewo/ondewo-csi-api/releases/tag/5.6.0); the stubs in `api/`
+  are regenerated from it. New API surface (summarised from the API release notes, purely additive and
+  wire-compatible with 5.5.0):
+  * `Conversations.SetCallMediaControl`: per-call operator media control pushed by ondewo-sip (in-container token
+    only). The request `CallMediaControlLevel` carries the full effective level (`bot_muted`, `listening_paused`), a
+    monotonic `generation` and a bounded `reason`; the response `SetCallMediaControlResponse` reports `applied`,
+    `changed`, `stale`, `bot_playback_in_flight` and `refusal_reason`.
+  * `ControlStreamResponse.media_control`: set only on media-control messages of `GetControlStream`, pushed on a
+    level change and seeded on every connect. Such a message must be handled as media control and its echoed
+    `control_status` must not be applied.
+  * `SipTrigger.INVITE` is documented as not implemented; use the ondewo-vtsi `Calls.InviteToCall` RPC.
+* The NLU, S2T and T2S APIs the CSI API imports are unchanged (NLU 7.1.0, S2T 7.5.0, T2S 6.6.0).
+
+### Improvements
+
+* The test suite covers the new surface: `tests/product_config.cc` expects `SetCallMediaControl` and records the
+  5.6.0 counts (848 messages, 98 enums, 2550 scalar fields); `tests/test_typed_api.cc` round-trips
+  `CallMediaControlLevel` and `ControlStreamResponse.media_control` and dispatches `SetCallMediaControl` against a
+  dead endpoint.
+* The pinned `ondewo-proto-compiler` submodule moves from 5.15.2 to 5.15.5 (its fixes concern the Python, Rust and
+  Node.js images; the C++ generation is unchanged).
+* Tracking API Version [5.6.0](https://github.com/ondewo/ondewo-csi-api/releases/tag/5.6.0) ( [Documentation](https://ondewo.github.io/ondewo-csi-api/) )
+
+*****************
+
 ## Release ONDEWO CSI C++ Client 5.5.1
 
 ### New Features

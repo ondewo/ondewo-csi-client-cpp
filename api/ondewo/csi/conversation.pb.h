@@ -57,6 +57,9 @@ struct TableStruct_ondewo_2fcsi_2fconversation_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_ondewo_2fcsi_2fconversation_2eproto;
 namespace ondewo {
 namespace csi {
+class CallMediaControlLevel;
+struct CallMediaControlLevelDefaultTypeInternal;
+extern CallMediaControlLevelDefaultTypeInternal _CallMediaControlLevel_default_instance_;
 class CheckUpstreamHealthResponse;
 struct CheckUpstreamHealthResponseDefaultTypeInternal;
 extern CheckUpstreamHealthResponseDefaultTypeInternal _CheckUpstreamHealthResponse_default_instance_;
@@ -93,6 +96,9 @@ extern S2sStreamRequestDefaultTypeInternal _S2sStreamRequest_default_instance_;
 class S2sStreamResponse;
 struct S2sStreamResponseDefaultTypeInternal;
 extern S2sStreamResponseDefaultTypeInternal _S2sStreamResponse_default_instance_;
+class SetCallMediaControlResponse;
+struct SetCallMediaControlResponseDefaultTypeInternal;
+extern SetCallMediaControlResponseDefaultTypeInternal _SetCallMediaControlResponse_default_instance_;
 class SetControlStatusRequest;
 struct SetControlStatusRequestDefaultTypeInternal;
 extern SetControlStatusRequestDefaultTypeInternal _SetControlStatusRequest_default_instance_;
@@ -105,6 +111,7 @@ extern SipTriggerDefaultTypeInternal _SipTrigger_default_instance_;
 }  // namespace csi
 }  // namespace ondewo
 PROTOBUF_NAMESPACE_OPEN
+template<> ::ondewo::csi::CallMediaControlLevel* Arena::CreateMaybeMessage<::ondewo::csi::CallMediaControlLevel>(Arena*);
 template<> ::ondewo::csi::CheckUpstreamHealthResponse* Arena::CreateMaybeMessage<::ondewo::csi::CheckUpstreamHealthResponse>(Arena*);
 template<> ::ondewo::csi::Condition* Arena::CreateMaybeMessage<::ondewo::csi::Condition>(Arena*);
 template<> ::ondewo::csi::ControlMessage* Arena::CreateMaybeMessage<::ondewo::csi::ControlMessage>(Arena*);
@@ -117,6 +124,7 @@ template<> ::ondewo::csi::S2sPipeline* Arena::CreateMaybeMessage<::ondewo::csi::
 template<> ::ondewo::csi::S2sPipelineId* Arena::CreateMaybeMessage<::ondewo::csi::S2sPipelineId>(Arena*);
 template<> ::ondewo::csi::S2sStreamRequest* Arena::CreateMaybeMessage<::ondewo::csi::S2sStreamRequest>(Arena*);
 template<> ::ondewo::csi::S2sStreamResponse* Arena::CreateMaybeMessage<::ondewo::csi::S2sStreamResponse>(Arena*);
+template<> ::ondewo::csi::SetCallMediaControlResponse* Arena::CreateMaybeMessage<::ondewo::csi::SetCallMediaControlResponse>(Arena*);
 template<> ::ondewo::csi::SetControlStatusRequest* Arena::CreateMaybeMessage<::ondewo::csi::SetControlStatusRequest>(Arena*);
 template<> ::ondewo::csi::SetControlStatusResponse* Arena::CreateMaybeMessage<::ondewo::csi::SetControlStatusResponse>(Arena*);
 template<> ::ondewo::csi::SipTrigger* Arena::CreateMaybeMessage<::ondewo::csi::SipTrigger>(Arena*);
@@ -2060,9 +2068,28 @@ class ControlStreamResponse final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kMediaControlFieldNumber = 3,
     kEpochFieldNumber = 2,
     kControlStatusFieldNumber = 1,
   };
+  // .ondewo.csi.CallMediaControlLevel media_control = 3;
+  bool has_media_control() const;
+  private:
+  bool _internal_has_media_control() const;
+  public:
+  void clear_media_control();
+  const ::ondewo::csi::CallMediaControlLevel& media_control() const;
+  PROTOBUF_NODISCARD ::ondewo::csi::CallMediaControlLevel* release_media_control();
+  ::ondewo::csi::CallMediaControlLevel* mutable_media_control();
+  void set_allocated_media_control(::ondewo::csi::CallMediaControlLevel* media_control);
+  private:
+  const ::ondewo::csi::CallMediaControlLevel& _internal_media_control() const;
+  ::ondewo::csi::CallMediaControlLevel* _internal_mutable_media_control();
+  public:
+  void unsafe_arena_set_allocated_media_control(
+      ::ondewo::csi::CallMediaControlLevel* media_control);
+  ::ondewo::csi::CallMediaControlLevel* unsafe_arena_release_media_control();
+
   // uint64 epoch = 2;
   void clear_epoch();
   uint64_t epoch() const;
@@ -2089,6 +2116,7 @@ class ControlStreamResponse final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::ondewo::csi::CallMediaControlLevel* media_control_;
     uint64_t epoch_;
     int control_status_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -2405,6 +2433,398 @@ class SetControlStatusResponse final :
 };
 // -------------------------------------------------------------------
 
+class CallMediaControlLevel final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.CallMediaControlLevel) */ {
+ public:
+  inline CallMediaControlLevel() : CallMediaControlLevel(nullptr) {}
+  ~CallMediaControlLevel() override;
+  explicit PROTOBUF_CONSTEXPR CallMediaControlLevel(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CallMediaControlLevel(const CallMediaControlLevel& from);
+  CallMediaControlLevel(CallMediaControlLevel&& from) noexcept
+    : CallMediaControlLevel() {
+    *this = ::std::move(from);
+  }
+
+  inline CallMediaControlLevel& operator=(const CallMediaControlLevel& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CallMediaControlLevel& operator=(CallMediaControlLevel&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CallMediaControlLevel& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CallMediaControlLevel* internal_default_instance() {
+    return reinterpret_cast<const CallMediaControlLevel*>(
+               &_CallMediaControlLevel_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  friend void swap(CallMediaControlLevel& a, CallMediaControlLevel& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CallMediaControlLevel* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CallMediaControlLevel* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CallMediaControlLevel* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CallMediaControlLevel>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CallMediaControlLevel& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CallMediaControlLevel& from) {
+    CallMediaControlLevel::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CallMediaControlLevel* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ondewo.csi.CallMediaControlLevel";
+  }
+  protected:
+  explicit CallMediaControlLevel(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kReasonFieldNumber = 4,
+    kGenerationFieldNumber = 3,
+    kBotMutedFieldNumber = 1,
+    kListeningPausedFieldNumber = 2,
+  };
+  // string reason = 4;
+  void clear_reason();
+  const std::string& reason() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_reason(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_reason();
+  PROTOBUF_NODISCARD std::string* release_reason();
+  void set_allocated_reason(std::string* reason);
+  private:
+  const std::string& _internal_reason() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_reason(const std::string& value);
+  std::string* _internal_mutable_reason();
+  public:
+
+  // uint64 generation = 3;
+  void clear_generation();
+  uint64_t generation() const;
+  void set_generation(uint64_t value);
+  private:
+  uint64_t _internal_generation() const;
+  void _internal_set_generation(uint64_t value);
+  public:
+
+  // bool bot_muted = 1;
+  void clear_bot_muted();
+  bool bot_muted() const;
+  void set_bot_muted(bool value);
+  private:
+  bool _internal_bot_muted() const;
+  void _internal_set_bot_muted(bool value);
+  public:
+
+  // bool listening_paused = 2;
+  void clear_listening_paused();
+  bool listening_paused() const;
+  void set_listening_paused(bool value);
+  private:
+  bool _internal_listening_paused() const;
+  void _internal_set_listening_paused(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ondewo.csi.CallMediaControlLevel)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr reason_;
+    uint64_t generation_;
+    bool bot_muted_;
+    bool listening_paused_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ondewo_2fcsi_2fconversation_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SetCallMediaControlResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.SetCallMediaControlResponse) */ {
+ public:
+  inline SetCallMediaControlResponse() : SetCallMediaControlResponse(nullptr) {}
+  ~SetCallMediaControlResponse() override;
+  explicit PROTOBUF_CONSTEXPR SetCallMediaControlResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetCallMediaControlResponse(const SetCallMediaControlResponse& from);
+  SetCallMediaControlResponse(SetCallMediaControlResponse&& from) noexcept
+    : SetCallMediaControlResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline SetCallMediaControlResponse& operator=(const SetCallMediaControlResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetCallMediaControlResponse& operator=(SetCallMediaControlResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetCallMediaControlResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetCallMediaControlResponse* internal_default_instance() {
+    return reinterpret_cast<const SetCallMediaControlResponse*>(
+               &_SetCallMediaControlResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  friend void swap(SetCallMediaControlResponse& a, SetCallMediaControlResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetCallMediaControlResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetCallMediaControlResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SetCallMediaControlResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetCallMediaControlResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetCallMediaControlResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetCallMediaControlResponse& from) {
+    SetCallMediaControlResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetCallMediaControlResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ondewo.csi.SetCallMediaControlResponse";
+  }
+  protected:
+  explicit SetCallMediaControlResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kRefusalReasonFieldNumber = 5,
+    kAppliedFieldNumber = 1,
+    kChangedFieldNumber = 2,
+    kStaleFieldNumber = 3,
+    kBotPlaybackInFlightFieldNumber = 4,
+  };
+  // string refusal_reason = 5;
+  void clear_refusal_reason();
+  const std::string& refusal_reason() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_refusal_reason(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_refusal_reason();
+  PROTOBUF_NODISCARD std::string* release_refusal_reason();
+  void set_allocated_refusal_reason(std::string* refusal_reason);
+  private:
+  const std::string& _internal_refusal_reason() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_refusal_reason(const std::string& value);
+  std::string* _internal_mutable_refusal_reason();
+  public:
+
+  // .ondewo.csi.CallMediaControlLevel applied = 1;
+  bool has_applied() const;
+  private:
+  bool _internal_has_applied() const;
+  public:
+  void clear_applied();
+  const ::ondewo::csi::CallMediaControlLevel& applied() const;
+  PROTOBUF_NODISCARD ::ondewo::csi::CallMediaControlLevel* release_applied();
+  ::ondewo::csi::CallMediaControlLevel* mutable_applied();
+  void set_allocated_applied(::ondewo::csi::CallMediaControlLevel* applied);
+  private:
+  const ::ondewo::csi::CallMediaControlLevel& _internal_applied() const;
+  ::ondewo::csi::CallMediaControlLevel* _internal_mutable_applied();
+  public:
+  void unsafe_arena_set_allocated_applied(
+      ::ondewo::csi::CallMediaControlLevel* applied);
+  ::ondewo::csi::CallMediaControlLevel* unsafe_arena_release_applied();
+
+  // bool changed = 2;
+  void clear_changed();
+  bool changed() const;
+  void set_changed(bool value);
+  private:
+  bool _internal_changed() const;
+  void _internal_set_changed(bool value);
+  public:
+
+  // bool stale = 3;
+  void clear_stale();
+  bool stale() const;
+  void set_stale(bool value);
+  private:
+  bool _internal_stale() const;
+  void _internal_set_stale(bool value);
+  public:
+
+  // bool bot_playback_in_flight = 4;
+  void clear_bot_playback_in_flight();
+  bool bot_playback_in_flight() const;
+  void set_bot_playback_in_flight(bool value);
+  private:
+  bool _internal_bot_playback_in_flight() const;
+  void _internal_set_bot_playback_in_flight(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ondewo.csi.SetCallMediaControlResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr refusal_reason_;
+    ::ondewo::csi::CallMediaControlLevel* applied_;
+    bool changed_;
+    bool stale_;
+    bool bot_playback_in_flight_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ondewo_2fcsi_2fconversation_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Condition final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.Condition) */ {
  public:
@@ -2453,7 +2873,7 @@ class Condition final :
                &_Condition_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    14;
 
   friend void swap(Condition& a, Condition& b) {
     a.Swap(&b);
@@ -2623,7 +3043,7 @@ class ControlMessageServiceParameters final :
                &_ControlMessageServiceParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    15;
 
   friend void swap(ControlMessageServiceParameters& a, ControlMessageServiceParameters& b) {
     a.Swap(&b);
@@ -2963,7 +3383,7 @@ class ControlMessage final :
                &_ControlMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    16;
 
   friend void swap(ControlMessage& a, ControlMessage& b) {
     a.Swap(&b);
@@ -4424,6 +4844,96 @@ inline void ControlStreamResponse::set_epoch(uint64_t value) {
   // @@protoc_insertion_point(field_set:ondewo.csi.ControlStreamResponse.epoch)
 }
 
+// .ondewo.csi.CallMediaControlLevel media_control = 3;
+inline bool ControlStreamResponse::_internal_has_media_control() const {
+  return this != internal_default_instance() && _impl_.media_control_ != nullptr;
+}
+inline bool ControlStreamResponse::has_media_control() const {
+  return _internal_has_media_control();
+}
+inline void ControlStreamResponse::clear_media_control() {
+  if (GetArenaForAllocation() == nullptr && _impl_.media_control_ != nullptr) {
+    delete _impl_.media_control_;
+  }
+  _impl_.media_control_ = nullptr;
+}
+inline const ::ondewo::csi::CallMediaControlLevel& ControlStreamResponse::_internal_media_control() const {
+  const ::ondewo::csi::CallMediaControlLevel* p = _impl_.media_control_;
+  return p != nullptr ? *p : reinterpret_cast<const ::ondewo::csi::CallMediaControlLevel&>(
+      ::ondewo::csi::_CallMediaControlLevel_default_instance_);
+}
+inline const ::ondewo::csi::CallMediaControlLevel& ControlStreamResponse::media_control() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.ControlStreamResponse.media_control)
+  return _internal_media_control();
+}
+inline void ControlStreamResponse::unsafe_arena_set_allocated_media_control(
+    ::ondewo::csi::CallMediaControlLevel* media_control) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.media_control_);
+  }
+  _impl_.media_control_ = media_control;
+  if (media_control) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ondewo.csi.ControlStreamResponse.media_control)
+}
+inline ::ondewo::csi::CallMediaControlLevel* ControlStreamResponse::release_media_control() {
+  
+  ::ondewo::csi::CallMediaControlLevel* temp = _impl_.media_control_;
+  _impl_.media_control_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::ondewo::csi::CallMediaControlLevel* ControlStreamResponse::unsafe_arena_release_media_control() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.ControlStreamResponse.media_control)
+  
+  ::ondewo::csi::CallMediaControlLevel* temp = _impl_.media_control_;
+  _impl_.media_control_ = nullptr;
+  return temp;
+}
+inline ::ondewo::csi::CallMediaControlLevel* ControlStreamResponse::_internal_mutable_media_control() {
+  
+  if (_impl_.media_control_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ondewo::csi::CallMediaControlLevel>(GetArenaForAllocation());
+    _impl_.media_control_ = p;
+  }
+  return _impl_.media_control_;
+}
+inline ::ondewo::csi::CallMediaControlLevel* ControlStreamResponse::mutable_media_control() {
+  ::ondewo::csi::CallMediaControlLevel* _msg = _internal_mutable_media_control();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.ControlStreamResponse.media_control)
+  return _msg;
+}
+inline void ControlStreamResponse::set_allocated_media_control(::ondewo::csi::CallMediaControlLevel* media_control) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.media_control_;
+  }
+  if (media_control) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(media_control);
+    if (message_arena != submessage_arena) {
+      media_control = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, media_control, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.media_control_ = media_control;
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.ControlStreamResponse.media_control)
+}
+
 // -------------------------------------------------------------------
 
 // SetControlStatusRequest
@@ -4490,6 +5000,324 @@ inline void SetControlStatusResponse::_internal_set_new_control_status(::ondewo:
 inline void SetControlStatusResponse::set_new_control_status(::ondewo::csi::ControlStatus value) {
   _internal_set_new_control_status(value);
   // @@protoc_insertion_point(field_set:ondewo.csi.SetControlStatusResponse.new_control_status)
+}
+
+// -------------------------------------------------------------------
+
+// CallMediaControlLevel
+
+// bool bot_muted = 1;
+inline void CallMediaControlLevel::clear_bot_muted() {
+  _impl_.bot_muted_ = false;
+}
+inline bool CallMediaControlLevel::_internal_bot_muted() const {
+  return _impl_.bot_muted_;
+}
+inline bool CallMediaControlLevel::bot_muted() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallMediaControlLevel.bot_muted)
+  return _internal_bot_muted();
+}
+inline void CallMediaControlLevel::_internal_set_bot_muted(bool value) {
+  
+  _impl_.bot_muted_ = value;
+}
+inline void CallMediaControlLevel::set_bot_muted(bool value) {
+  _internal_set_bot_muted(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallMediaControlLevel.bot_muted)
+}
+
+// bool listening_paused = 2;
+inline void CallMediaControlLevel::clear_listening_paused() {
+  _impl_.listening_paused_ = false;
+}
+inline bool CallMediaControlLevel::_internal_listening_paused() const {
+  return _impl_.listening_paused_;
+}
+inline bool CallMediaControlLevel::listening_paused() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallMediaControlLevel.listening_paused)
+  return _internal_listening_paused();
+}
+inline void CallMediaControlLevel::_internal_set_listening_paused(bool value) {
+  
+  _impl_.listening_paused_ = value;
+}
+inline void CallMediaControlLevel::set_listening_paused(bool value) {
+  _internal_set_listening_paused(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallMediaControlLevel.listening_paused)
+}
+
+// uint64 generation = 3;
+inline void CallMediaControlLevel::clear_generation() {
+  _impl_.generation_ = uint64_t{0u};
+}
+inline uint64_t CallMediaControlLevel::_internal_generation() const {
+  return _impl_.generation_;
+}
+inline uint64_t CallMediaControlLevel::generation() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallMediaControlLevel.generation)
+  return _internal_generation();
+}
+inline void CallMediaControlLevel::_internal_set_generation(uint64_t value) {
+  
+  _impl_.generation_ = value;
+}
+inline void CallMediaControlLevel::set_generation(uint64_t value) {
+  _internal_set_generation(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallMediaControlLevel.generation)
+}
+
+// string reason = 4;
+inline void CallMediaControlLevel::clear_reason() {
+  _impl_.reason_.ClearToEmpty();
+}
+inline const std::string& CallMediaControlLevel::reason() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallMediaControlLevel.reason)
+  return _internal_reason();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CallMediaControlLevel::set_reason(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.reason_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallMediaControlLevel.reason)
+}
+inline std::string* CallMediaControlLevel::mutable_reason() {
+  std::string* _s = _internal_mutable_reason();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.CallMediaControlLevel.reason)
+  return _s;
+}
+inline const std::string& CallMediaControlLevel::_internal_reason() const {
+  return _impl_.reason_.Get();
+}
+inline void CallMediaControlLevel::_internal_set_reason(const std::string& value) {
+  
+  _impl_.reason_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CallMediaControlLevel::_internal_mutable_reason() {
+  
+  return _impl_.reason_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CallMediaControlLevel::release_reason() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.CallMediaControlLevel.reason)
+  return _impl_.reason_.Release();
+}
+inline void CallMediaControlLevel::set_allocated_reason(std::string* reason) {
+  if (reason != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.reason_.SetAllocated(reason, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.reason_.IsDefault()) {
+    _impl_.reason_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.CallMediaControlLevel.reason)
+}
+
+// -------------------------------------------------------------------
+
+// SetCallMediaControlResponse
+
+// .ondewo.csi.CallMediaControlLevel applied = 1;
+inline bool SetCallMediaControlResponse::_internal_has_applied() const {
+  return this != internal_default_instance() && _impl_.applied_ != nullptr;
+}
+inline bool SetCallMediaControlResponse::has_applied() const {
+  return _internal_has_applied();
+}
+inline void SetCallMediaControlResponse::clear_applied() {
+  if (GetArenaForAllocation() == nullptr && _impl_.applied_ != nullptr) {
+    delete _impl_.applied_;
+  }
+  _impl_.applied_ = nullptr;
+}
+inline const ::ondewo::csi::CallMediaControlLevel& SetCallMediaControlResponse::_internal_applied() const {
+  const ::ondewo::csi::CallMediaControlLevel* p = _impl_.applied_;
+  return p != nullptr ? *p : reinterpret_cast<const ::ondewo::csi::CallMediaControlLevel&>(
+      ::ondewo::csi::_CallMediaControlLevel_default_instance_);
+}
+inline const ::ondewo::csi::CallMediaControlLevel& SetCallMediaControlResponse::applied() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetCallMediaControlResponse.applied)
+  return _internal_applied();
+}
+inline void SetCallMediaControlResponse::unsafe_arena_set_allocated_applied(
+    ::ondewo::csi::CallMediaControlLevel* applied) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.applied_);
+  }
+  _impl_.applied_ = applied;
+  if (applied) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ondewo.csi.SetCallMediaControlResponse.applied)
+}
+inline ::ondewo::csi::CallMediaControlLevel* SetCallMediaControlResponse::release_applied() {
+  
+  ::ondewo::csi::CallMediaControlLevel* temp = _impl_.applied_;
+  _impl_.applied_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::ondewo::csi::CallMediaControlLevel* SetCallMediaControlResponse::unsafe_arena_release_applied() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.SetCallMediaControlResponse.applied)
+  
+  ::ondewo::csi::CallMediaControlLevel* temp = _impl_.applied_;
+  _impl_.applied_ = nullptr;
+  return temp;
+}
+inline ::ondewo::csi::CallMediaControlLevel* SetCallMediaControlResponse::_internal_mutable_applied() {
+  
+  if (_impl_.applied_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ondewo::csi::CallMediaControlLevel>(GetArenaForAllocation());
+    _impl_.applied_ = p;
+  }
+  return _impl_.applied_;
+}
+inline ::ondewo::csi::CallMediaControlLevel* SetCallMediaControlResponse::mutable_applied() {
+  ::ondewo::csi::CallMediaControlLevel* _msg = _internal_mutable_applied();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.SetCallMediaControlResponse.applied)
+  return _msg;
+}
+inline void SetCallMediaControlResponse::set_allocated_applied(::ondewo::csi::CallMediaControlLevel* applied) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.applied_;
+  }
+  if (applied) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(applied);
+    if (message_arena != submessage_arena) {
+      applied = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, applied, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.applied_ = applied;
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.SetCallMediaControlResponse.applied)
+}
+
+// bool changed = 2;
+inline void SetCallMediaControlResponse::clear_changed() {
+  _impl_.changed_ = false;
+}
+inline bool SetCallMediaControlResponse::_internal_changed() const {
+  return _impl_.changed_;
+}
+inline bool SetCallMediaControlResponse::changed() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetCallMediaControlResponse.changed)
+  return _internal_changed();
+}
+inline void SetCallMediaControlResponse::_internal_set_changed(bool value) {
+  
+  _impl_.changed_ = value;
+}
+inline void SetCallMediaControlResponse::set_changed(bool value) {
+  _internal_set_changed(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.SetCallMediaControlResponse.changed)
+}
+
+// bool stale = 3;
+inline void SetCallMediaControlResponse::clear_stale() {
+  _impl_.stale_ = false;
+}
+inline bool SetCallMediaControlResponse::_internal_stale() const {
+  return _impl_.stale_;
+}
+inline bool SetCallMediaControlResponse::stale() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetCallMediaControlResponse.stale)
+  return _internal_stale();
+}
+inline void SetCallMediaControlResponse::_internal_set_stale(bool value) {
+  
+  _impl_.stale_ = value;
+}
+inline void SetCallMediaControlResponse::set_stale(bool value) {
+  _internal_set_stale(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.SetCallMediaControlResponse.stale)
+}
+
+// bool bot_playback_in_flight = 4;
+inline void SetCallMediaControlResponse::clear_bot_playback_in_flight() {
+  _impl_.bot_playback_in_flight_ = false;
+}
+inline bool SetCallMediaControlResponse::_internal_bot_playback_in_flight() const {
+  return _impl_.bot_playback_in_flight_;
+}
+inline bool SetCallMediaControlResponse::bot_playback_in_flight() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetCallMediaControlResponse.bot_playback_in_flight)
+  return _internal_bot_playback_in_flight();
+}
+inline void SetCallMediaControlResponse::_internal_set_bot_playback_in_flight(bool value) {
+  
+  _impl_.bot_playback_in_flight_ = value;
+}
+inline void SetCallMediaControlResponse::set_bot_playback_in_flight(bool value) {
+  _internal_set_bot_playback_in_flight(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.SetCallMediaControlResponse.bot_playback_in_flight)
+}
+
+// string refusal_reason = 5;
+inline void SetCallMediaControlResponse::clear_refusal_reason() {
+  _impl_.refusal_reason_.ClearToEmpty();
+}
+inline const std::string& SetCallMediaControlResponse::refusal_reason() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetCallMediaControlResponse.refusal_reason)
+  return _internal_refusal_reason();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SetCallMediaControlResponse::set_refusal_reason(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.refusal_reason_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.SetCallMediaControlResponse.refusal_reason)
+}
+inline std::string* SetCallMediaControlResponse::mutable_refusal_reason() {
+  std::string* _s = _internal_mutable_refusal_reason();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.SetCallMediaControlResponse.refusal_reason)
+  return _s;
+}
+inline const std::string& SetCallMediaControlResponse::_internal_refusal_reason() const {
+  return _impl_.refusal_reason_.Get();
+}
+inline void SetCallMediaControlResponse::_internal_set_refusal_reason(const std::string& value) {
+  
+  _impl_.refusal_reason_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SetCallMediaControlResponse::_internal_mutable_refusal_reason() {
+  
+  return _impl_.refusal_reason_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SetCallMediaControlResponse::release_refusal_reason() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.SetCallMediaControlResponse.refusal_reason)
+  return _impl_.refusal_reason_.Release();
+}
+inline void SetCallMediaControlResponse::set_allocated_refusal_reason(std::string* refusal_reason) {
+  if (refusal_reason != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.refusal_reason_.SetAllocated(refusal_reason, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.refusal_reason_.IsDefault()) {
+    _impl_.refusal_reason_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.SetCallMediaControlResponse.refusal_reason)
 }
 
 // -------------------------------------------------------------------
@@ -5388,6 +6216,10 @@ inline void ControlMessage::set_allocated_parameters(::ondewo::csi::ControlMessa
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
