@@ -34,13 +34,11 @@
 #include <google/protobuf/unknown_field_set.h>
 #include <google/protobuf/empty.pb.h>
 #include "google/rpc/status.pb.h"
-#include <google/protobuf/timestamp.pb.h>
 #include <google/protobuf/struct.pb.h>
 #include "ondewo/nlu/session.pb.h"
 #include "ondewo/t2s/text-to-speech.pb.h"
 #include "ondewo/s2t/speech-to-text.pb.h"
 #include "ondewo/nlu/context.pb.h"
-#include <google/protobuf/any.pb.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_ondewo_2fcsi_2fconversation_2eproto
