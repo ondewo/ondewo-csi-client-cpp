@@ -2,38 +2,17 @@
 
 namespace ondewo_client_test {
 
-// Mirrors the #include list of the generated public-api.h, one .proto per pair of headers:
+// Every .proto of the generated umbrella header public-api.h, one per pair of headers. DERIVED at
+// configure time by tests/CMakeLists.txt - the equivalent of
 //   sed -n 's|^#include "\(.*\)\.pb\.h"$|\1|p' public-api.h | sed 's|\.grpc$||' | sort -u
+// - so an API release that adds a .proto needs no edit here.
 //
 // CSI is a composition product: ondewo/csi/conversation.proto is the only .proto the CSI API
 // declares itself, and it pulls the whole NLU, S2T and T2S surface in as imports - a CSI
-// client that could not also speak those is useless, so all of them are generated and linked.
+// client that could not also speak those is useless, so all of them are generated, linked and
+// appear in the derived list.
 const std::vector<std::string> kProtoFileNames = {
-    "google/api/annotations.proto",
-    "google/api/http.proto",
-    "google/rpc/status.proto",
-    "google/type/latlng.proto",
-    "ondewo/csi/conversation.proto",
-    "ondewo/nlu/agent.proto",
-    "ondewo/nlu/aiservices.proto",
-    "ondewo/nlu/ccai_project.proto",
-    "ondewo/nlu/common.proto",
-    "ondewo/nlu/context.proto",
-    "ondewo/nlu/entity_type.proto",
-    "ondewo/nlu/intent.proto",
-    "ondewo/nlu/llm_evaluation.proto",
-    "ondewo/nlu/operation_metadata.proto",
-    "ondewo/nlu/operations.proto",
-    "ondewo/nlu/project_role.proto",
-    "ondewo/nlu/project_statistics.proto",
-    "ondewo/nlu/rag.proto",
-    "ondewo/nlu/server_statistics.proto",
-    "ondewo/nlu/session.proto",
-    "ondewo/nlu/user.proto",
-    "ondewo/nlu/utility.proto",
-    "ondewo/nlu/webhook.proto",
-    "ondewo/s2t/speech-to-text.proto",
-    "ondewo/t2s/text-to-speech.proto",
+#include "proto_file_names.inc"
 };
 
 // The product's own service plus the 16 NLU services and the S2T / T2S services it re-exports.
