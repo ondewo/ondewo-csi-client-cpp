@@ -237,6 +237,46 @@ class Conversations final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>> PrepareAsyncSetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>>(PrepareAsyncSetCallMediaControlRaw(context, request, cq));
     }
+    // <p>Report one DTMF key the caller pressed on the current call.</p>
+    //
+    // <p>Sent by ondewo-sip only, one request per key in the order received, authenticated with its in-container
+    // token (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused
+    // with <code>UNAUTHENTICATED</code>.</p>
+    //
+    // <p>The server turns keys into caller input: a key pressed while the bot speaks is a barge-in, a key of a
+    // declared menu commits a turn at once, and a key string is collected until its terminator, its maximum length
+    // or its inter-digit timeout. A key of another call, a repeated or older sequence number, or a key while the
+    // server takes no keys is answered <code>accepted=false</code> with a reason token and changes nothing. Neither
+    // side ever logs the digit in clear.</p>
+    virtual ::grpc::Status SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::ondewo::csi::CallerDtmfResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::CallerDtmfResponse>> AsyncSetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::CallerDtmfResponse>>(AsyncSetCallerDtmfRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::CallerDtmfResponse>> PrepareAsyncSetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::CallerDtmfResponse>>(PrepareAsyncSetCallerDtmfRaw(context, request, cq));
+    }
+    // <p>Deliver the outcome of a warm transfer that did NOT hand the caller over, so the bot can tell the
+    // caller.</p>
+    //
+    // <p>Sent by ondewo-sip only, authenticated with its in-container token (the
+    // <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused with
+    // <code>UNAUTHENTICATED</code>. ondewo-sip sends it whenever a notice is attached to the release of the
+    // participant hold, after the level push of <code>SetCallMediaControl</code> or on its own when the level did not
+    // change, and re-sends a notice it holds as pending (resync) by this RPC only, never inside a level. It clears
+    // its pending notice on <code>QUEUED</code> or <code>DUPLICATE</code>.</p>
+    //
+    // <p>A queued notice is never dropped by the server, except by <code>CALL_ENDED</code>: there is no caller left
+    // to tell. It is spoken once the bot is unmuted, its listening is not paused and no utterance is in flight. See
+    // <code>WarmTransferOutcomeNotice</code> for how. This RPC has no generation, never changes the control status of
+    // <code>GetControlStream</code> / <code>SetControlStatus</code> and is never announced on the control stream. A
+    // server built against a CSI API before 5.9.0 answers <code>UNIMPLEMENTED</code>.</p>
+    virtual ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>> AsyncDeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>>(AsyncDeliverWarmTransferOutcomeNoticeRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>> PrepareAsyncDeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>>(PrepareAsyncDeliverWarmTransferOutcomeNoticeRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -369,6 +409,36 @@ class Conversations final {
       // <code>ControlStreamResponse</code> with <code>media_control</code> set.</p>
       virtual void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // <p>Report one DTMF key the caller pressed on the current call.</p>
+      //
+      // <p>Sent by ondewo-sip only, one request per key in the order received, authenticated with its in-container
+      // token (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused
+      // with <code>UNAUTHENTICATED</code>.</p>
+      //
+      // <p>The server turns keys into caller input: a key pressed while the bot speaks is a barge-in, a key of a
+      // declared menu commits a turn at once, and a key string is collected until its terminator, its maximum length
+      // or its inter-digit timeout. A key of another call, a repeated or older sequence number, or a key while the
+      // server takes no keys is answered <code>accepted=false</code> with a reason token and changes nothing. Neither
+      // side ever logs the digit in clear.</p>
+      virtual void SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // <p>Deliver the outcome of a warm transfer that did NOT hand the caller over, so the bot can tell the
+      // caller.</p>
+      //
+      // <p>Sent by ondewo-sip only, authenticated with its in-container token (the
+      // <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused with
+      // <code>UNAUTHENTICATED</code>. ondewo-sip sends it whenever a notice is attached to the release of the
+      // participant hold, after the level push of <code>SetCallMediaControl</code> or on its own when the level did not
+      // change, and re-sends a notice it holds as pending (resync) by this RPC only, never inside a level. It clears
+      // its pending notice on <code>QUEUED</code> or <code>DUPLICATE</code>.</p>
+      //
+      // <p>A queued notice is never dropped by the server, except by <code>CALL_ENDED</code>: there is no caller left
+      // to tell. It is spoken once the bot is unmuted, its listening is not paused and no utterance is in flight. See
+      // <code>WarmTransferOutcomeNotice</code> for how. This RPC has no generation, never changes the control status of
+      // <code>GetControlStream</code> / <code>SetControlStatus</code> and is never announced on the control stream. A
+      // server built against a CSI API before 5.9.0 answers <code>UNIMPLEMENTED</code>.</p>
+      virtual void DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -396,6 +466,10 @@ class Conversations final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetControlStatusResponse>* PrepareAsyncSetControlStatusRaw(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>* AsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::SetCallMediaControlResponse>* PrepareAsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::CallerDtmfResponse>* AsyncSetCallerDtmfRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::CallerDtmfResponse>* PrepareAsyncSetCallerDtmfRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* AsyncDeliverWarmTransferOutcomeNoticeRaw(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* PrepareAsyncDeliverWarmTransferOutcomeNoticeRaw(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -474,6 +548,20 @@ class Conversations final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>> PrepareAsyncSetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>>(PrepareAsyncSetCallMediaControlRaw(context, request, cq));
     }
+    ::grpc::Status SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::ondewo::csi::CallerDtmfResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>> AsyncSetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>>(AsyncSetCallerDtmfRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>> PrepareAsyncSetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>>(PrepareAsyncSetCallerDtmfRaw(context, request, cq));
+    }
+    ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>> AsyncDeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>>(AsyncDeliverWarmTransferOutcomeNoticeRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>> PrepareAsyncDeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>>(PrepareAsyncDeliverWarmTransferOutcomeNoticeRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -495,6 +583,10 @@ class Conversations final {
       void SetControlStatus(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest* request, ::ondewo::csi::SetControlStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, std::function<void(::grpc::Status)>) override;
       void SetCallMediaControl(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response, std::function<void(::grpc::Status)>) override;
+      void DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -528,6 +620,10 @@ class Conversations final {
     ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetControlStatusResponse>* PrepareAsyncSetControlStatusRaw(::grpc::ClientContext* context, const ::ondewo::csi::SetControlStatusRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>* AsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::ondewo::csi::SetCallMediaControlResponse>* PrepareAsyncSetCallMediaControlRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallMediaControlLevel& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>* AsyncSetCallerDtmfRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>* PrepareAsyncSetCallerDtmfRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* AsyncDeliverWarmTransferOutcomeNoticeRaw(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* PrepareAsyncDeliverWarmTransferOutcomeNoticeRaw(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_CreateS2sPipeline_;
     const ::grpc::internal::RpcMethod rpcmethod_GetS2sPipeline_;
     const ::grpc::internal::RpcMethod rpcmethod_UpdateS2sPipeline_;
@@ -538,6 +634,8 @@ class Conversations final {
     const ::grpc::internal::RpcMethod rpcmethod_GetControlStream_;
     const ::grpc::internal::RpcMethod rpcmethod_SetControlStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_SetCallMediaControl_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetCallerDtmf_;
+    const ::grpc::internal::RpcMethod rpcmethod_DeliverWarmTransferOutcomeNotice_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -666,6 +764,34 @@ class Conversations final {
     // (the barge-in slot). A level change is announced on the control stream as a
     // <code>ControlStreamResponse</code> with <code>media_control</code> set.</p>
     virtual ::grpc::Status SetCallMediaControl(::grpc::ServerContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response);
+    // <p>Report one DTMF key the caller pressed on the current call.</p>
+    //
+    // <p>Sent by ondewo-sip only, one request per key in the order received, authenticated with its in-container
+    // token (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused
+    // with <code>UNAUTHENTICATED</code>.</p>
+    //
+    // <p>The server turns keys into caller input: a key pressed while the bot speaks is a barge-in, a key of a
+    // declared menu commits a turn at once, and a key string is collected until its terminator, its maximum length
+    // or its inter-digit timeout. A key of another call, a repeated or older sequence number, or a key while the
+    // server takes no keys is answered <code>accepted=false</code> with a reason token and changes nothing. Neither
+    // side ever logs the digit in clear.</p>
+    virtual ::grpc::Status SetCallerDtmf(::grpc::ServerContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response);
+    // <p>Deliver the outcome of a warm transfer that did NOT hand the caller over, so the bot can tell the
+    // caller.</p>
+    //
+    // <p>Sent by ondewo-sip only, authenticated with its in-container token (the
+    // <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused with
+    // <code>UNAUTHENTICATED</code>. ondewo-sip sends it whenever a notice is attached to the release of the
+    // participant hold, after the level push of <code>SetCallMediaControl</code> or on its own when the level did not
+    // change, and re-sends a notice it holds as pending (resync) by this RPC only, never inside a level. It clears
+    // its pending notice on <code>QUEUED</code> or <code>DUPLICATE</code>.</p>
+    //
+    // <p>A queued notice is never dropped by the server, except by <code>CALL_ENDED</code>: there is no caller left
+    // to tell. It is spoken once the bot is unmuted, its listening is not paused and no utterance is in flight. See
+    // <code>WarmTransferOutcomeNotice</code> for how. This RPC has no generation, never changes the control status of
+    // <code>GetControlStream</code> / <code>SetControlStatus</code> and is never announced on the control stream. A
+    // server built against a CSI API before 5.9.0 answers <code>UNIMPLEMENTED</code>.</p>
+    virtual ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_CreateS2sPipeline : public BaseClass {
@@ -867,7 +993,47 @@ class Conversations final {
       ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_CreateS2sPipeline<WithAsyncMethod_GetS2sPipeline<WithAsyncMethod_UpdateS2sPipeline<WithAsyncMethod_DeleteS2sPipeline<WithAsyncMethod_ListS2sPipelines<WithAsyncMethod_S2sStream<WithAsyncMethod_CheckUpstreamHealth<WithAsyncMethod_GetControlStream<WithAsyncMethod_SetControlStatus<WithAsyncMethod_SetCallMediaControl<Service > > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SetCallerDtmf : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetCallerDtmf() {
+      ::grpc::Service::MarkMethodAsync(10);
+    }
+    ~WithAsyncMethod_SetCallerDtmf() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallerDtmf(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallerDtmfRequest* /*request*/, ::ondewo::csi::CallerDtmfResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetCallerDtmf(::grpc::ServerContext* context, ::ondewo::csi::CallerDtmfRequest* request, ::grpc::ServerAsyncResponseWriter< ::ondewo::csi::CallerDtmfResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_DeliverWarmTransferOutcomeNotice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_DeliverWarmTransferOutcomeNotice() {
+      ::grpc::Service::MarkMethodAsync(11);
+    }
+    ~WithAsyncMethod_DeliverWarmTransferOutcomeNotice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* /*context*/, const ::ondewo::csi::WarmTransferOutcomeNotice* /*request*/, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDeliverWarmTransferOutcomeNotice(::grpc::ServerContext* context, ::ondewo::csi::WarmTransferOutcomeNotice* request, ::grpc::ServerAsyncResponseWriter< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_CreateS2sPipeline<WithAsyncMethod_GetS2sPipeline<WithAsyncMethod_UpdateS2sPipeline<WithAsyncMethod_DeleteS2sPipeline<WithAsyncMethod_ListS2sPipelines<WithAsyncMethod_S2sStream<WithAsyncMethod_CheckUpstreamHealth<WithAsyncMethod_GetControlStream<WithAsyncMethod_SetControlStatus<WithAsyncMethod_SetCallMediaControl<WithAsyncMethod_SetCallerDtmf<WithAsyncMethod_DeliverWarmTransferOutcomeNotice<Service > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_CreateS2sPipeline : public BaseClass {
    private:
@@ -1129,7 +1295,61 @@ class Conversations final {
     virtual ::grpc::ServerUnaryReactor* SetCallMediaControl(
       ::grpc::CallbackServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_CreateS2sPipeline<WithCallbackMethod_GetS2sPipeline<WithCallbackMethod_UpdateS2sPipeline<WithCallbackMethod_DeleteS2sPipeline<WithCallbackMethod_ListS2sPipelines<WithCallbackMethod_S2sStream<WithCallbackMethod_CheckUpstreamHealth<WithCallbackMethod_GetControlStream<WithCallbackMethod_SetControlStatus<WithCallbackMethod_SetCallMediaControl<Service > > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_SetCallerDtmf : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SetCallerDtmf() {
+      ::grpc::Service::MarkMethodCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response) { return this->SetCallerDtmf(context, request, response); }));}
+    void SetMessageAllocatorFor_SetCallerDtmf(
+        ::grpc::MessageAllocator< ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SetCallerDtmf() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallerDtmf(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallerDtmfRequest* /*request*/, ::ondewo::csi::CallerDtmfResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetCallerDtmf(
+      ::grpc::CallbackServerContext* /*context*/, const ::ondewo::csi::CallerDtmfRequest* /*request*/, ::ondewo::csi::CallerDtmfResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_DeliverWarmTransferOutcomeNotice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_DeliverWarmTransferOutcomeNotice() {
+      ::grpc::Service::MarkMethodCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response) { return this->DeliverWarmTransferOutcomeNotice(context, request, response); }));}
+    void SetMessageAllocatorFor_DeliverWarmTransferOutcomeNotice(
+        ::grpc::MessageAllocator< ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_DeliverWarmTransferOutcomeNotice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* /*context*/, const ::ondewo::csi::WarmTransferOutcomeNotice* /*request*/, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* DeliverWarmTransferOutcomeNotice(
+      ::grpc::CallbackServerContext* /*context*/, const ::ondewo::csi::WarmTransferOutcomeNotice* /*request*/, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_CreateS2sPipeline<WithCallbackMethod_GetS2sPipeline<WithCallbackMethod_UpdateS2sPipeline<WithCallbackMethod_DeleteS2sPipeline<WithCallbackMethod_ListS2sPipelines<WithCallbackMethod_S2sStream<WithCallbackMethod_CheckUpstreamHealth<WithCallbackMethod_GetControlStream<WithCallbackMethod_SetControlStatus<WithCallbackMethod_SetCallMediaControl<WithCallbackMethod_SetCallerDtmf<WithCallbackMethod_DeliverWarmTransferOutcomeNotice<Service > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_CreateS2sPipeline : public BaseClass {
@@ -1297,6 +1517,40 @@ class Conversations final {
     }
     // disable synchronous version of this method
     ::grpc::Status SetCallMediaControl(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallMediaControlLevel* /*request*/, ::ondewo::csi::SetCallMediaControlResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetCallerDtmf : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetCallerDtmf() {
+      ::grpc::Service::MarkMethodGeneric(10);
+    }
+    ~WithGenericMethod_SetCallerDtmf() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallerDtmf(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallerDtmfRequest* /*request*/, ::ondewo::csi::CallerDtmfResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_DeliverWarmTransferOutcomeNotice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_DeliverWarmTransferOutcomeNotice() {
+      ::grpc::Service::MarkMethodGeneric(11);
+    }
+    ~WithGenericMethod_DeliverWarmTransferOutcomeNotice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* /*context*/, const ::ondewo::csi::WarmTransferOutcomeNotice* /*request*/, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1499,6 +1753,46 @@ class Conversations final {
     }
     void RequestSetCallMediaControl(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetCallerDtmf : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetCallerDtmf() {
+      ::grpc::Service::MarkMethodRaw(10);
+    }
+    ~WithRawMethod_SetCallerDtmf() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallerDtmf(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallerDtmfRequest* /*request*/, ::ondewo::csi::CallerDtmfResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetCallerDtmf(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_DeliverWarmTransferOutcomeNotice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_DeliverWarmTransferOutcomeNotice() {
+      ::grpc::Service::MarkMethodRaw(11);
+    }
+    ~WithRawMethod_DeliverWarmTransferOutcomeNotice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* /*context*/, const ::ondewo::csi::WarmTransferOutcomeNotice* /*request*/, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDeliverWarmTransferOutcomeNotice(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1723,6 +2017,50 @@ class Conversations final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_SetCallerDtmf : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SetCallerDtmf() {
+      ::grpc::Service::MarkMethodRawCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetCallerDtmf(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SetCallerDtmf() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetCallerDtmf(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallerDtmfRequest* /*request*/, ::ondewo::csi::CallerDtmfResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetCallerDtmf(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_DeliverWarmTransferOutcomeNotice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_DeliverWarmTransferOutcomeNotice() {
+      ::grpc::Service::MarkMethodRawCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DeliverWarmTransferOutcomeNotice(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_DeliverWarmTransferOutcomeNotice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* /*context*/, const ::ondewo::csi::WarmTransferOutcomeNotice* /*request*/, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* DeliverWarmTransferOutcomeNotice(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_CreateS2sPipeline : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -1938,7 +2276,61 @@ class Conversations final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedSetCallMediaControl(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ondewo::csi::CallMediaControlLevel,::ondewo::csi::SetCallMediaControlResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithStreamedUnaryMethod_SetControlStatus<WithStreamedUnaryMethod_SetCallMediaControl<Service > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetCallerDtmf : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetCallerDtmf() {
+      ::grpc::Service::MarkMethodStreamed(10,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse>* streamer) {
+                       return this->StreamedSetCallerDtmf(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SetCallerDtmf() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetCallerDtmf(::grpc::ServerContext* /*context*/, const ::ondewo::csi::CallerDtmfRequest* /*request*/, ::ondewo::csi::CallerDtmfResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetCallerDtmf(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ondewo::csi::CallerDtmfRequest,::ondewo::csi::CallerDtmfResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_DeliverWarmTransferOutcomeNotice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_DeliverWarmTransferOutcomeNotice() {
+      ::grpc::Service::MarkMethodStreamed(11,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* streamer) {
+                       return this->StreamedDeliverWarmTransferOutcomeNotice(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_DeliverWarmTransferOutcomeNotice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* /*context*/, const ::ondewo::csi::WarmTransferOutcomeNotice* /*request*/, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedDeliverWarmTransferOutcomeNotice(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::ondewo::csi::WarmTransferOutcomeNotice,::ondewo::csi::WarmTransferOutcomeNoticeResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithStreamedUnaryMethod_SetControlStatus<WithStreamedUnaryMethod_SetCallMediaControl<WithStreamedUnaryMethod_SetCallerDtmf<WithStreamedUnaryMethod_DeliverWarmTransferOutcomeNotice<Service > > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_GetControlStream : public BaseClass {
    private:
@@ -1967,7 +2359,7 @@ class Conversations final {
     virtual ::grpc::Status StreamedGetControlStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::ondewo::csi::ControlStreamRequest,::ondewo::csi::ControlStreamResponse>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_GetControlStream<Service > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithSplitStreamingMethod_GetControlStream<WithStreamedUnaryMethod_SetControlStatus<WithStreamedUnaryMethod_SetCallMediaControl<Service > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_CreateS2sPipeline<WithStreamedUnaryMethod_GetS2sPipeline<WithStreamedUnaryMethod_UpdateS2sPipeline<WithStreamedUnaryMethod_DeleteS2sPipeline<WithStreamedUnaryMethod_ListS2sPipelines<WithStreamedUnaryMethod_CheckUpstreamHealth<WithSplitStreamingMethod_GetControlStream<WithStreamedUnaryMethod_SetControlStatus<WithStreamedUnaryMethod_SetCallMediaControl<WithStreamedUnaryMethod_SetCallerDtmf<WithStreamedUnaryMethod_DeliverWarmTransferOutcomeNotice<Service > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace csi

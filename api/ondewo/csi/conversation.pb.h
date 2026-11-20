@@ -58,6 +58,12 @@ namespace csi {
 class CallMediaControlLevel;
 struct CallMediaControlLevelDefaultTypeInternal;
 extern CallMediaControlLevelDefaultTypeInternal _CallMediaControlLevel_default_instance_;
+class CallerDtmfRequest;
+struct CallerDtmfRequestDefaultTypeInternal;
+extern CallerDtmfRequestDefaultTypeInternal _CallerDtmfRequest_default_instance_;
+class CallerDtmfResponse;
+struct CallerDtmfResponseDefaultTypeInternal;
+extern CallerDtmfResponseDefaultTypeInternal _CallerDtmfResponse_default_instance_;
 class CheckUpstreamHealthResponse;
 struct CheckUpstreamHealthResponseDefaultTypeInternal;
 extern CheckUpstreamHealthResponseDefaultTypeInternal _CheckUpstreamHealthResponse_default_instance_;
@@ -82,6 +88,9 @@ extern ListS2sPipelinesRequestDefaultTypeInternal _ListS2sPipelinesRequest_defau
 class ListS2sPipelinesResponse;
 struct ListS2sPipelinesResponseDefaultTypeInternal;
 extern ListS2sPipelinesResponseDefaultTypeInternal _ListS2sPipelinesResponse_default_instance_;
+class PlaybackCut;
+struct PlaybackCutDefaultTypeInternal;
+extern PlaybackCutDefaultTypeInternal _PlaybackCut_default_instance_;
 class S2sPipeline;
 struct S2sPipelineDefaultTypeInternal;
 extern S2sPipelineDefaultTypeInternal _S2sPipeline_default_instance_;
@@ -106,10 +115,18 @@ extern SetControlStatusResponseDefaultTypeInternal _SetControlStatusResponse_def
 class SipTrigger;
 struct SipTriggerDefaultTypeInternal;
 extern SipTriggerDefaultTypeInternal _SipTrigger_default_instance_;
+class WarmTransferOutcomeNotice;
+struct WarmTransferOutcomeNoticeDefaultTypeInternal;
+extern WarmTransferOutcomeNoticeDefaultTypeInternal _WarmTransferOutcomeNotice_default_instance_;
+class WarmTransferOutcomeNoticeResponse;
+struct WarmTransferOutcomeNoticeResponseDefaultTypeInternal;
+extern WarmTransferOutcomeNoticeResponseDefaultTypeInternal _WarmTransferOutcomeNoticeResponse_default_instance_;
 }  // namespace csi
 }  // namespace ondewo
 PROTOBUF_NAMESPACE_OPEN
 template<> ::ondewo::csi::CallMediaControlLevel* Arena::CreateMaybeMessage<::ondewo::csi::CallMediaControlLevel>(Arena*);
+template<> ::ondewo::csi::CallerDtmfRequest* Arena::CreateMaybeMessage<::ondewo::csi::CallerDtmfRequest>(Arena*);
+template<> ::ondewo::csi::CallerDtmfResponse* Arena::CreateMaybeMessage<::ondewo::csi::CallerDtmfResponse>(Arena*);
 template<> ::ondewo::csi::CheckUpstreamHealthResponse* Arena::CreateMaybeMessage<::ondewo::csi::CheckUpstreamHealthResponse>(Arena*);
 template<> ::ondewo::csi::Condition* Arena::CreateMaybeMessage<::ondewo::csi::Condition>(Arena*);
 template<> ::ondewo::csi::ControlMessage* Arena::CreateMaybeMessage<::ondewo::csi::ControlMessage>(Arena*);
@@ -118,6 +135,7 @@ template<> ::ondewo::csi::ControlStreamRequest* Arena::CreateMaybeMessage<::onde
 template<> ::ondewo::csi::ControlStreamResponse* Arena::CreateMaybeMessage<::ondewo::csi::ControlStreamResponse>(Arena*);
 template<> ::ondewo::csi::ListS2sPipelinesRequest* Arena::CreateMaybeMessage<::ondewo::csi::ListS2sPipelinesRequest>(Arena*);
 template<> ::ondewo::csi::ListS2sPipelinesResponse* Arena::CreateMaybeMessage<::ondewo::csi::ListS2sPipelinesResponse>(Arena*);
+template<> ::ondewo::csi::PlaybackCut* Arena::CreateMaybeMessage<::ondewo::csi::PlaybackCut>(Arena*);
 template<> ::ondewo::csi::S2sPipeline* Arena::CreateMaybeMessage<::ondewo::csi::S2sPipeline>(Arena*);
 template<> ::ondewo::csi::S2sPipelineId* Arena::CreateMaybeMessage<::ondewo::csi::S2sPipelineId>(Arena*);
 template<> ::ondewo::csi::S2sStreamRequest* Arena::CreateMaybeMessage<::ondewo::csi::S2sStreamRequest>(Arena*);
@@ -126,6 +144,8 @@ template<> ::ondewo::csi::SetCallMediaControlResponse* Arena::CreateMaybeMessage
 template<> ::ondewo::csi::SetControlStatusRequest* Arena::CreateMaybeMessage<::ondewo::csi::SetControlStatusRequest>(Arena*);
 template<> ::ondewo::csi::SetControlStatusResponse* Arena::CreateMaybeMessage<::ondewo::csi::SetControlStatusResponse>(Arena*);
 template<> ::ondewo::csi::SipTrigger* Arena::CreateMaybeMessage<::ondewo::csi::SipTrigger>(Arena*);
+template<> ::ondewo::csi::WarmTransferOutcomeNotice* Arena::CreateMaybeMessage<::ondewo::csi::WarmTransferOutcomeNotice>(Arena*);
+template<> ::ondewo::csi::WarmTransferOutcomeNoticeResponse* Arena::CreateMaybeMessage<::ondewo::csi::WarmTransferOutcomeNoticeResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace ondewo {
 namespace csi {
@@ -171,12 +191,13 @@ enum ControlStatus : int {
   PLAYBACK_RESUMED = 6,
   PLAYBACK_DONE = 7,
   CALL_ENDED = 8,
+  PLAYBACK_CUT = 9,
   ControlStatus_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   ControlStatus_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool ControlStatus_IsValid(int value);
 constexpr ControlStatus ControlStatus_MIN = OK;
-constexpr ControlStatus ControlStatus_MAX = CALL_ENDED;
+constexpr ControlStatus ControlStatus_MAX = PLAYBACK_CUT;
 constexpr int ControlStatus_ARRAYSIZE = ControlStatus_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ControlStatus_descriptor();
@@ -192,6 +213,61 @@ inline bool ControlStatus_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ControlStatus* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ControlStatus>(
     ControlStatus_descriptor(), name, value);
+}
+enum WarmTransferOutcome : int {
+  WARM_TRANSFER_OUTCOME_UNSPECIFIED = 0,
+  WARM_TRANSFER_OUTCOME_DECLINED = 1,
+  WARM_TRANSFER_OUTCOME_UNREACHABLE = 2,
+  WARM_TRANSFER_OUTCOME_DELEGATION_EXPIRED = 3,
+  WarmTransferOutcome_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  WarmTransferOutcome_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool WarmTransferOutcome_IsValid(int value);
+constexpr WarmTransferOutcome WarmTransferOutcome_MIN = WARM_TRANSFER_OUTCOME_UNSPECIFIED;
+constexpr WarmTransferOutcome WarmTransferOutcome_MAX = WARM_TRANSFER_OUTCOME_DELEGATION_EXPIRED;
+constexpr int WarmTransferOutcome_ARRAYSIZE = WarmTransferOutcome_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* WarmTransferOutcome_descriptor();
+template<typename T>
+inline const std::string& WarmTransferOutcome_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, WarmTransferOutcome>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function WarmTransferOutcome_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    WarmTransferOutcome_descriptor(), enum_t_value);
+}
+inline bool WarmTransferOutcome_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, WarmTransferOutcome* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<WarmTransferOutcome>(
+    WarmTransferOutcome_descriptor(), name, value);
+}
+enum WarmTransferOutcomeNoticeStatus : int {
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_UNSPECIFIED = 0,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_QUEUED = 1,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DUPLICATE = 2,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DISABLED = 3,
+  WARM_TRANSFER_OUTCOME_NOTICE_STATUS_INVALID = 4,
+  WarmTransferOutcomeNoticeStatus_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  WarmTransferOutcomeNoticeStatus_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool WarmTransferOutcomeNoticeStatus_IsValid(int value);
+constexpr WarmTransferOutcomeNoticeStatus WarmTransferOutcomeNoticeStatus_MIN = WARM_TRANSFER_OUTCOME_NOTICE_STATUS_UNSPECIFIED;
+constexpr WarmTransferOutcomeNoticeStatus WarmTransferOutcomeNoticeStatus_MAX = WARM_TRANSFER_OUTCOME_NOTICE_STATUS_INVALID;
+constexpr int WarmTransferOutcomeNoticeStatus_ARRAYSIZE = WarmTransferOutcomeNoticeStatus_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* WarmTransferOutcomeNoticeStatus_descriptor();
+template<typename T>
+inline const std::string& WarmTransferOutcomeNoticeStatus_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, WarmTransferOutcomeNoticeStatus>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function WarmTransferOutcomeNoticeStatus_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    WarmTransferOutcomeNoticeStatus_descriptor(), enum_t_value);
+}
+inline bool WarmTransferOutcomeNoticeStatus_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, WarmTransferOutcomeNoticeStatus* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<WarmTransferOutcomeNoticeStatus>(
+    WarmTransferOutcomeNoticeStatus_descriptor(), name, value);
 }
 enum ControlMessageServiceName : int {
   UNKNOWNNAME = 0,
@@ -1285,6 +1361,7 @@ class S2sStreamResponse final :
     kChunkIndexFieldNumber = 5,
     kLastChunkFieldNumber = 6,
     kTurnEpochFieldNumber = 7,
+    kResponseSequenceFieldNumber = 8,
     kDetectIntentResponseFieldNumber = 1,
     kSynthesizeResponseFieldNumber = 2,
     kSipTriggerFieldNumber = 3,
@@ -1328,6 +1405,15 @@ class S2sStreamResponse final :
   private:
   uint64_t _internal_turn_epoch() const;
   void _internal_set_turn_epoch(uint64_t value);
+  public:
+
+  // uint64 response_sequence = 8;
+  void clear_response_sequence();
+  uint64_t response_sequence() const;
+  void set_response_sequence(uint64_t value);
+  private:
+  uint64_t _internal_response_sequence() const;
+  void _internal_set_response_sequence(uint64_t value);
   public:
 
   // .ondewo.nlu.DetectIntentResponse detect_intent_response = 1;
@@ -1404,6 +1490,7 @@ class S2sStreamResponse final :
     int32_t chunk_index_;
     bool last_chunk_;
     uint64_t turn_epoch_;
+    uint64_t response_sequence_;
     union ResponseUnion {
       constexpr ResponseUnion() : _constinit_{} {}
         ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized _constinit_;
@@ -2068,6 +2155,7 @@ class ControlStreamResponse final :
   enum : int {
     kMediaControlFieldNumber = 3,
     kEpochFieldNumber = 2,
+    kPlaybackCutRequestIdFieldNumber = 4,
     kControlStatusFieldNumber = 1,
   };
   // .ondewo.csi.CallMediaControlLevel media_control = 3;
@@ -2097,6 +2185,15 @@ class ControlStreamResponse final :
   void _internal_set_epoch(uint64_t value);
   public:
 
+  // uint64 playback_cut_request_id = 4;
+  void clear_playback_cut_request_id();
+  uint64_t playback_cut_request_id() const;
+  void set_playback_cut_request_id(uint64_t value);
+  private:
+  uint64_t _internal_playback_cut_request_id() const;
+  void _internal_set_playback_cut_request_id(uint64_t value);
+  public:
+
   // .ondewo.csi.ControlStatus control_status = 1;
   void clear_control_status();
   ::ondewo::csi::ControlStatus control_status() const;
@@ -2116,6 +2213,7 @@ class ControlStreamResponse final :
   struct Impl_ {
     ::ondewo::csi::CallMediaControlLevel* media_control_;
     uint64_t epoch_;
+    uint64_t playback_cut_request_id_;
     int control_status_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -2245,8 +2343,52 @@ class SetControlStatusRequest final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kUtteranceIdFieldNumber = 3,
+    kPlaybackCutFieldNumber = 2,
+    kResponseSequenceFieldNumber = 4,
     kControlStatusFieldNumber = 1,
   };
+  // string utterance_id = 3;
+  void clear_utterance_id();
+  const std::string& utterance_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_utterance_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_utterance_id();
+  PROTOBUF_NODISCARD std::string* release_utterance_id();
+  void set_allocated_utterance_id(std::string* utterance_id);
+  private:
+  const std::string& _internal_utterance_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_utterance_id(const std::string& value);
+  std::string* _internal_mutable_utterance_id();
+  public:
+
+  // .ondewo.csi.PlaybackCut playback_cut = 2;
+  bool has_playback_cut() const;
+  private:
+  bool _internal_has_playback_cut() const;
+  public:
+  void clear_playback_cut();
+  const ::ondewo::csi::PlaybackCut& playback_cut() const;
+  PROTOBUF_NODISCARD ::ondewo::csi::PlaybackCut* release_playback_cut();
+  ::ondewo::csi::PlaybackCut* mutable_playback_cut();
+  void set_allocated_playback_cut(::ondewo::csi::PlaybackCut* playback_cut);
+  private:
+  const ::ondewo::csi::PlaybackCut& _internal_playback_cut() const;
+  ::ondewo::csi::PlaybackCut* _internal_mutable_playback_cut();
+  public:
+  void unsafe_arena_set_allocated_playback_cut(
+      ::ondewo::csi::PlaybackCut* playback_cut);
+  ::ondewo::csi::PlaybackCut* unsafe_arena_release_playback_cut();
+
+  // uint64 response_sequence = 4;
+  void clear_response_sequence();
+  uint64_t response_sequence() const;
+  void set_response_sequence(uint64_t value);
+  private:
+  uint64_t _internal_response_sequence() const;
+  void _internal_set_response_sequence(uint64_t value);
+  public:
+
   // .ondewo.csi.ControlStatus control_status = 1;
   void clear_control_status();
   ::ondewo::csi::ControlStatus control_status() const;
@@ -2264,7 +2406,262 @@ class SetControlStatusRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr utterance_id_;
+    ::ondewo::csi::PlaybackCut* playback_cut_;
+    uint64_t response_sequence_;
     int control_status_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ondewo_2fcsi_2fconversation_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PlaybackCut final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.PlaybackCut) */ {
+ public:
+  inline PlaybackCut() : PlaybackCut(nullptr) {}
+  ~PlaybackCut() override;
+  explicit PROTOBUF_CONSTEXPR PlaybackCut(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PlaybackCut(const PlaybackCut& from);
+  PlaybackCut(PlaybackCut&& from) noexcept
+    : PlaybackCut() {
+    *this = ::std::move(from);
+  }
+
+  inline PlaybackCut& operator=(const PlaybackCut& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PlaybackCut& operator=(PlaybackCut&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PlaybackCut& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PlaybackCut* internal_default_instance() {
+    return reinterpret_cast<const PlaybackCut*>(
+               &_PlaybackCut_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(PlaybackCut& a, PlaybackCut& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PlaybackCut* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PlaybackCut* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PlaybackCut* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PlaybackCut>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PlaybackCut& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PlaybackCut& from) {
+    PlaybackCut::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PlaybackCut* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ondewo.csi.PlaybackCut";
+  }
+  protected:
+  explicit PlaybackCut(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUtteranceIdFieldNumber = 3,
+    kPlaybackCutRequestIdFieldNumber = 1,
+    kBargeInEpochFieldNumber = 2,
+    kResponseSequenceFieldNumber = 5,
+    kWrittenAudioUsFieldNumber = 6,
+    kQueuedAudioUsFieldNumber = 7,
+    kChunkIndexFieldNumber = 4,
+    kQueuedAudioEstimatedFieldNumber = 8,
+    kRemainderHeldFieldNumber = 10,
+    kCutMonotonicNsFieldNumber = 9,
+  };
+  // string utterance_id = 3;
+  void clear_utterance_id();
+  const std::string& utterance_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_utterance_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_utterance_id();
+  PROTOBUF_NODISCARD std::string* release_utterance_id();
+  void set_allocated_utterance_id(std::string* utterance_id);
+  private:
+  const std::string& _internal_utterance_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_utterance_id(const std::string& value);
+  std::string* _internal_mutable_utterance_id();
+  public:
+
+  // uint64 playback_cut_request_id = 1;
+  void clear_playback_cut_request_id();
+  uint64_t playback_cut_request_id() const;
+  void set_playback_cut_request_id(uint64_t value);
+  private:
+  uint64_t _internal_playback_cut_request_id() const;
+  void _internal_set_playback_cut_request_id(uint64_t value);
+  public:
+
+  // uint64 barge_in_epoch = 2;
+  void clear_barge_in_epoch();
+  uint64_t barge_in_epoch() const;
+  void set_barge_in_epoch(uint64_t value);
+  private:
+  uint64_t _internal_barge_in_epoch() const;
+  void _internal_set_barge_in_epoch(uint64_t value);
+  public:
+
+  // uint64 response_sequence = 5;
+  void clear_response_sequence();
+  uint64_t response_sequence() const;
+  void set_response_sequence(uint64_t value);
+  private:
+  uint64_t _internal_response_sequence() const;
+  void _internal_set_response_sequence(uint64_t value);
+  public:
+
+  // int64 written_audio_us = 6;
+  void clear_written_audio_us();
+  int64_t written_audio_us() const;
+  void set_written_audio_us(int64_t value);
+  private:
+  int64_t _internal_written_audio_us() const;
+  void _internal_set_written_audio_us(int64_t value);
+  public:
+
+  // int64 queued_audio_us = 7;
+  void clear_queued_audio_us();
+  int64_t queued_audio_us() const;
+  void set_queued_audio_us(int64_t value);
+  private:
+  int64_t _internal_queued_audio_us() const;
+  void _internal_set_queued_audio_us(int64_t value);
+  public:
+
+  // int32 chunk_index = 4;
+  void clear_chunk_index();
+  int32_t chunk_index() const;
+  void set_chunk_index(int32_t value);
+  private:
+  int32_t _internal_chunk_index() const;
+  void _internal_set_chunk_index(int32_t value);
+  public:
+
+  // bool queued_audio_estimated = 8;
+  void clear_queued_audio_estimated();
+  bool queued_audio_estimated() const;
+  void set_queued_audio_estimated(bool value);
+  private:
+  bool _internal_queued_audio_estimated() const;
+  void _internal_set_queued_audio_estimated(bool value);
+  public:
+
+  // bool remainder_held = 10;
+  void clear_remainder_held();
+  bool remainder_held() const;
+  void set_remainder_held(bool value);
+  private:
+  bool _internal_remainder_held() const;
+  void _internal_set_remainder_held(bool value);
+  public:
+
+  // int64 cut_monotonic_ns = 9;
+  void clear_cut_monotonic_ns();
+  int64_t cut_monotonic_ns() const;
+  void set_cut_monotonic_ns(int64_t value);
+  private:
+  int64_t _internal_cut_monotonic_ns() const;
+  void _internal_set_cut_monotonic_ns(int64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ondewo.csi.PlaybackCut)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr utterance_id_;
+    uint64_t playback_cut_request_id_;
+    uint64_t barge_in_epoch_;
+    uint64_t response_sequence_;
+    int64_t written_audio_us_;
+    int64_t queued_audio_us_;
+    int32_t chunk_index_;
+    bool queued_audio_estimated_;
+    bool remainder_held_;
+    int64_t cut_monotonic_ns_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -2320,7 +2717,7 @@ class SetControlStatusResponse final :
                &_SetControlStatusResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(SetControlStatusResponse& a, SetControlStatusResponse& b) {
     a.Swap(&b);
@@ -2479,7 +2876,7 @@ class CallMediaControlLevel final :
                &_CallMediaControlLevel_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(CallMediaControlLevel& a, CallMediaControlLevel& b) {
     a.Swap(&b);
@@ -2665,7 +3062,7 @@ class SetCallMediaControlResponse final :
                &_SetCallMediaControlResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(SetCallMediaControlResponse& a, SetCallMediaControlResponse& b) {
     a.Swap(&b);
@@ -2823,6 +3220,748 @@ class SetCallMediaControlResponse final :
 };
 // -------------------------------------------------------------------
 
+class CallerDtmfRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.CallerDtmfRequest) */ {
+ public:
+  inline CallerDtmfRequest() : CallerDtmfRequest(nullptr) {}
+  ~CallerDtmfRequest() override;
+  explicit PROTOBUF_CONSTEXPR CallerDtmfRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CallerDtmfRequest(const CallerDtmfRequest& from);
+  CallerDtmfRequest(CallerDtmfRequest&& from) noexcept
+    : CallerDtmfRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline CallerDtmfRequest& operator=(const CallerDtmfRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CallerDtmfRequest& operator=(CallerDtmfRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CallerDtmfRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CallerDtmfRequest* internal_default_instance() {
+    return reinterpret_cast<const CallerDtmfRequest*>(
+               &_CallerDtmfRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  friend void swap(CallerDtmfRequest& a, CallerDtmfRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CallerDtmfRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CallerDtmfRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CallerDtmfRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CallerDtmfRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CallerDtmfRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CallerDtmfRequest& from) {
+    CallerDtmfRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CallerDtmfRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ondewo.csi.CallerDtmfRequest";
+  }
+  protected:
+  explicit CallerDtmfRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCallIdFieldNumber = 1,
+    kDigitFieldNumber = 3,
+    kSequenceFieldNumber = 2,
+    kReceivedUnixNsFieldNumber = 5,
+    kDurationMsFieldNumber = 4,
+  };
+  // string call_id = 1;
+  void clear_call_id();
+  const std::string& call_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_call_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_call_id();
+  PROTOBUF_NODISCARD std::string* release_call_id();
+  void set_allocated_call_id(std::string* call_id);
+  private:
+  const std::string& _internal_call_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_call_id(const std::string& value);
+  std::string* _internal_mutable_call_id();
+  public:
+
+  // string digit = 3;
+  void clear_digit();
+  const std::string& digit() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_digit(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_digit();
+  PROTOBUF_NODISCARD std::string* release_digit();
+  void set_allocated_digit(std::string* digit);
+  private:
+  const std::string& _internal_digit() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_digit(const std::string& value);
+  std::string* _internal_mutable_digit();
+  public:
+
+  // uint64 sequence = 2;
+  void clear_sequence();
+  uint64_t sequence() const;
+  void set_sequence(uint64_t value);
+  private:
+  uint64_t _internal_sequence() const;
+  void _internal_set_sequence(uint64_t value);
+  public:
+
+  // int64 received_unix_ns = 5;
+  void clear_received_unix_ns();
+  int64_t received_unix_ns() const;
+  void set_received_unix_ns(int64_t value);
+  private:
+  int64_t _internal_received_unix_ns() const;
+  void _internal_set_received_unix_ns(int64_t value);
+  public:
+
+  // uint32 duration_ms = 4;
+  void clear_duration_ms();
+  uint32_t duration_ms() const;
+  void set_duration_ms(uint32_t value);
+  private:
+  uint32_t _internal_duration_ms() const;
+  void _internal_set_duration_ms(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ondewo.csi.CallerDtmfRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr call_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr digit_;
+    uint64_t sequence_;
+    int64_t received_unix_ns_;
+    uint32_t duration_ms_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ondewo_2fcsi_2fconversation_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CallerDtmfResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.CallerDtmfResponse) */ {
+ public:
+  inline CallerDtmfResponse() : CallerDtmfResponse(nullptr) {}
+  ~CallerDtmfResponse() override;
+  explicit PROTOBUF_CONSTEXPR CallerDtmfResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CallerDtmfResponse(const CallerDtmfResponse& from);
+  CallerDtmfResponse(CallerDtmfResponse&& from) noexcept
+    : CallerDtmfResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline CallerDtmfResponse& operator=(const CallerDtmfResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CallerDtmfResponse& operator=(CallerDtmfResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CallerDtmfResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CallerDtmfResponse* internal_default_instance() {
+    return reinterpret_cast<const CallerDtmfResponse*>(
+               &_CallerDtmfResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  friend void swap(CallerDtmfResponse& a, CallerDtmfResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CallerDtmfResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CallerDtmfResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CallerDtmfResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CallerDtmfResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CallerDtmfResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CallerDtmfResponse& from) {
+    CallerDtmfResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CallerDtmfResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ondewo.csi.CallerDtmfResponse";
+  }
+  protected:
+  explicit CallerDtmfResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kReasonFieldNumber = 2,
+    kAcceptedFieldNumber = 1,
+  };
+  // string reason = 2;
+  void clear_reason();
+  const std::string& reason() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_reason(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_reason();
+  PROTOBUF_NODISCARD std::string* release_reason();
+  void set_allocated_reason(std::string* reason);
+  private:
+  const std::string& _internal_reason() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_reason(const std::string& value);
+  std::string* _internal_mutable_reason();
+  public:
+
+  // bool accepted = 1;
+  void clear_accepted();
+  bool accepted() const;
+  void set_accepted(bool value);
+  private:
+  bool _internal_accepted() const;
+  void _internal_set_accepted(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ondewo.csi.CallerDtmfResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr reason_;
+    bool accepted_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ondewo_2fcsi_2fconversation_2eproto;
+};
+// -------------------------------------------------------------------
+
+class WarmTransferOutcomeNotice final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.WarmTransferOutcomeNotice) */ {
+ public:
+  inline WarmTransferOutcomeNotice() : WarmTransferOutcomeNotice(nullptr) {}
+  ~WarmTransferOutcomeNotice() override;
+  explicit PROTOBUF_CONSTEXPR WarmTransferOutcomeNotice(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  WarmTransferOutcomeNotice(const WarmTransferOutcomeNotice& from);
+  WarmTransferOutcomeNotice(WarmTransferOutcomeNotice&& from) noexcept
+    : WarmTransferOutcomeNotice() {
+    *this = ::std::move(from);
+  }
+
+  inline WarmTransferOutcomeNotice& operator=(const WarmTransferOutcomeNotice& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline WarmTransferOutcomeNotice& operator=(WarmTransferOutcomeNotice&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const WarmTransferOutcomeNotice& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const WarmTransferOutcomeNotice* internal_default_instance() {
+    return reinterpret_cast<const WarmTransferOutcomeNotice*>(
+               &_WarmTransferOutcomeNotice_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  friend void swap(WarmTransferOutcomeNotice& a, WarmTransferOutcomeNotice& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(WarmTransferOutcomeNotice* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(WarmTransferOutcomeNotice* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  WarmTransferOutcomeNotice* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<WarmTransferOutcomeNotice>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const WarmTransferOutcomeNotice& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const WarmTransferOutcomeNotice& from) {
+    WarmTransferOutcomeNotice::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(WarmTransferOutcomeNotice* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ondewo.csi.WarmTransferOutcomeNotice";
+  }
+  protected:
+  explicit WarmTransferOutcomeNotice(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kRequestIdFieldNumber = 1,
+    kIntroSessionFieldNumber = 3,
+    kCalleeDisplayNameFieldNumber = 4,
+    kCauseFieldNumber = 5,
+    kFallbackTextFieldNumber = 6,
+    kOutcomeFieldNumber = 2,
+  };
+  // string request_id = 1;
+  void clear_request_id();
+  const std::string& request_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_request_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_request_id();
+  PROTOBUF_NODISCARD std::string* release_request_id();
+  void set_allocated_request_id(std::string* request_id);
+  private:
+  const std::string& _internal_request_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_request_id(const std::string& value);
+  std::string* _internal_mutable_request_id();
+  public:
+
+  // string intro_session = 3;
+  void clear_intro_session();
+  const std::string& intro_session() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_intro_session(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_intro_session();
+  PROTOBUF_NODISCARD std::string* release_intro_session();
+  void set_allocated_intro_session(std::string* intro_session);
+  private:
+  const std::string& _internal_intro_session() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_intro_session(const std::string& value);
+  std::string* _internal_mutable_intro_session();
+  public:
+
+  // string callee_display_name = 4;
+  void clear_callee_display_name();
+  const std::string& callee_display_name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_callee_display_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_callee_display_name();
+  PROTOBUF_NODISCARD std::string* release_callee_display_name();
+  void set_allocated_callee_display_name(std::string* callee_display_name);
+  private:
+  const std::string& _internal_callee_display_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_callee_display_name(const std::string& value);
+  std::string* _internal_mutable_callee_display_name();
+  public:
+
+  // string cause = 5;
+  void clear_cause();
+  const std::string& cause() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_cause(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_cause();
+  PROTOBUF_NODISCARD std::string* release_cause();
+  void set_allocated_cause(std::string* cause);
+  private:
+  const std::string& _internal_cause() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_cause(const std::string& value);
+  std::string* _internal_mutable_cause();
+  public:
+
+  // string fallback_text = 6;
+  void clear_fallback_text();
+  const std::string& fallback_text() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_fallback_text(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_fallback_text();
+  PROTOBUF_NODISCARD std::string* release_fallback_text();
+  void set_allocated_fallback_text(std::string* fallback_text);
+  private:
+  const std::string& _internal_fallback_text() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_fallback_text(const std::string& value);
+  std::string* _internal_mutable_fallback_text();
+  public:
+
+  // .ondewo.csi.WarmTransferOutcome outcome = 2;
+  void clear_outcome();
+  ::ondewo::csi::WarmTransferOutcome outcome() const;
+  void set_outcome(::ondewo::csi::WarmTransferOutcome value);
+  private:
+  ::ondewo::csi::WarmTransferOutcome _internal_outcome() const;
+  void _internal_set_outcome(::ondewo::csi::WarmTransferOutcome value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ondewo.csi.WarmTransferOutcomeNotice)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr request_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr intro_session_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr callee_display_name_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr cause_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr fallback_text_;
+    int outcome_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ondewo_2fcsi_2fconversation_2eproto;
+};
+// -------------------------------------------------------------------
+
+class WarmTransferOutcomeNoticeResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.WarmTransferOutcomeNoticeResponse) */ {
+ public:
+  inline WarmTransferOutcomeNoticeResponse() : WarmTransferOutcomeNoticeResponse(nullptr) {}
+  ~WarmTransferOutcomeNoticeResponse() override;
+  explicit PROTOBUF_CONSTEXPR WarmTransferOutcomeNoticeResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  WarmTransferOutcomeNoticeResponse(const WarmTransferOutcomeNoticeResponse& from);
+  WarmTransferOutcomeNoticeResponse(WarmTransferOutcomeNoticeResponse&& from) noexcept
+    : WarmTransferOutcomeNoticeResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline WarmTransferOutcomeNoticeResponse& operator=(const WarmTransferOutcomeNoticeResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline WarmTransferOutcomeNoticeResponse& operator=(WarmTransferOutcomeNoticeResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const WarmTransferOutcomeNoticeResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const WarmTransferOutcomeNoticeResponse* internal_default_instance() {
+    return reinterpret_cast<const WarmTransferOutcomeNoticeResponse*>(
+               &_WarmTransferOutcomeNoticeResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    18;
+
+  friend void swap(WarmTransferOutcomeNoticeResponse& a, WarmTransferOutcomeNoticeResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(WarmTransferOutcomeNoticeResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(WarmTransferOutcomeNoticeResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  WarmTransferOutcomeNoticeResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<WarmTransferOutcomeNoticeResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const WarmTransferOutcomeNoticeResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const WarmTransferOutcomeNoticeResponse& from) {
+    WarmTransferOutcomeNoticeResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(WarmTransferOutcomeNoticeResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ondewo.csi.WarmTransferOutcomeNoticeResponse";
+  }
+  protected:
+  explicit WarmTransferOutcomeNoticeResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kStatusFieldNumber = 1,
+  };
+  // .ondewo.csi.WarmTransferOutcomeNoticeStatus status = 1;
+  void clear_status();
+  ::ondewo::csi::WarmTransferOutcomeNoticeStatus status() const;
+  void set_status(::ondewo::csi::WarmTransferOutcomeNoticeStatus value);
+  private:
+  ::ondewo::csi::WarmTransferOutcomeNoticeStatus _internal_status() const;
+  void _internal_set_status(::ondewo::csi::WarmTransferOutcomeNoticeStatus value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int status_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_ondewo_2fcsi_2fconversation_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Condition final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ondewo.csi.Condition) */ {
  public:
@@ -2871,7 +4010,7 @@ class Condition final :
                &_Condition_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    19;
 
   friend void swap(Condition& a, Condition& b) {
     a.Swap(&b);
@@ -3041,7 +4180,7 @@ class ControlMessageServiceParameters final :
                &_ControlMessageServiceParameters_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    20;
 
   friend void swap(ControlMessageServiceParameters& a, ControlMessageServiceParameters& b) {
     a.Swap(&b);
@@ -3381,7 +4520,7 @@ class ControlMessage final :
                &_ControlMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    21;
 
   friend void swap(ControlMessage& a, ControlMessage& b) {
     a.Swap(&b);
@@ -4417,6 +5556,26 @@ inline void S2sStreamResponse::set_turn_epoch(uint64_t value) {
   // @@protoc_insertion_point(field_set:ondewo.csi.S2sStreamResponse.turn_epoch)
 }
 
+// uint64 response_sequence = 8;
+inline void S2sStreamResponse::clear_response_sequence() {
+  _impl_.response_sequence_ = uint64_t{0u};
+}
+inline uint64_t S2sStreamResponse::_internal_response_sequence() const {
+  return _impl_.response_sequence_;
+}
+inline uint64_t S2sStreamResponse::response_sequence() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.S2sStreamResponse.response_sequence)
+  return _internal_response_sequence();
+}
+inline void S2sStreamResponse::_internal_set_response_sequence(uint64_t value) {
+  
+  _impl_.response_sequence_ = value;
+}
+inline void S2sStreamResponse::set_response_sequence(uint64_t value) {
+  _internal_set_response_sequence(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.S2sStreamResponse.response_sequence)
+}
+
 inline bool S2sStreamResponse::has_response() const {
   return response_case() != RESPONSE_NOT_SET;
 }
@@ -4932,6 +6091,26 @@ inline void ControlStreamResponse::set_allocated_media_control(::ondewo::csi::Ca
   // @@protoc_insertion_point(field_set_allocated:ondewo.csi.ControlStreamResponse.media_control)
 }
 
+// uint64 playback_cut_request_id = 4;
+inline void ControlStreamResponse::clear_playback_cut_request_id() {
+  _impl_.playback_cut_request_id_ = uint64_t{0u};
+}
+inline uint64_t ControlStreamResponse::_internal_playback_cut_request_id() const {
+  return _impl_.playback_cut_request_id_;
+}
+inline uint64_t ControlStreamResponse::playback_cut_request_id() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.ControlStreamResponse.playback_cut_request_id)
+  return _internal_playback_cut_request_id();
+}
+inline void ControlStreamResponse::_internal_set_playback_cut_request_id(uint64_t value) {
+  
+  _impl_.playback_cut_request_id_ = value;
+}
+inline void ControlStreamResponse::set_playback_cut_request_id(uint64_t value) {
+  _internal_set_playback_cut_request_id(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.ControlStreamResponse.playback_cut_request_id)
+}
+
 // -------------------------------------------------------------------
 
 // SetControlStatusRequest
@@ -4954,6 +6133,400 @@ inline void SetControlStatusRequest::_internal_set_control_status(::ondewo::csi:
 inline void SetControlStatusRequest::set_control_status(::ondewo::csi::ControlStatus value) {
   _internal_set_control_status(value);
   // @@protoc_insertion_point(field_set:ondewo.csi.SetControlStatusRequest.control_status)
+}
+
+// .ondewo.csi.PlaybackCut playback_cut = 2;
+inline bool SetControlStatusRequest::_internal_has_playback_cut() const {
+  return this != internal_default_instance() && _impl_.playback_cut_ != nullptr;
+}
+inline bool SetControlStatusRequest::has_playback_cut() const {
+  return _internal_has_playback_cut();
+}
+inline void SetControlStatusRequest::clear_playback_cut() {
+  if (GetArenaForAllocation() == nullptr && _impl_.playback_cut_ != nullptr) {
+    delete _impl_.playback_cut_;
+  }
+  _impl_.playback_cut_ = nullptr;
+}
+inline const ::ondewo::csi::PlaybackCut& SetControlStatusRequest::_internal_playback_cut() const {
+  const ::ondewo::csi::PlaybackCut* p = _impl_.playback_cut_;
+  return p != nullptr ? *p : reinterpret_cast<const ::ondewo::csi::PlaybackCut&>(
+      ::ondewo::csi::_PlaybackCut_default_instance_);
+}
+inline const ::ondewo::csi::PlaybackCut& SetControlStatusRequest::playback_cut() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetControlStatusRequest.playback_cut)
+  return _internal_playback_cut();
+}
+inline void SetControlStatusRequest::unsafe_arena_set_allocated_playback_cut(
+    ::ondewo::csi::PlaybackCut* playback_cut) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.playback_cut_);
+  }
+  _impl_.playback_cut_ = playback_cut;
+  if (playback_cut) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:ondewo.csi.SetControlStatusRequest.playback_cut)
+}
+inline ::ondewo::csi::PlaybackCut* SetControlStatusRequest::release_playback_cut() {
+  
+  ::ondewo::csi::PlaybackCut* temp = _impl_.playback_cut_;
+  _impl_.playback_cut_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::ondewo::csi::PlaybackCut* SetControlStatusRequest::unsafe_arena_release_playback_cut() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.SetControlStatusRequest.playback_cut)
+  
+  ::ondewo::csi::PlaybackCut* temp = _impl_.playback_cut_;
+  _impl_.playback_cut_ = nullptr;
+  return temp;
+}
+inline ::ondewo::csi::PlaybackCut* SetControlStatusRequest::_internal_mutable_playback_cut() {
+  
+  if (_impl_.playback_cut_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ondewo::csi::PlaybackCut>(GetArenaForAllocation());
+    _impl_.playback_cut_ = p;
+  }
+  return _impl_.playback_cut_;
+}
+inline ::ondewo::csi::PlaybackCut* SetControlStatusRequest::mutable_playback_cut() {
+  ::ondewo::csi::PlaybackCut* _msg = _internal_mutable_playback_cut();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.SetControlStatusRequest.playback_cut)
+  return _msg;
+}
+inline void SetControlStatusRequest::set_allocated_playback_cut(::ondewo::csi::PlaybackCut* playback_cut) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.playback_cut_;
+  }
+  if (playback_cut) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(playback_cut);
+    if (message_arena != submessage_arena) {
+      playback_cut = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, playback_cut, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.playback_cut_ = playback_cut;
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.SetControlStatusRequest.playback_cut)
+}
+
+// string utterance_id = 3;
+inline void SetControlStatusRequest::clear_utterance_id() {
+  _impl_.utterance_id_.ClearToEmpty();
+}
+inline const std::string& SetControlStatusRequest::utterance_id() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetControlStatusRequest.utterance_id)
+  return _internal_utterance_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SetControlStatusRequest::set_utterance_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.utterance_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.SetControlStatusRequest.utterance_id)
+}
+inline std::string* SetControlStatusRequest::mutable_utterance_id() {
+  std::string* _s = _internal_mutable_utterance_id();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.SetControlStatusRequest.utterance_id)
+  return _s;
+}
+inline const std::string& SetControlStatusRequest::_internal_utterance_id() const {
+  return _impl_.utterance_id_.Get();
+}
+inline void SetControlStatusRequest::_internal_set_utterance_id(const std::string& value) {
+  
+  _impl_.utterance_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SetControlStatusRequest::_internal_mutable_utterance_id() {
+  
+  return _impl_.utterance_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SetControlStatusRequest::release_utterance_id() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.SetControlStatusRequest.utterance_id)
+  return _impl_.utterance_id_.Release();
+}
+inline void SetControlStatusRequest::set_allocated_utterance_id(std::string* utterance_id) {
+  if (utterance_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.utterance_id_.SetAllocated(utterance_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.utterance_id_.IsDefault()) {
+    _impl_.utterance_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.SetControlStatusRequest.utterance_id)
+}
+
+// uint64 response_sequence = 4;
+inline void SetControlStatusRequest::clear_response_sequence() {
+  _impl_.response_sequence_ = uint64_t{0u};
+}
+inline uint64_t SetControlStatusRequest::_internal_response_sequence() const {
+  return _impl_.response_sequence_;
+}
+inline uint64_t SetControlStatusRequest::response_sequence() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.SetControlStatusRequest.response_sequence)
+  return _internal_response_sequence();
+}
+inline void SetControlStatusRequest::_internal_set_response_sequence(uint64_t value) {
+  
+  _impl_.response_sequence_ = value;
+}
+inline void SetControlStatusRequest::set_response_sequence(uint64_t value) {
+  _internal_set_response_sequence(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.SetControlStatusRequest.response_sequence)
+}
+
+// -------------------------------------------------------------------
+
+// PlaybackCut
+
+// uint64 playback_cut_request_id = 1;
+inline void PlaybackCut::clear_playback_cut_request_id() {
+  _impl_.playback_cut_request_id_ = uint64_t{0u};
+}
+inline uint64_t PlaybackCut::_internal_playback_cut_request_id() const {
+  return _impl_.playback_cut_request_id_;
+}
+inline uint64_t PlaybackCut::playback_cut_request_id() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.playback_cut_request_id)
+  return _internal_playback_cut_request_id();
+}
+inline void PlaybackCut::_internal_set_playback_cut_request_id(uint64_t value) {
+  
+  _impl_.playback_cut_request_id_ = value;
+}
+inline void PlaybackCut::set_playback_cut_request_id(uint64_t value) {
+  _internal_set_playback_cut_request_id(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.playback_cut_request_id)
+}
+
+// uint64 barge_in_epoch = 2;
+inline void PlaybackCut::clear_barge_in_epoch() {
+  _impl_.barge_in_epoch_ = uint64_t{0u};
+}
+inline uint64_t PlaybackCut::_internal_barge_in_epoch() const {
+  return _impl_.barge_in_epoch_;
+}
+inline uint64_t PlaybackCut::barge_in_epoch() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.barge_in_epoch)
+  return _internal_barge_in_epoch();
+}
+inline void PlaybackCut::_internal_set_barge_in_epoch(uint64_t value) {
+  
+  _impl_.barge_in_epoch_ = value;
+}
+inline void PlaybackCut::set_barge_in_epoch(uint64_t value) {
+  _internal_set_barge_in_epoch(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.barge_in_epoch)
+}
+
+// string utterance_id = 3;
+inline void PlaybackCut::clear_utterance_id() {
+  _impl_.utterance_id_.ClearToEmpty();
+}
+inline const std::string& PlaybackCut::utterance_id() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.utterance_id)
+  return _internal_utterance_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void PlaybackCut::set_utterance_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.utterance_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.utterance_id)
+}
+inline std::string* PlaybackCut::mutable_utterance_id() {
+  std::string* _s = _internal_mutable_utterance_id();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.PlaybackCut.utterance_id)
+  return _s;
+}
+inline const std::string& PlaybackCut::_internal_utterance_id() const {
+  return _impl_.utterance_id_.Get();
+}
+inline void PlaybackCut::_internal_set_utterance_id(const std::string& value) {
+  
+  _impl_.utterance_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* PlaybackCut::_internal_mutable_utterance_id() {
+  
+  return _impl_.utterance_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* PlaybackCut::release_utterance_id() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.PlaybackCut.utterance_id)
+  return _impl_.utterance_id_.Release();
+}
+inline void PlaybackCut::set_allocated_utterance_id(std::string* utterance_id) {
+  if (utterance_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.utterance_id_.SetAllocated(utterance_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.utterance_id_.IsDefault()) {
+    _impl_.utterance_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.PlaybackCut.utterance_id)
+}
+
+// int32 chunk_index = 4;
+inline void PlaybackCut::clear_chunk_index() {
+  _impl_.chunk_index_ = 0;
+}
+inline int32_t PlaybackCut::_internal_chunk_index() const {
+  return _impl_.chunk_index_;
+}
+inline int32_t PlaybackCut::chunk_index() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.chunk_index)
+  return _internal_chunk_index();
+}
+inline void PlaybackCut::_internal_set_chunk_index(int32_t value) {
+  
+  _impl_.chunk_index_ = value;
+}
+inline void PlaybackCut::set_chunk_index(int32_t value) {
+  _internal_set_chunk_index(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.chunk_index)
+}
+
+// uint64 response_sequence = 5;
+inline void PlaybackCut::clear_response_sequence() {
+  _impl_.response_sequence_ = uint64_t{0u};
+}
+inline uint64_t PlaybackCut::_internal_response_sequence() const {
+  return _impl_.response_sequence_;
+}
+inline uint64_t PlaybackCut::response_sequence() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.response_sequence)
+  return _internal_response_sequence();
+}
+inline void PlaybackCut::_internal_set_response_sequence(uint64_t value) {
+  
+  _impl_.response_sequence_ = value;
+}
+inline void PlaybackCut::set_response_sequence(uint64_t value) {
+  _internal_set_response_sequence(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.response_sequence)
+}
+
+// int64 written_audio_us = 6;
+inline void PlaybackCut::clear_written_audio_us() {
+  _impl_.written_audio_us_ = int64_t{0};
+}
+inline int64_t PlaybackCut::_internal_written_audio_us() const {
+  return _impl_.written_audio_us_;
+}
+inline int64_t PlaybackCut::written_audio_us() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.written_audio_us)
+  return _internal_written_audio_us();
+}
+inline void PlaybackCut::_internal_set_written_audio_us(int64_t value) {
+  
+  _impl_.written_audio_us_ = value;
+}
+inline void PlaybackCut::set_written_audio_us(int64_t value) {
+  _internal_set_written_audio_us(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.written_audio_us)
+}
+
+// int64 queued_audio_us = 7;
+inline void PlaybackCut::clear_queued_audio_us() {
+  _impl_.queued_audio_us_ = int64_t{0};
+}
+inline int64_t PlaybackCut::_internal_queued_audio_us() const {
+  return _impl_.queued_audio_us_;
+}
+inline int64_t PlaybackCut::queued_audio_us() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.queued_audio_us)
+  return _internal_queued_audio_us();
+}
+inline void PlaybackCut::_internal_set_queued_audio_us(int64_t value) {
+  
+  _impl_.queued_audio_us_ = value;
+}
+inline void PlaybackCut::set_queued_audio_us(int64_t value) {
+  _internal_set_queued_audio_us(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.queued_audio_us)
+}
+
+// bool queued_audio_estimated = 8;
+inline void PlaybackCut::clear_queued_audio_estimated() {
+  _impl_.queued_audio_estimated_ = false;
+}
+inline bool PlaybackCut::_internal_queued_audio_estimated() const {
+  return _impl_.queued_audio_estimated_;
+}
+inline bool PlaybackCut::queued_audio_estimated() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.queued_audio_estimated)
+  return _internal_queued_audio_estimated();
+}
+inline void PlaybackCut::_internal_set_queued_audio_estimated(bool value) {
+  
+  _impl_.queued_audio_estimated_ = value;
+}
+inline void PlaybackCut::set_queued_audio_estimated(bool value) {
+  _internal_set_queued_audio_estimated(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.queued_audio_estimated)
+}
+
+// int64 cut_monotonic_ns = 9;
+inline void PlaybackCut::clear_cut_monotonic_ns() {
+  _impl_.cut_monotonic_ns_ = int64_t{0};
+}
+inline int64_t PlaybackCut::_internal_cut_monotonic_ns() const {
+  return _impl_.cut_monotonic_ns_;
+}
+inline int64_t PlaybackCut::cut_monotonic_ns() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.cut_monotonic_ns)
+  return _internal_cut_monotonic_ns();
+}
+inline void PlaybackCut::_internal_set_cut_monotonic_ns(int64_t value) {
+  
+  _impl_.cut_monotonic_ns_ = value;
+}
+inline void PlaybackCut::set_cut_monotonic_ns(int64_t value) {
+  _internal_set_cut_monotonic_ns(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.cut_monotonic_ns)
+}
+
+// bool remainder_held = 10;
+inline void PlaybackCut::clear_remainder_held() {
+  _impl_.remainder_held_ = false;
+}
+inline bool PlaybackCut::_internal_remainder_held() const {
+  return _impl_.remainder_held_;
+}
+inline bool PlaybackCut::remainder_held() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.PlaybackCut.remainder_held)
+  return _internal_remainder_held();
+}
+inline void PlaybackCut::_internal_set_remainder_held(bool value) {
+  
+  _impl_.remainder_held_ = value;
+}
+inline void PlaybackCut::set_remainder_held(bool value) {
+  _internal_set_remainder_held(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.PlaybackCut.remainder_held)
 }
 
 // -------------------------------------------------------------------
@@ -5316,6 +6889,542 @@ inline void SetCallMediaControlResponse::set_allocated_refusal_reason(std::strin
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:ondewo.csi.SetCallMediaControlResponse.refusal_reason)
+}
+
+// -------------------------------------------------------------------
+
+// CallerDtmfRequest
+
+// string call_id = 1;
+inline void CallerDtmfRequest::clear_call_id() {
+  _impl_.call_id_.ClearToEmpty();
+}
+inline const std::string& CallerDtmfRequest::call_id() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallerDtmfRequest.call_id)
+  return _internal_call_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CallerDtmfRequest::set_call_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.call_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallerDtmfRequest.call_id)
+}
+inline std::string* CallerDtmfRequest::mutable_call_id() {
+  std::string* _s = _internal_mutable_call_id();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.CallerDtmfRequest.call_id)
+  return _s;
+}
+inline const std::string& CallerDtmfRequest::_internal_call_id() const {
+  return _impl_.call_id_.Get();
+}
+inline void CallerDtmfRequest::_internal_set_call_id(const std::string& value) {
+  
+  _impl_.call_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CallerDtmfRequest::_internal_mutable_call_id() {
+  
+  return _impl_.call_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CallerDtmfRequest::release_call_id() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.CallerDtmfRequest.call_id)
+  return _impl_.call_id_.Release();
+}
+inline void CallerDtmfRequest::set_allocated_call_id(std::string* call_id) {
+  if (call_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.call_id_.SetAllocated(call_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.call_id_.IsDefault()) {
+    _impl_.call_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.CallerDtmfRequest.call_id)
+}
+
+// uint64 sequence = 2;
+inline void CallerDtmfRequest::clear_sequence() {
+  _impl_.sequence_ = uint64_t{0u};
+}
+inline uint64_t CallerDtmfRequest::_internal_sequence() const {
+  return _impl_.sequence_;
+}
+inline uint64_t CallerDtmfRequest::sequence() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallerDtmfRequest.sequence)
+  return _internal_sequence();
+}
+inline void CallerDtmfRequest::_internal_set_sequence(uint64_t value) {
+  
+  _impl_.sequence_ = value;
+}
+inline void CallerDtmfRequest::set_sequence(uint64_t value) {
+  _internal_set_sequence(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallerDtmfRequest.sequence)
+}
+
+// string digit = 3;
+inline void CallerDtmfRequest::clear_digit() {
+  _impl_.digit_.ClearToEmpty();
+}
+inline const std::string& CallerDtmfRequest::digit() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallerDtmfRequest.digit)
+  return _internal_digit();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CallerDtmfRequest::set_digit(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.digit_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallerDtmfRequest.digit)
+}
+inline std::string* CallerDtmfRequest::mutable_digit() {
+  std::string* _s = _internal_mutable_digit();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.CallerDtmfRequest.digit)
+  return _s;
+}
+inline const std::string& CallerDtmfRequest::_internal_digit() const {
+  return _impl_.digit_.Get();
+}
+inline void CallerDtmfRequest::_internal_set_digit(const std::string& value) {
+  
+  _impl_.digit_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CallerDtmfRequest::_internal_mutable_digit() {
+  
+  return _impl_.digit_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CallerDtmfRequest::release_digit() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.CallerDtmfRequest.digit)
+  return _impl_.digit_.Release();
+}
+inline void CallerDtmfRequest::set_allocated_digit(std::string* digit) {
+  if (digit != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.digit_.SetAllocated(digit, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.digit_.IsDefault()) {
+    _impl_.digit_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.CallerDtmfRequest.digit)
+}
+
+// uint32 duration_ms = 4;
+inline void CallerDtmfRequest::clear_duration_ms() {
+  _impl_.duration_ms_ = 0u;
+}
+inline uint32_t CallerDtmfRequest::_internal_duration_ms() const {
+  return _impl_.duration_ms_;
+}
+inline uint32_t CallerDtmfRequest::duration_ms() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallerDtmfRequest.duration_ms)
+  return _internal_duration_ms();
+}
+inline void CallerDtmfRequest::_internal_set_duration_ms(uint32_t value) {
+  
+  _impl_.duration_ms_ = value;
+}
+inline void CallerDtmfRequest::set_duration_ms(uint32_t value) {
+  _internal_set_duration_ms(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallerDtmfRequest.duration_ms)
+}
+
+// int64 received_unix_ns = 5;
+inline void CallerDtmfRequest::clear_received_unix_ns() {
+  _impl_.received_unix_ns_ = int64_t{0};
+}
+inline int64_t CallerDtmfRequest::_internal_received_unix_ns() const {
+  return _impl_.received_unix_ns_;
+}
+inline int64_t CallerDtmfRequest::received_unix_ns() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallerDtmfRequest.received_unix_ns)
+  return _internal_received_unix_ns();
+}
+inline void CallerDtmfRequest::_internal_set_received_unix_ns(int64_t value) {
+  
+  _impl_.received_unix_ns_ = value;
+}
+inline void CallerDtmfRequest::set_received_unix_ns(int64_t value) {
+  _internal_set_received_unix_ns(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallerDtmfRequest.received_unix_ns)
+}
+
+// -------------------------------------------------------------------
+
+// CallerDtmfResponse
+
+// bool accepted = 1;
+inline void CallerDtmfResponse::clear_accepted() {
+  _impl_.accepted_ = false;
+}
+inline bool CallerDtmfResponse::_internal_accepted() const {
+  return _impl_.accepted_;
+}
+inline bool CallerDtmfResponse::accepted() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallerDtmfResponse.accepted)
+  return _internal_accepted();
+}
+inline void CallerDtmfResponse::_internal_set_accepted(bool value) {
+  
+  _impl_.accepted_ = value;
+}
+inline void CallerDtmfResponse::set_accepted(bool value) {
+  _internal_set_accepted(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallerDtmfResponse.accepted)
+}
+
+// string reason = 2;
+inline void CallerDtmfResponse::clear_reason() {
+  _impl_.reason_.ClearToEmpty();
+}
+inline const std::string& CallerDtmfResponse::reason() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.CallerDtmfResponse.reason)
+  return _internal_reason();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CallerDtmfResponse::set_reason(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.reason_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.CallerDtmfResponse.reason)
+}
+inline std::string* CallerDtmfResponse::mutable_reason() {
+  std::string* _s = _internal_mutable_reason();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.CallerDtmfResponse.reason)
+  return _s;
+}
+inline const std::string& CallerDtmfResponse::_internal_reason() const {
+  return _impl_.reason_.Get();
+}
+inline void CallerDtmfResponse::_internal_set_reason(const std::string& value) {
+  
+  _impl_.reason_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CallerDtmfResponse::_internal_mutable_reason() {
+  
+  return _impl_.reason_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CallerDtmfResponse::release_reason() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.CallerDtmfResponse.reason)
+  return _impl_.reason_.Release();
+}
+inline void CallerDtmfResponse::set_allocated_reason(std::string* reason) {
+  if (reason != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.reason_.SetAllocated(reason, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.reason_.IsDefault()) {
+    _impl_.reason_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.CallerDtmfResponse.reason)
+}
+
+// -------------------------------------------------------------------
+
+// WarmTransferOutcomeNotice
+
+// string request_id = 1;
+inline void WarmTransferOutcomeNotice::clear_request_id() {
+  _impl_.request_id_.ClearToEmpty();
+}
+inline const std::string& WarmTransferOutcomeNotice::request_id() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.WarmTransferOutcomeNotice.request_id)
+  return _internal_request_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void WarmTransferOutcomeNotice::set_request_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.request_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.WarmTransferOutcomeNotice.request_id)
+}
+inline std::string* WarmTransferOutcomeNotice::mutable_request_id() {
+  std::string* _s = _internal_mutable_request_id();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.WarmTransferOutcomeNotice.request_id)
+  return _s;
+}
+inline const std::string& WarmTransferOutcomeNotice::_internal_request_id() const {
+  return _impl_.request_id_.Get();
+}
+inline void WarmTransferOutcomeNotice::_internal_set_request_id(const std::string& value) {
+  
+  _impl_.request_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::_internal_mutable_request_id() {
+  
+  return _impl_.request_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::release_request_id() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.WarmTransferOutcomeNotice.request_id)
+  return _impl_.request_id_.Release();
+}
+inline void WarmTransferOutcomeNotice::set_allocated_request_id(std::string* request_id) {
+  if (request_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.request_id_.SetAllocated(request_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.request_id_.IsDefault()) {
+    _impl_.request_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.WarmTransferOutcomeNotice.request_id)
+}
+
+// .ondewo.csi.WarmTransferOutcome outcome = 2;
+inline void WarmTransferOutcomeNotice::clear_outcome() {
+  _impl_.outcome_ = 0;
+}
+inline ::ondewo::csi::WarmTransferOutcome WarmTransferOutcomeNotice::_internal_outcome() const {
+  return static_cast< ::ondewo::csi::WarmTransferOutcome >(_impl_.outcome_);
+}
+inline ::ondewo::csi::WarmTransferOutcome WarmTransferOutcomeNotice::outcome() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.WarmTransferOutcomeNotice.outcome)
+  return _internal_outcome();
+}
+inline void WarmTransferOutcomeNotice::_internal_set_outcome(::ondewo::csi::WarmTransferOutcome value) {
+  
+  _impl_.outcome_ = value;
+}
+inline void WarmTransferOutcomeNotice::set_outcome(::ondewo::csi::WarmTransferOutcome value) {
+  _internal_set_outcome(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.WarmTransferOutcomeNotice.outcome)
+}
+
+// string intro_session = 3;
+inline void WarmTransferOutcomeNotice::clear_intro_session() {
+  _impl_.intro_session_.ClearToEmpty();
+}
+inline const std::string& WarmTransferOutcomeNotice::intro_session() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.WarmTransferOutcomeNotice.intro_session)
+  return _internal_intro_session();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void WarmTransferOutcomeNotice::set_intro_session(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.intro_session_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.WarmTransferOutcomeNotice.intro_session)
+}
+inline std::string* WarmTransferOutcomeNotice::mutable_intro_session() {
+  std::string* _s = _internal_mutable_intro_session();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.WarmTransferOutcomeNotice.intro_session)
+  return _s;
+}
+inline const std::string& WarmTransferOutcomeNotice::_internal_intro_session() const {
+  return _impl_.intro_session_.Get();
+}
+inline void WarmTransferOutcomeNotice::_internal_set_intro_session(const std::string& value) {
+  
+  _impl_.intro_session_.Set(value, GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::_internal_mutable_intro_session() {
+  
+  return _impl_.intro_session_.Mutable(GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::release_intro_session() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.WarmTransferOutcomeNotice.intro_session)
+  return _impl_.intro_session_.Release();
+}
+inline void WarmTransferOutcomeNotice::set_allocated_intro_session(std::string* intro_session) {
+  if (intro_session != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.intro_session_.SetAllocated(intro_session, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.intro_session_.IsDefault()) {
+    _impl_.intro_session_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.WarmTransferOutcomeNotice.intro_session)
+}
+
+// string callee_display_name = 4;
+inline void WarmTransferOutcomeNotice::clear_callee_display_name() {
+  _impl_.callee_display_name_.ClearToEmpty();
+}
+inline const std::string& WarmTransferOutcomeNotice::callee_display_name() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.WarmTransferOutcomeNotice.callee_display_name)
+  return _internal_callee_display_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void WarmTransferOutcomeNotice::set_callee_display_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.callee_display_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.WarmTransferOutcomeNotice.callee_display_name)
+}
+inline std::string* WarmTransferOutcomeNotice::mutable_callee_display_name() {
+  std::string* _s = _internal_mutable_callee_display_name();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.WarmTransferOutcomeNotice.callee_display_name)
+  return _s;
+}
+inline const std::string& WarmTransferOutcomeNotice::_internal_callee_display_name() const {
+  return _impl_.callee_display_name_.Get();
+}
+inline void WarmTransferOutcomeNotice::_internal_set_callee_display_name(const std::string& value) {
+  
+  _impl_.callee_display_name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::_internal_mutable_callee_display_name() {
+  
+  return _impl_.callee_display_name_.Mutable(GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::release_callee_display_name() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.WarmTransferOutcomeNotice.callee_display_name)
+  return _impl_.callee_display_name_.Release();
+}
+inline void WarmTransferOutcomeNotice::set_allocated_callee_display_name(std::string* callee_display_name) {
+  if (callee_display_name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.callee_display_name_.SetAllocated(callee_display_name, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.callee_display_name_.IsDefault()) {
+    _impl_.callee_display_name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.WarmTransferOutcomeNotice.callee_display_name)
+}
+
+// string cause = 5;
+inline void WarmTransferOutcomeNotice::clear_cause() {
+  _impl_.cause_.ClearToEmpty();
+}
+inline const std::string& WarmTransferOutcomeNotice::cause() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.WarmTransferOutcomeNotice.cause)
+  return _internal_cause();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void WarmTransferOutcomeNotice::set_cause(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.cause_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.WarmTransferOutcomeNotice.cause)
+}
+inline std::string* WarmTransferOutcomeNotice::mutable_cause() {
+  std::string* _s = _internal_mutable_cause();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.WarmTransferOutcomeNotice.cause)
+  return _s;
+}
+inline const std::string& WarmTransferOutcomeNotice::_internal_cause() const {
+  return _impl_.cause_.Get();
+}
+inline void WarmTransferOutcomeNotice::_internal_set_cause(const std::string& value) {
+  
+  _impl_.cause_.Set(value, GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::_internal_mutable_cause() {
+  
+  return _impl_.cause_.Mutable(GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::release_cause() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.WarmTransferOutcomeNotice.cause)
+  return _impl_.cause_.Release();
+}
+inline void WarmTransferOutcomeNotice::set_allocated_cause(std::string* cause) {
+  if (cause != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.cause_.SetAllocated(cause, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.cause_.IsDefault()) {
+    _impl_.cause_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.WarmTransferOutcomeNotice.cause)
+}
+
+// string fallback_text = 6;
+inline void WarmTransferOutcomeNotice::clear_fallback_text() {
+  _impl_.fallback_text_.ClearToEmpty();
+}
+inline const std::string& WarmTransferOutcomeNotice::fallback_text() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.WarmTransferOutcomeNotice.fallback_text)
+  return _internal_fallback_text();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void WarmTransferOutcomeNotice::set_fallback_text(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.fallback_text_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ondewo.csi.WarmTransferOutcomeNotice.fallback_text)
+}
+inline std::string* WarmTransferOutcomeNotice::mutable_fallback_text() {
+  std::string* _s = _internal_mutable_fallback_text();
+  // @@protoc_insertion_point(field_mutable:ondewo.csi.WarmTransferOutcomeNotice.fallback_text)
+  return _s;
+}
+inline const std::string& WarmTransferOutcomeNotice::_internal_fallback_text() const {
+  return _impl_.fallback_text_.Get();
+}
+inline void WarmTransferOutcomeNotice::_internal_set_fallback_text(const std::string& value) {
+  
+  _impl_.fallback_text_.Set(value, GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::_internal_mutable_fallback_text() {
+  
+  return _impl_.fallback_text_.Mutable(GetArenaForAllocation());
+}
+inline std::string* WarmTransferOutcomeNotice::release_fallback_text() {
+  // @@protoc_insertion_point(field_release:ondewo.csi.WarmTransferOutcomeNotice.fallback_text)
+  return _impl_.fallback_text_.Release();
+}
+inline void WarmTransferOutcomeNotice::set_allocated_fallback_text(std::string* fallback_text) {
+  if (fallback_text != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.fallback_text_.SetAllocated(fallback_text, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.fallback_text_.IsDefault()) {
+    _impl_.fallback_text_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ondewo.csi.WarmTransferOutcomeNotice.fallback_text)
+}
+
+// -------------------------------------------------------------------
+
+// WarmTransferOutcomeNoticeResponse
+
+// .ondewo.csi.WarmTransferOutcomeNoticeStatus status = 1;
+inline void WarmTransferOutcomeNoticeResponse::clear_status() {
+  _impl_.status_ = 0;
+}
+inline ::ondewo::csi::WarmTransferOutcomeNoticeStatus WarmTransferOutcomeNoticeResponse::_internal_status() const {
+  return static_cast< ::ondewo::csi::WarmTransferOutcomeNoticeStatus >(_impl_.status_);
+}
+inline ::ondewo::csi::WarmTransferOutcomeNoticeStatus WarmTransferOutcomeNoticeResponse::status() const {
+  // @@protoc_insertion_point(field_get:ondewo.csi.WarmTransferOutcomeNoticeResponse.status)
+  return _internal_status();
+}
+inline void WarmTransferOutcomeNoticeResponse::_internal_set_status(::ondewo::csi::WarmTransferOutcomeNoticeStatus value) {
+  
+  _impl_.status_ = value;
+}
+inline void WarmTransferOutcomeNoticeResponse::set_status(::ondewo::csi::WarmTransferOutcomeNoticeStatus value) {
+  _internal_set_status(value);
+  // @@protoc_insertion_point(field_set:ondewo.csi.WarmTransferOutcomeNoticeResponse.status)
 }
 
 // -------------------------------------------------------------------
@@ -6246,6 +8355,16 @@ inline void ControlMessage::set_allocated_parameters(::ondewo::csi::ControlMessa
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -6263,6 +8382,16 @@ template <> struct is_proto_enum< ::ondewo::csi::ControlStatus> : ::std::true_ty
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::ondewo::csi::ControlStatus>() {
   return ::ondewo::csi::ControlStatus_descriptor();
+}
+template <> struct is_proto_enum< ::ondewo::csi::WarmTransferOutcome> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::ondewo::csi::WarmTransferOutcome>() {
+  return ::ondewo::csi::WarmTransferOutcome_descriptor();
+}
+template <> struct is_proto_enum< ::ondewo::csi::WarmTransferOutcomeNoticeStatus> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::ondewo::csi::WarmTransferOutcomeNoticeStatus>() {
+  return ::ondewo::csi::WarmTransferOutcomeNoticeStatus_descriptor();
 }
 template <> struct is_proto_enum< ::ondewo::csi::ControlMessageServiceName> : ::std::true_type {};
 template <>

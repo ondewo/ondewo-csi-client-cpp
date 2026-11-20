@@ -99,6 +99,7 @@ PROTOBUF_CONSTEXPR S2sStreamResponse::S2sStreamResponse(
   , /*decltype(_impl_.chunk_index_)*/0
   , /*decltype(_impl_.last_chunk_)*/false
   , /*decltype(_impl_.turn_epoch_)*/uint64_t{0u}
+  , /*decltype(_impl_.response_sequence_)*/uint64_t{0u}
   , /*decltype(_impl_.response_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
   , /*decltype(_impl_._oneof_case_)*/{}} {}
@@ -155,6 +156,7 @@ PROTOBUF_CONSTEXPR ControlStreamResponse::ControlStreamResponse(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.media_control_)*/nullptr
   , /*decltype(_impl_.epoch_)*/uint64_t{0u}
+  , /*decltype(_impl_.playback_cut_request_id_)*/uint64_t{0u}
   , /*decltype(_impl_.control_status_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ControlStreamResponseDefaultTypeInternal {
@@ -168,7 +170,10 @@ struct ControlStreamResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ControlStreamResponseDefaultTypeInternal _ControlStreamResponse_default_instance_;
 PROTOBUF_CONSTEXPR SetControlStatusRequest::SetControlStatusRequest(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.control_status_)*/0
+    /*decltype(_impl_.utterance_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.playback_cut_)*/nullptr
+  , /*decltype(_impl_.response_sequence_)*/uint64_t{0u}
+  , /*decltype(_impl_.control_status_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct SetControlStatusRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SetControlStatusRequestDefaultTypeInternal()
@@ -179,6 +184,28 @@ struct SetControlStatusRequestDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetControlStatusRequestDefaultTypeInternal _SetControlStatusRequest_default_instance_;
+PROTOBUF_CONSTEXPR PlaybackCut::PlaybackCut(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.utterance_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.playback_cut_request_id_)*/uint64_t{0u}
+  , /*decltype(_impl_.barge_in_epoch_)*/uint64_t{0u}
+  , /*decltype(_impl_.response_sequence_)*/uint64_t{0u}
+  , /*decltype(_impl_.written_audio_us_)*/int64_t{0}
+  , /*decltype(_impl_.queued_audio_us_)*/int64_t{0}
+  , /*decltype(_impl_.chunk_index_)*/0
+  , /*decltype(_impl_.queued_audio_estimated_)*/false
+  , /*decltype(_impl_.remainder_held_)*/false
+  , /*decltype(_impl_.cut_monotonic_ns_)*/int64_t{0}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct PlaybackCutDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PlaybackCutDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PlaybackCutDefaultTypeInternal() {}
+  union {
+    PlaybackCut _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlaybackCutDefaultTypeInternal _PlaybackCut_default_instance_;
 PROTOBUF_CONSTEXPR SetControlStatusResponse::SetControlStatusResponse(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.old_control_status_)*/0
@@ -226,6 +253,68 @@ struct SetCallMediaControlResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetCallMediaControlResponseDefaultTypeInternal _SetCallMediaControlResponse_default_instance_;
+PROTOBUF_CONSTEXPR CallerDtmfRequest::CallerDtmfRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.call_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.digit_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.sequence_)*/uint64_t{0u}
+  , /*decltype(_impl_.received_unix_ns_)*/int64_t{0}
+  , /*decltype(_impl_.duration_ms_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct CallerDtmfRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR CallerDtmfRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~CallerDtmfRequestDefaultTypeInternal() {}
+  union {
+    CallerDtmfRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CallerDtmfRequestDefaultTypeInternal _CallerDtmfRequest_default_instance_;
+PROTOBUF_CONSTEXPR CallerDtmfResponse::CallerDtmfResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.reason_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.accepted_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct CallerDtmfResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR CallerDtmfResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~CallerDtmfResponseDefaultTypeInternal() {}
+  union {
+    CallerDtmfResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CallerDtmfResponseDefaultTypeInternal _CallerDtmfResponse_default_instance_;
+PROTOBUF_CONSTEXPR WarmTransferOutcomeNotice::WarmTransferOutcomeNotice(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.request_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.intro_session_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.callee_display_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.cause_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.fallback_text_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.outcome_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct WarmTransferOutcomeNoticeDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR WarmTransferOutcomeNoticeDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~WarmTransferOutcomeNoticeDefaultTypeInternal() {}
+  union {
+    WarmTransferOutcomeNotice _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 WarmTransferOutcomeNoticeDefaultTypeInternal _WarmTransferOutcomeNotice_default_instance_;
+PROTOBUF_CONSTEXPR WarmTransferOutcomeNoticeResponse::WarmTransferOutcomeNoticeResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.status_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct WarmTransferOutcomeNoticeResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR WarmTransferOutcomeNoticeResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~WarmTransferOutcomeNoticeResponseDefaultTypeInternal() {}
+  union {
+    WarmTransferOutcomeNoticeResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 WarmTransferOutcomeNoticeResponseDefaultTypeInternal _WarmTransferOutcomeNoticeResponse_default_instance_;
 PROTOBUF_CONSTEXPR Condition::Condition(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.value_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -279,8 +368,8 @@ struct ControlMessageDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ControlMessageDefaultTypeInternal _ControlMessage_default_instance_;
 }  // namespace csi
 }  // namespace ondewo
-static ::_pb::Metadata file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[17];
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[5];
+static ::_pb::Metadata file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[22];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[7];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_ondewo_2fcsi_2fconversation_2eproto = nullptr;
 
 const uint32_t TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -339,6 +428,7 @@ const uint32_t TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets[] PROTOB
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::S2sStreamResponse, _impl_.chunk_index_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::S2sStreamResponse, _impl_.last_chunk_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::S2sStreamResponse, _impl_.turn_epoch_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::S2sStreamResponse, _impl_.response_sequence_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::S2sStreamResponse, _impl_.response_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SipTrigger, _internal_metadata_),
@@ -372,6 +462,7 @@ const uint32_t TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets[] PROTOB
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::ControlStreamResponse, _impl_.control_status_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::ControlStreamResponse, _impl_.epoch_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::ControlStreamResponse, _impl_.media_control_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::ControlStreamResponse, _impl_.playback_cut_request_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -379,6 +470,25 @@ const uint32_t TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets[] PROTOB
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusRequest, _impl_.control_status_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusRequest, _impl_.playback_cut_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusRequest, _impl_.utterance_id_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusRequest, _impl_.response_sequence_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.playback_cut_request_id_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.barge_in_epoch_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.utterance_id_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.chunk_index_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.response_sequence_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.written_audio_us_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.queued_audio_us_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.queued_audio_estimated_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.cut_monotonic_ns_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::PlaybackCut, _impl_.remainder_held_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetControlStatusResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -408,6 +518,44 @@ const uint32_t TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets[] PROTOB
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.stale_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.bot_playback_in_flight_),
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::SetCallMediaControlResponse, _impl_.refusal_reason_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfRequest, _impl_.call_id_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfRequest, _impl_.sequence_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfRequest, _impl_.digit_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfRequest, _impl_.duration_ms_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfRequest, _impl_.received_unix_ns_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfResponse, _impl_.accepted_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::CallerDtmfResponse, _impl_.reason_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNotice, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNotice, _impl_.request_id_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNotice, _impl_.outcome_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNotice, _impl_.intro_session_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNotice, _impl_.callee_display_name_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNotice, _impl_.cause_),
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNotice, _impl_.fallback_text_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNoticeResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::ondewo::csi::WarmTransferOutcomeNoticeResponse, _impl_.status_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ondewo::csi::Condition, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -450,17 +598,22 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 24, -1, -1, sizeof(::ondewo::csi::ListS2sPipelinesResponse)},
   { 31, -1, -1, sizeof(::ondewo::csi::S2sStreamRequest)},
   { 42, -1, -1, sizeof(::ondewo::csi::S2sStreamResponse)},
-  { 56, -1, -1, sizeof(::ondewo::csi::SipTrigger)},
-  { 64, -1, -1, sizeof(::ondewo::csi::CheckUpstreamHealthResponse)},
-  { 73, -1, -1, sizeof(::ondewo::csi::ControlStreamRequest)},
-  { 79, -1, -1, sizeof(::ondewo::csi::ControlStreamResponse)},
-  { 88, -1, -1, sizeof(::ondewo::csi::SetControlStatusRequest)},
-  { 95, -1, -1, sizeof(::ondewo::csi::SetControlStatusResponse)},
-  { 103, -1, -1, sizeof(::ondewo::csi::CallMediaControlLevel)},
-  { 113, -1, -1, sizeof(::ondewo::csi::SetCallMediaControlResponse)},
-  { 124, -1, -1, sizeof(::ondewo::csi::Condition)},
-  { 132, -1, -1, sizeof(::ondewo::csi::ControlMessageServiceParameters)},
-  { 149, -1, -1, sizeof(::ondewo::csi::ControlMessage)},
+  { 57, -1, -1, sizeof(::ondewo::csi::SipTrigger)},
+  { 65, -1, -1, sizeof(::ondewo::csi::CheckUpstreamHealthResponse)},
+  { 74, -1, -1, sizeof(::ondewo::csi::ControlStreamRequest)},
+  { 80, -1, -1, sizeof(::ondewo::csi::ControlStreamResponse)},
+  { 90, -1, -1, sizeof(::ondewo::csi::SetControlStatusRequest)},
+  { 100, -1, -1, sizeof(::ondewo::csi::PlaybackCut)},
+  { 116, -1, -1, sizeof(::ondewo::csi::SetControlStatusResponse)},
+  { 124, -1, -1, sizeof(::ondewo::csi::CallMediaControlLevel)},
+  { 134, -1, -1, sizeof(::ondewo::csi::SetCallMediaControlResponse)},
+  { 145, -1, -1, sizeof(::ondewo::csi::CallerDtmfRequest)},
+  { 156, -1, -1, sizeof(::ondewo::csi::CallerDtmfResponse)},
+  { 164, -1, -1, sizeof(::ondewo::csi::WarmTransferOutcomeNotice)},
+  { 176, -1, -1, sizeof(::ondewo::csi::WarmTransferOutcomeNoticeResponse)},
+  { 183, -1, -1, sizeof(::ondewo::csi::Condition)},
+  { 191, -1, -1, sizeof(::ondewo::csi::ControlMessageServiceParameters)},
+  { 208, -1, -1, sizeof(::ondewo::csi::ControlMessage)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -475,9 +628,14 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::ondewo::csi::_ControlStreamRequest_default_instance_._instance,
   &::ondewo::csi::_ControlStreamResponse_default_instance_._instance,
   &::ondewo::csi::_SetControlStatusRequest_default_instance_._instance,
+  &::ondewo::csi::_PlaybackCut_default_instance_._instance,
   &::ondewo::csi::_SetControlStatusResponse_default_instance_._instance,
   &::ondewo::csi::_CallMediaControlLevel_default_instance_._instance,
   &::ondewo::csi::_SetCallMediaControlResponse_default_instance_._instance,
+  &::ondewo::csi::_CallerDtmfRequest_default_instance_._instance,
+  &::ondewo::csi::_CallerDtmfResponse_default_instance_._instance,
+  &::ondewo::csi::_WarmTransferOutcomeNotice_default_instance_._instance,
+  &::ondewo::csi::_WarmTransferOutcomeNoticeResponse_default_instance_._instance,
   &::ondewo::csi::_Condition_default_instance_._instance,
   &::ondewo::csi::_ControlMessageServiceParameters_default_instance_._instance,
   &::ondewo::csi::_ControlMessage_default_instance_._instance,
@@ -499,7 +657,7 @@ const char descriptor_table_protodef_ondewo_2fcsi_2fconversation_2eproto[] PROTO
   "ndewo.csi.S2sPipeline\"\206\001\n\020S2sStreamReque"
   "st\022\023\n\013pipeline_id\030\001 \001(\t\022\022\n\nsession_id\030\002 "
   "\001(\t\022\r\n\005audio\030\003 \001(\014\022\025\n\rend_of_stream\030\004 \001("
-  "\010\022#\n\033initial_intent_display_name\030\005 \001(\t\"\244"
+  "\010\022#\n\033initial_intent_display_name\030\005 \001(\t\"\277"
   "\002\n\021S2sStreamResponse\022B\n\026detect_intent_re"
   "sponse\030\001 \001(\0132 .ondewo.nlu.DetectIntentRe"
   "sponseH\000\022=\n\023synthesize_response\030\002 \001(\0132\036."
@@ -507,92 +665,132 @@ const char descriptor_table_protodef_ondewo_2fcsi_2fconversation_2eproto[] PROTO
   "rigger\030\003 \001(\0132\026.ondewo.csi.SipTriggerH\000\022\024"
   "\n\014utterance_id\030\004 \001(\t\022\023\n\013chunk_index\030\005 \001("
   "\005\022\022\n\nlast_chunk\030\006 \001(\010\022\022\n\nturn_epoch\030\007 \001("
-  "\004B\n\n\010response\"\362\001\n\nSipTrigger\0223\n\004type\030\001 \001"
-  "(\0162%.ondewo.csi.SipTrigger.SipTriggerTyp"
-  "e\022(\n\007content\030\002 \001(\0132\027.google.protobuf.Str"
-  "uct\"\204\001\n\016SipTriggerType\022\017\n\013UNSPECIFIED\020\000\022"
-  "\n\n\006HANGUP\020\001\022\022\n\016HUMAN_HANDOVER\020\002\022\014\n\010SEND_"
-  "NOW\020\003\022\t\n\005PAUSE\020\004\022\014\n\010TRANSFER\020\005\022\n\n\006INVITE"
-  "\020\006\022\016\n\nPLAY_AUDIO\020\007\"\225\001\n\033CheckUpstreamHeal"
-  "thResponse\022&\n\ns2t_status\030\001 \001(\0132\022.google."
-  "rpc.Status\022&\n\nnlu_status\030\002 \001(\0132\022.google."
-  "rpc.Status\022&\n\nt2s_status\030\003 \001(\0132\022.google."
-  "rpc.Status\"\026\n\024ControlStreamRequest\"\223\001\n\025C"
-  "ontrolStreamResponse\0221\n\016control_status\030\001"
-  " \001(\0162\031.ondewo.csi.ControlStatus\022\r\n\005epoch"
-  "\030\002 \001(\004\0228\n\rmedia_control\030\003 \001(\0132!.ondewo.c"
-  "si.CallMediaControlLevel\"L\n\027SetControlSt"
-  "atusRequest\0221\n\016control_status\030\001 \001(\0162\031.on"
-  "dewo.csi.ControlStatus\"\210\001\n\030SetControlSta"
-  "tusResponse\0225\n\022old_control_status\030\001 \001(\0162"
-  "\031.ondewo.csi.ControlStatus\0225\n\022new_contro"
-  "l_status\030\002 \001(\0162\031.ondewo.csi.ControlStatu"
-  "s\"h\n\025CallMediaControlLevel\022\021\n\tbot_muted\030"
-  "\001 \001(\010\022\030\n\020listening_paused\030\002 \001(\010\022\022\n\ngener"
-  "ation\030\003 \001(\004\022\016\n\006reason\030\004 \001(\t\"\251\001\n\033SetCallM"
-  "ediaControlResponse\0222\n\007applied\030\001 \001(\0132!.o"
-  "ndewo.csi.CallMediaControlLevel\022\017\n\007chang"
-  "ed\030\002 \001(\010\022\r\n\005stale\030\003 \001(\010\022\036\n\026bot_playback_"
-  "in_flight\030\004 \001(\010\022\026\n\016refusal_reason\030\005 \001(\t\""
-  "C\n\tCondition\022\'\n\004type\030\001 \001(\0162\031.ondewo.csi."
-  "ConditionType\022\r\n\005value\030\002 \001(\t\"\373\002\n\037Control"
-  "MessageServiceParameters\022/\n\nt2s_config\030\001"
-  " \001(\0132\031.ondewo.t2s.RequestConfigH\000\0229\n\ns2t"
-  "_config\030\002 \001(\0132#.ondewo.s2t.TranscribeReq"
-  "uestConfigH\000\022\023\n\013transfer_id\030\003 \001(\t\022\021\n\twav"
-  "_files\030\004 \003(\014\022\014\n\004text\030\005 \001(\t\022$\n\007context\030\006 "
-  "\001(\0132\023.ondewo.nlu.Context\022\022\n\nsession_id\030\007"
-  " \001(\t\022\024\n\014context_name\030\010 \001(\t\022.\n\017condition_"
-  "start\030\t \001(\0132\025.ondewo.csi.Condition\022,\n\rco"
-  "ndition_end\030\n \001(\0132\025.ondewo.csi.Condition"
-  "B\010\n\006config\"\302\001\n\016ControlMessage\0226\n\007service"
-  "\030\001 \001(\0162%.ondewo.csi.ControlMessageServic"
-  "eName\0227\n\006method\030\002 \001(\0162\'.ondewo.csi.Contr"
-  "olMessageServiceMethod\022\?\n\nparameters\030\003 \001"
-  "(\0132+.ondewo.csi.ControlMessageServicePar"
-  "ameters*\267\001\n\rControlStatus\022\006\n\002OK\020\000\022\022\n\016EME"
-  "RGENCY_STOP\020\001\022\027\n\023VAD_START_OF_SPEECH\020\002\022\014"
-  "\n\010BARGE_IN\020\003\022\023\n\017RESUME_PLAYBACK\020\004\022\025\n\021DIS"
-  "CARD_REMAINDER\020\005\022\024\n\020PLAYBACK_RESUMED\020\006\022\021"
-  "\n\rPLAYBACK_DONE\020\007\022\016\n\nCALL_ENDED\020\010*\240\001\n\031Co"
-  "ntrolMessageServiceName\022\017\n\013UNKNOWNNAME\020\000"
-  "\022\016\n\nondewo_s2t\020\001\022\016\n\nondewo_t2s\020\002\022\016\n\nonde"
-  "wo_nlu\020\003\022\016\n\nondewo_sip\020\004\022\017\n\013ondewo_vtsi\020"
-  "\005\022\016\n\nondewo_csi\020\006\022\021\n\rondewo_survey\020\007*\205\003\n"
-  "\033ControlMessageServiceMethod\022\021\n\rUNKNOWNM"
-  "ETHOD\020\000\022\021\n\rupdate_config\020\001\022\017\n\013undo_confi"
-  "g\020\002\022\020\n\014reset_config\020\003\022\014\n\010end_call\020\004\022\021\n\rt"
-  "ransfer_call\020\005\022\022\n\016play_wav_files\020\006\022\r\n\tpl"
-  "ay_text\020\007\022\010\n\004mute\020\010\022\013\n\007un_mute\020\t\022\035\n\031stop"
-  "_all_control_messages\020\n\022\017\n\013train_agent\020\013"
-  "\022\026\n\022cancel_train_agent\020\014\022\022\n\016delete_sessi"
-  "on\020\r\022\027\n\023delete_all_contexts\020\016\022\022\n\016create_"
-  "context\020\017\022\022\n\016update_context\020\020\022\022\n\016delete_"
-  "context\020\021\022\021\n\rdetect_intent\020\022*\\\n\rConditio"
-  "nType\022\016\n\nUNKNOWTYPE\020\000\022\r\n\timmediate\020\001\022\014\n\010"
-  "duration\020\002\022\014\n\010datetime\020\003\022\020\n\014interactions"
-  "\020\0042\337\006\n\rConversations\022F\n\021CreateS2sPipelin"
-  "e\022\027.ondewo.csi.S2sPipeline\032\026.google.prot"
-  "obuf.Empty\"\000\022F\n\016GetS2sPipeline\022\031.ondewo."
-  "csi.S2sPipelineId\032\027.ondewo.csi.S2sPipeli"
-  "ne\"\000\022F\n\021UpdateS2sPipeline\022\027.ondewo.csi.S"
-  "2sPipeline\032\026.google.protobuf.Empty\"\000\022H\n\021"
-  "DeleteS2sPipeline\022\031.ondewo.csi.S2sPipeli"
-  "neId\032\026.google.protobuf.Empty\"\000\022_\n\020ListS2"
-  "sPipelines\022#.ondewo.csi.ListS2sPipelines"
-  "Request\032$.ondewo.csi.ListS2sPipelinesRes"
-  "ponse\"\000\022N\n\tS2sStream\022\034.ondewo.csi.S2sStr"
-  "eamRequest\032\035.ondewo.csi.S2sStreamRespons"
-  "e\"\000(\0010\001\022X\n\023CheckUpstreamHealth\022\026.google."
-  "protobuf.Empty\032\'.ondewo.csi.CheckUpstrea"
-  "mHealthResponse\"\000\022[\n\020GetControlStream\022 ."
-  "ondewo.csi.ControlStreamRequest\032!.ondewo"
-  ".csi.ControlStreamResponse\"\0000\001\022_\n\020SetCon"
-  "trolStatus\022#.ondewo.csi.SetControlStatus"
-  "Request\032$.ondewo.csi.SetControlStatusRes"
-  "ponse\"\000\022c\n\023SetCallMediaControl\022!.ondewo."
-  "csi.CallMediaControlLevel\032\'.ondewo.csi.S"
-  "etCallMediaControlResponse\"\000b\006proto3"
+  "\004\022\031\n\021response_sequence\030\010 \001(\004B\n\n\010response"
+  "\"\362\001\n\nSipTrigger\0223\n\004type\030\001 \001(\0162%.ondewo.c"
+  "si.SipTrigger.SipTriggerType\022(\n\007content\030"
+  "\002 \001(\0132\027.google.protobuf.Struct\"\204\001\n\016SipTr"
+  "iggerType\022\017\n\013UNSPECIFIED\020\000\022\n\n\006HANGUP\020\001\022\022"
+  "\n\016HUMAN_HANDOVER\020\002\022\014\n\010SEND_NOW\020\003\022\t\n\005PAUS"
+  "E\020\004\022\014\n\010TRANSFER\020\005\022\n\n\006INVITE\020\006\022\016\n\nPLAY_AU"
+  "DIO\020\007\"\225\001\n\033CheckUpstreamHealthResponse\022&\n"
+  "\ns2t_status\030\001 \001(\0132\022.google.rpc.Status\022&\n"
+  "\nnlu_status\030\002 \001(\0132\022.google.rpc.Status\022&\n"
+  "\nt2s_status\030\003 \001(\0132\022.google.rpc.Status\"\026\n"
+  "\024ControlStreamRequest\"\264\001\n\025ControlStreamR"
+  "esponse\0221\n\016control_status\030\001 \001(\0162\031.ondewo"
+  ".csi.ControlStatus\022\r\n\005epoch\030\002 \001(\004\0228\n\rmed"
+  "ia_control\030\003 \001(\0132!.ondewo.csi.CallMediaC"
+  "ontrolLevel\022\037\n\027playback_cut_request_id\030\004"
+  " \001(\004\"\254\001\n\027SetControlStatusRequest\0221\n\016cont"
+  "rol_status\030\001 \001(\0162\031.ondewo.csi.ControlSta"
+  "tus\022-\n\014playback_cut\030\002 \001(\0132\027.ondewo.csi.P"
+  "laybackCut\022\024\n\014utterance_id\030\003 \001(\t\022\031\n\021resp"
+  "onse_sequence\030\004 \001(\004\"\221\002\n\013PlaybackCut\022\037\n\027p"
+  "layback_cut_request_id\030\001 \001(\004\022\026\n\016barge_in"
+  "_epoch\030\002 \001(\004\022\024\n\014utterance_id\030\003 \001(\t\022\023\n\013ch"
+  "unk_index\030\004 \001(\005\022\031\n\021response_sequence\030\005 \001"
+  "(\004\022\030\n\020written_audio_us\030\006 \001(\003\022\027\n\017queued_a"
+  "udio_us\030\007 \001(\003\022\036\n\026queued_audio_estimated\030"
+  "\010 \001(\010\022\030\n\020cut_monotonic_ns\030\t \001(\003\022\026\n\016remai"
+  "nder_held\030\n \001(\010\"\210\001\n\030SetControlStatusResp"
+  "onse\0225\n\022old_control_status\030\001 \001(\0162\031.ondew"
+  "o.csi.ControlStatus\0225\n\022new_control_statu"
+  "s\030\002 \001(\0162\031.ondewo.csi.ControlStatus\"h\n\025Ca"
+  "llMediaControlLevel\022\021\n\tbot_muted\030\001 \001(\010\022\030"
+  "\n\020listening_paused\030\002 \001(\010\022\022\n\ngeneration\030\003"
+  " \001(\004\022\016\n\006reason\030\004 \001(\t\"\251\001\n\033SetCallMediaCon"
+  "trolResponse\0222\n\007applied\030\001 \001(\0132!.ondewo.c"
+  "si.CallMediaControlLevel\022\017\n\007changed\030\002 \001("
+  "\010\022\r\n\005stale\030\003 \001(\010\022\036\n\026bot_playback_in_flig"
+  "ht\030\004 \001(\010\022\026\n\016refusal_reason\030\005 \001(\t\"t\n\021Call"
+  "erDtmfRequest\022\017\n\007call_id\030\001 \001(\t\022\020\n\010sequen"
+  "ce\030\002 \001(\004\022\r\n\005digit\030\003 \001(\t\022\023\n\013duration_ms\030\004"
+  " \001(\r\022\030\n\020received_unix_ns\030\005 \001(\003\"6\n\022Caller"
+  "DtmfResponse\022\020\n\010accepted\030\001 \001(\010\022\016\n\006reason"
+  "\030\002 \001(\t\"\273\001\n\031WarmTransferOutcomeNotice\022\022\n\n"
+  "request_id\030\001 \001(\t\0220\n\007outcome\030\002 \001(\0162\037.onde"
+  "wo.csi.WarmTransferOutcome\022\025\n\rintro_sess"
+  "ion\030\003 \001(\t\022\033\n\023callee_display_name\030\004 \001(\t\022\r"
+  "\n\005cause\030\005 \001(\t\022\025\n\rfallback_text\030\006 \001(\t\"`\n!"
+  "WarmTransferOutcomeNoticeResponse\022;\n\006sta"
+  "tus\030\001 \001(\0162+.ondewo.csi.WarmTransferOutco"
+  "meNoticeStatus\"C\n\tCondition\022\'\n\004type\030\001 \001("
+  "\0162\031.ondewo.csi.ConditionType\022\r\n\005value\030\002 "
+  "\001(\t\"\373\002\n\037ControlMessageServiceParameters\022"
+  "/\n\nt2s_config\030\001 \001(\0132\031.ondewo.t2s.Request"
+  "ConfigH\000\0229\n\ns2t_config\030\002 \001(\0132#.ondewo.s2"
+  "t.TranscribeRequestConfigH\000\022\023\n\013transfer_"
+  "id\030\003 \001(\t\022\021\n\twav_files\030\004 \003(\014\022\014\n\004text\030\005 \001("
+  "\t\022$\n\007context\030\006 \001(\0132\023.ondewo.nlu.Context\022"
+  "\022\n\nsession_id\030\007 \001(\t\022\024\n\014context_name\030\010 \001("
+  "\t\022.\n\017condition_start\030\t \001(\0132\025.ondewo.csi."
+  "Condition\022,\n\rcondition_end\030\n \001(\0132\025.ondew"
+  "o.csi.ConditionB\010\n\006config\"\302\001\n\016ControlMes"
+  "sage\0226\n\007service\030\001 \001(\0162%.ondewo.csi.Contr"
+  "olMessageServiceName\0227\n\006method\030\002 \001(\0162\'.o"
+  "ndewo.csi.ControlMessageServiceMethod\022\?\n"
+  "\nparameters\030\003 \001(\0132+.ondewo.csi.ControlMe"
+  "ssageServiceParameters*\311\001\n\rControlStatus"
+  "\022\006\n\002OK\020\000\022\022\n\016EMERGENCY_STOP\020\001\022\027\n\023VAD_STAR"
+  "T_OF_SPEECH\020\002\022\014\n\010BARGE_IN\020\003\022\023\n\017RESUME_PL"
+  "AYBACK\020\004\022\025\n\021DISCARD_REMAINDER\020\005\022\024\n\020PLAYB"
+  "ACK_RESUMED\020\006\022\021\n\rPLAYBACK_DONE\020\007\022\016\n\nCALL"
+  "_ENDED\020\010\022\020\n\014PLAYBACK_CUT\020\t*\265\001\n\023WarmTrans"
+  "ferOutcome\022%\n!WARM_TRANSFER_OUTCOME_UNSP"
+  "ECIFIED\020\000\022\"\n\036WARM_TRANSFER_OUTCOME_DECLI"
+  "NED\020\001\022%\n!WARM_TRANSFER_OUTCOME_UNREACHAB"
+  "LE\020\002\022,\n(WARM_TRANSFER_OUTCOME_DELEGATION"
+  "_EXPIRED\020\003*\234\002\n\037WarmTransferOutcomeNotice"
+  "Status\0223\n/WARM_TRANSFER_OUTCOME_NOTICE_S"
+  "TATUS_UNSPECIFIED\020\000\022.\n*WARM_TRANSFER_OUT"
+  "COME_NOTICE_STATUS_QUEUED\020\001\0221\n-WARM_TRAN"
+  "SFER_OUTCOME_NOTICE_STATUS_DUPLICATE\020\002\0220"
+  "\n,WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DI"
+  "SABLED\020\003\022/\n+WARM_TRANSFER_OUTCOME_NOTICE"
+  "_STATUS_INVALID\020\004*\240\001\n\031ControlMessageServ"
+  "iceName\022\017\n\013UNKNOWNNAME\020\000\022\016\n\nondewo_s2t\020\001"
+  "\022\016\n\nondewo_t2s\020\002\022\016\n\nondewo_nlu\020\003\022\016\n\nonde"
+  "wo_sip\020\004\022\017\n\013ondewo_vtsi\020\005\022\016\n\nondewo_csi\020"
+  "\006\022\021\n\rondewo_survey\020\007*\205\003\n\033ControlMessageS"
+  "erviceMethod\022\021\n\rUNKNOWNMETHOD\020\000\022\021\n\rupdat"
+  "e_config\020\001\022\017\n\013undo_config\020\002\022\020\n\014reset_con"
+  "fig\020\003\022\014\n\010end_call\020\004\022\021\n\rtransfer_call\020\005\022\022"
+  "\n\016play_wav_files\020\006\022\r\n\tplay_text\020\007\022\010\n\004mut"
+  "e\020\010\022\013\n\007un_mute\020\t\022\035\n\031stop_all_control_mes"
+  "sages\020\n\022\017\n\013train_agent\020\013\022\026\n\022cancel_train"
+  "_agent\020\014\022\022\n\016delete_session\020\r\022\027\n\023delete_a"
+  "ll_contexts\020\016\022\022\n\016create_context\020\017\022\022\n\016upd"
+  "ate_context\020\020\022\022\n\016delete_context\020\021\022\021\n\rdet"
+  "ect_intent\020\022*\\\n\rConditionType\022\016\n\nUNKNOWT"
+  "YPE\020\000\022\r\n\timmediate\020\001\022\014\n\010duration\020\002\022\014\n\010da"
+  "tetime\020\003\022\020\n\014interactions\020\0042\255\010\n\rConversat"
+  "ions\022F\n\021CreateS2sPipeline\022\027.ondewo.csi.S"
+  "2sPipeline\032\026.google.protobuf.Empty\"\000\022F\n\016"
+  "GetS2sPipeline\022\031.ondewo.csi.S2sPipelineI"
+  "d\032\027.ondewo.csi.S2sPipeline\"\000\022F\n\021UpdateS2"
+  "sPipeline\022\027.ondewo.csi.S2sPipeline\032\026.goo"
+  "gle.protobuf.Empty\"\000\022H\n\021DeleteS2sPipelin"
+  "e\022\031.ondewo.csi.S2sPipelineId\032\026.google.pr"
+  "otobuf.Empty\"\000\022_\n\020ListS2sPipelines\022#.ond"
+  "ewo.csi.ListS2sPipelinesRequest\032$.ondewo"
+  ".csi.ListS2sPipelinesResponse\"\000\022N\n\tS2sSt"
+  "ream\022\034.ondewo.csi.S2sStreamRequest\032\035.ond"
+  "ewo.csi.S2sStreamResponse\"\000(\0010\001\022X\n\023Check"
+  "UpstreamHealth\022\026.google.protobuf.Empty\032\'"
+  ".ondewo.csi.CheckUpstreamHealthResponse\""
+  "\000\022[\n\020GetControlStream\022 .ondewo.csi.Contr"
+  "olStreamRequest\032!.ondewo.csi.ControlStre"
+  "amResponse\"\0000\001\022_\n\020SetControlStatus\022#.ond"
+  "ewo.csi.SetControlStatusRequest\032$.ondewo"
+  ".csi.SetControlStatusResponse\"\000\022c\n\023SetCa"
+  "llMediaControl\022!.ondewo.csi.CallMediaCon"
+  "trolLevel\032\'.ondewo.csi.SetCallMediaContr"
+  "olResponse\"\000\022P\n\rSetCallerDtmf\022\035.ondewo.c"
+  "si.CallerDtmfRequest\032\036.ondewo.csi.Caller"
+  "DtmfResponse\"\000\022z\n DeliverWarmTransferOut"
+  "comeNotice\022%.ondewo.csi.WarmTransferOutc"
+  "omeNotice\032-.ondewo.csi.WarmTransferOutco"
+  "meNoticeResponse\"\000b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_ondewo_2fcsi_2fconversation_2eproto_deps[7] = {
   &::descriptor_table_google_2fprotobuf_2fempty_2eproto,
@@ -605,9 +803,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_ondewo_2fcsi_2fconv
 };
 static ::_pbi::once_flag descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_ondewo_2fcsi_2fconversation_2eproto = {
-    false, false, 4356, descriptor_table_protodef_ondewo_2fcsi_2fconversation_2eproto,
+    false, false, 5946, descriptor_table_protodef_ondewo_2fcsi_2fconversation_2eproto,
     "ondewo/csi/conversation.proto",
-    &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once, descriptor_table_ondewo_2fcsi_2fconversation_2eproto_deps, 7, 17,
+    &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once, descriptor_table_ondewo_2fcsi_2fconversation_2eproto_deps, 7, 22,
     schemas, file_default_instances, TableStruct_ondewo_2fcsi_2fconversation_2eproto::offsets,
     file_level_metadata_ondewo_2fcsi_2fconversation_2eproto, file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto,
     file_level_service_descriptors_ondewo_2fcsi_2fconversation_2eproto,
@@ -668,6 +866,40 @@ bool ControlStatus_IsValid(int value) {
     case 6:
     case 7:
     case 8:
+    case 9:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* WarmTransferOutcome_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_ondewo_2fcsi_2fconversation_2eproto);
+  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[2];
+}
+bool WarmTransferOutcome_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* WarmTransferOutcomeNoticeStatus_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_ondewo_2fcsi_2fconversation_2eproto);
+  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[3];
+}
+bool WarmTransferOutcomeNoticeStatus_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
       return true;
     default:
       return false;
@@ -676,7 +908,7 @@ bool ControlStatus_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ControlMessageServiceName_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_ondewo_2fcsi_2fconversation_2eproto);
-  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[2];
+  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[4];
 }
 bool ControlMessageServiceName_IsValid(int value) {
   switch (value) {
@@ -696,7 +928,7 @@ bool ControlMessageServiceName_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ControlMessageServiceMethod_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_ondewo_2fcsi_2fconversation_2eproto);
-  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[3];
+  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[5];
 }
 bool ControlMessageServiceMethod_IsValid(int value) {
   switch (value) {
@@ -727,7 +959,7 @@ bool ControlMessageServiceMethod_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ConditionType_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_ondewo_2fcsi_2fconversation_2eproto);
-  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[4];
+  return file_level_enum_descriptors_ondewo_2fcsi_2fconversation_2eproto[6];
 }
 bool ConditionType_IsValid(int value) {
   switch (value) {
@@ -2047,6 +2279,7 @@ S2sStreamResponse::S2sStreamResponse(const S2sStreamResponse& from)
     , decltype(_impl_.chunk_index_){}
     , decltype(_impl_.last_chunk_){}
     , decltype(_impl_.turn_epoch_){}
+    , decltype(_impl_.response_sequence_){}
     , decltype(_impl_.response_){}
     , /*decltype(_impl_._cached_size_)*/{}
     , /*decltype(_impl_._oneof_case_)*/{}};
@@ -2061,8 +2294,8 @@ S2sStreamResponse::S2sStreamResponse(const S2sStreamResponse& from)
       _this->GetArenaForAllocation());
   }
   ::memcpy(&_impl_.chunk_index_, &from._impl_.chunk_index_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.turn_epoch_) -
-    reinterpret_cast<char*>(&_impl_.chunk_index_)) + sizeof(_impl_.turn_epoch_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.response_sequence_) -
+    reinterpret_cast<char*>(&_impl_.chunk_index_)) + sizeof(_impl_.response_sequence_));
   clear_has_response();
   switch (from.response_case()) {
     case kDetectIntentResponse: {
@@ -2096,6 +2329,7 @@ inline void S2sStreamResponse::SharedCtor(
     , decltype(_impl_.chunk_index_){0}
     , decltype(_impl_.last_chunk_){false}
     , decltype(_impl_.turn_epoch_){uint64_t{0u}}
+    , decltype(_impl_.response_sequence_){uint64_t{0u}}
     , decltype(_impl_.response_){}
     , /*decltype(_impl_._cached_size_)*/{}
     , /*decltype(_impl_._oneof_case_)*/{}
@@ -2165,8 +2399,8 @@ void S2sStreamResponse::Clear() {
 
   _impl_.utterance_id_.ClearToEmpty();
   ::memset(&_impl_.chunk_index_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.turn_epoch_) -
-      reinterpret_cast<char*>(&_impl_.chunk_index_)) + sizeof(_impl_.turn_epoch_));
+      reinterpret_cast<char*>(&_impl_.response_sequence_) -
+      reinterpret_cast<char*>(&_impl_.chunk_index_)) + sizeof(_impl_.response_sequence_));
   clear_response();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -2231,6 +2465,14 @@ const char* S2sStreamResponse::_InternalParse(const char* ptr, ::_pbi::ParseCont
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
           _impl_.turn_epoch_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 response_sequence = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 64)) {
+          _impl_.response_sequence_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -2313,6 +2555,12 @@ uint8_t* S2sStreamResponse::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt64ToArray(7, this->_internal_turn_epoch(), target);
   }
 
+  // uint64 response_sequence = 8;
+  if (this->_internal_response_sequence() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(8, this->_internal_response_sequence(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2349,6 +2597,11 @@ size_t S2sStreamResponse::ByteSizeLong() const {
   // uint64 turn_epoch = 7;
   if (this->_internal_turn_epoch() != 0) {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_turn_epoch());
+  }
+
+  // uint64 response_sequence = 8;
+  if (this->_internal_response_sequence() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_response_sequence());
   }
 
   switch (response_case()) {
@@ -2407,6 +2660,9 @@ void S2sStreamResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, cons
   if (from._internal_turn_epoch() != 0) {
     _this->_internal_set_turn_epoch(from._internal_turn_epoch());
   }
+  if (from._internal_response_sequence() != 0) {
+    _this->_internal_set_response_sequence(from._internal_response_sequence());
+  }
   switch (from.response_case()) {
     case kDetectIntentResponse: {
       _this->_internal_mutable_detect_intent_response()->::ondewo::nlu::DetectIntentResponse::MergeFrom(
@@ -2451,8 +2707,8 @@ void S2sStreamResponse::InternalSwap(S2sStreamResponse* other) {
       &other->_impl_.utterance_id_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(S2sStreamResponse, _impl_.turn_epoch_)
-      + sizeof(S2sStreamResponse::_impl_.turn_epoch_)
+      PROTOBUF_FIELD_OFFSET(S2sStreamResponse, _impl_.response_sequence_)
+      + sizeof(S2sStreamResponse::_impl_.response_sequence_)
       - PROTOBUF_FIELD_OFFSET(S2sStreamResponse, _impl_.chunk_index_)>(
           reinterpret_cast<char*>(&_impl_.chunk_index_),
           reinterpret_cast<char*>(&other->_impl_.chunk_index_));
@@ -3060,6 +3316,7 @@ ControlStreamResponse::ControlStreamResponse(const ControlStreamResponse& from)
   new (&_impl_) Impl_{
       decltype(_impl_.media_control_){nullptr}
     , decltype(_impl_.epoch_){}
+    , decltype(_impl_.playback_cut_request_id_){}
     , decltype(_impl_.control_status_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -3080,6 +3337,7 @@ inline void ControlStreamResponse::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.media_control_){nullptr}
     , decltype(_impl_.epoch_){uint64_t{0u}}
+    , decltype(_impl_.playback_cut_request_id_){uint64_t{0u}}
     , decltype(_impl_.control_status_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -3150,6 +3408,14 @@ const char* ControlStreamResponse::_InternalParse(const char* ptr, ::_pbi::Parse
         } else
           goto handle_unusual;
         continue;
+      // uint64 playback_cut_request_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.playback_cut_request_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
       default:
         goto handle_unusual;
     }  // switch
@@ -3199,6 +3465,12 @@ uint8_t* ControlStreamResponse::_InternalSerialize(
         _Internal::media_control(this).GetCachedSize(), target, stream);
   }
 
+  // uint64 playback_cut_request_id = 4;
+  if (this->_internal_playback_cut_request_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(4, this->_internal_playback_cut_request_id(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -3225,6 +3497,11 @@ size_t ControlStreamResponse::ByteSizeLong() const {
   // uint64 epoch = 2;
   if (this->_internal_epoch() != 0) {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_epoch());
+  }
+
+  // uint64 playback_cut_request_id = 4;
+  if (this->_internal_playback_cut_request_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_playback_cut_request_id());
   }
 
   // .ondewo.csi.ControlStatus control_status = 1;
@@ -3257,6 +3534,9 @@ void ControlStreamResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, 
   }
   if (from._internal_epoch() != 0) {
     _this->_internal_set_epoch(from._internal_epoch());
+  }
+  if (from._internal_playback_cut_request_id() != 0) {
+    _this->_internal_set_playback_cut_request_id(from._internal_playback_cut_request_id());
   }
   if (from._internal_control_status() != 0) {
     _this->_internal_set_control_status(from._internal_control_status());
@@ -3296,8 +3576,13 @@ void ControlStreamResponse::InternalSwap(ControlStreamResponse* other) {
 
 class SetControlStatusRequest::_Internal {
  public:
+  static const ::ondewo::csi::PlaybackCut& playback_cut(const SetControlStatusRequest* msg);
 };
 
+const ::ondewo::csi::PlaybackCut&
+SetControlStatusRequest::_Internal::playback_cut(const SetControlStatusRequest* msg) {
+  return *msg->_impl_.playback_cut_;
+}
 SetControlStatusRequest::SetControlStatusRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -3308,11 +3593,27 @@ SetControlStatusRequest::SetControlStatusRequest(const SetControlStatusRequest& 
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   SetControlStatusRequest* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.control_status_){}
+      decltype(_impl_.utterance_id_){}
+    , decltype(_impl_.playback_cut_){nullptr}
+    , decltype(_impl_.response_sequence_){}
+    , decltype(_impl_.control_status_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.control_status_ = from._impl_.control_status_;
+  _impl_.utterance_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.utterance_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_utterance_id().empty()) {
+    _this->_impl_.utterance_id_.Set(from._internal_utterance_id(), 
+      _this->GetArenaForAllocation());
+  }
+  if (from._internal_has_playback_cut()) {
+    _this->_impl_.playback_cut_ = new ::ondewo::csi::PlaybackCut(*from._impl_.playback_cut_);
+  }
+  ::memcpy(&_impl_.response_sequence_, &from._impl_.response_sequence_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.control_status_) -
+    reinterpret_cast<char*>(&_impl_.response_sequence_)) + sizeof(_impl_.control_status_));
   // @@protoc_insertion_point(copy_constructor:ondewo.csi.SetControlStatusRequest)
 }
 
@@ -3321,9 +3622,16 @@ inline void SetControlStatusRequest::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.control_status_){0}
+      decltype(_impl_.utterance_id_){}
+    , decltype(_impl_.playback_cut_){nullptr}
+    , decltype(_impl_.response_sequence_){uint64_t{0u}}
+    , decltype(_impl_.control_status_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.utterance_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.utterance_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 SetControlStatusRequest::~SetControlStatusRequest() {
@@ -3337,6 +3645,8 @@ SetControlStatusRequest::~SetControlStatusRequest() {
 
 inline void SetControlStatusRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.utterance_id_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.playback_cut_;
 }
 
 void SetControlStatusRequest::SetCachedSize(int size) const {
@@ -3349,7 +3659,14 @@ void SetControlStatusRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.control_status_ = 0;
+  _impl_.utterance_id_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.playback_cut_ != nullptr) {
+    delete _impl_.playback_cut_;
+  }
+  _impl_.playback_cut_ = nullptr;
+  ::memset(&_impl_.response_sequence_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.control_status_) -
+      reinterpret_cast<char*>(&_impl_.response_sequence_)) + sizeof(_impl_.control_status_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3365,6 +3682,32 @@ const char* SetControlStatusRequest::_InternalParse(const char* ptr, ::_pbi::Par
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_control_status(static_cast<::ondewo::csi::ControlStatus>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // .ondewo.csi.PlaybackCut playback_cut = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_playback_cut(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string utterance_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_utterance_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.SetControlStatusRequest.utterance_id"));
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 response_sequence = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.response_sequence_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -3404,6 +3747,29 @@ uint8_t* SetControlStatusRequest::_InternalSerialize(
       1, this->_internal_control_status(), target);
   }
 
+  // .ondewo.csi.PlaybackCut playback_cut = 2;
+  if (this->_internal_has_playback_cut()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::playback_cut(this),
+        _Internal::playback_cut(this).GetCachedSize(), target, stream);
+  }
+
+  // string utterance_id = 3;
+  if (!this->_internal_utterance_id().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_utterance_id().data(), static_cast<int>(this->_internal_utterance_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.SetControlStatusRequest.utterance_id");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_utterance_id(), target);
+  }
+
+  // uint64 response_sequence = 4;
+  if (this->_internal_response_sequence() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(4, this->_internal_response_sequence(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -3419,6 +3785,25 @@ size_t SetControlStatusRequest::ByteSizeLong() const {
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // string utterance_id = 3;
+  if (!this->_internal_utterance_id().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_utterance_id());
+  }
+
+  // .ondewo.csi.PlaybackCut playback_cut = 2;
+  if (this->_internal_has_playback_cut()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.playback_cut_);
+  }
+
+  // uint64 response_sequence = 4;
+  if (this->_internal_response_sequence() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_response_sequence());
+  }
 
   // .ondewo.csi.ControlStatus control_status = 1;
   if (this->_internal_control_status() != 0) {
@@ -3444,6 +3829,16 @@ void SetControlStatusRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_utterance_id().empty()) {
+    _this->_internal_set_utterance_id(from._internal_utterance_id());
+  }
+  if (from._internal_has_playback_cut()) {
+    _this->_internal_mutable_playback_cut()->::ondewo::csi::PlaybackCut::MergeFrom(
+        from._internal_playback_cut());
+  }
+  if (from._internal_response_sequence() != 0) {
+    _this->_internal_set_response_sequence(from._internal_response_sequence());
+  }
   if (from._internal_control_status() != 0) {
     _this->_internal_set_control_status(from._internal_control_status());
   }
@@ -3463,14 +3858,456 @@ bool SetControlStatusRequest::IsInitialized() const {
 
 void SetControlStatusRequest::InternalSwap(SetControlStatusRequest* other) {
   using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.control_status_, other->_impl_.control_status_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.utterance_id_, lhs_arena,
+      &other->_impl_.utterance_id_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SetControlStatusRequest, _impl_.control_status_)
+      + sizeof(SetControlStatusRequest::_impl_.control_status_)
+      - PROTOBUF_FIELD_OFFSET(SetControlStatusRequest, _impl_.playback_cut_)>(
+          reinterpret_cast<char*>(&_impl_.playback_cut_),
+          reinterpret_cast<char*>(&other->_impl_.playback_cut_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata SetControlStatusRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
       file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[10]);
+}
+
+// ===================================================================
+
+class PlaybackCut::_Internal {
+ public:
+};
+
+PlaybackCut::PlaybackCut(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ondewo.csi.PlaybackCut)
+}
+PlaybackCut::PlaybackCut(const PlaybackCut& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  PlaybackCut* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.utterance_id_){}
+    , decltype(_impl_.playback_cut_request_id_){}
+    , decltype(_impl_.barge_in_epoch_){}
+    , decltype(_impl_.response_sequence_){}
+    , decltype(_impl_.written_audio_us_){}
+    , decltype(_impl_.queued_audio_us_){}
+    , decltype(_impl_.chunk_index_){}
+    , decltype(_impl_.queued_audio_estimated_){}
+    , decltype(_impl_.remainder_held_){}
+    , decltype(_impl_.cut_monotonic_ns_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.utterance_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.utterance_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_utterance_id().empty()) {
+    _this->_impl_.utterance_id_.Set(from._internal_utterance_id(), 
+      _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.playback_cut_request_id_, &from._impl_.playback_cut_request_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.cut_monotonic_ns_) -
+    reinterpret_cast<char*>(&_impl_.playback_cut_request_id_)) + sizeof(_impl_.cut_monotonic_ns_));
+  // @@protoc_insertion_point(copy_constructor:ondewo.csi.PlaybackCut)
+}
+
+inline void PlaybackCut::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.utterance_id_){}
+    , decltype(_impl_.playback_cut_request_id_){uint64_t{0u}}
+    , decltype(_impl_.barge_in_epoch_){uint64_t{0u}}
+    , decltype(_impl_.response_sequence_){uint64_t{0u}}
+    , decltype(_impl_.written_audio_us_){int64_t{0}}
+    , decltype(_impl_.queued_audio_us_){int64_t{0}}
+    , decltype(_impl_.chunk_index_){0}
+    , decltype(_impl_.queued_audio_estimated_){false}
+    , decltype(_impl_.remainder_held_){false}
+    , decltype(_impl_.cut_monotonic_ns_){int64_t{0}}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.utterance_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.utterance_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+PlaybackCut::~PlaybackCut() {
+  // @@protoc_insertion_point(destructor:ondewo.csi.PlaybackCut)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void PlaybackCut::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.utterance_id_.Destroy();
+}
+
+void PlaybackCut::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void PlaybackCut::Clear() {
+// @@protoc_insertion_point(message_clear_start:ondewo.csi.PlaybackCut)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.utterance_id_.ClearToEmpty();
+  ::memset(&_impl_.playback_cut_request_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.cut_monotonic_ns_) -
+      reinterpret_cast<char*>(&_impl_.playback_cut_request_id_)) + sizeof(_impl_.cut_monotonic_ns_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* PlaybackCut::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint64 playback_cut_request_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.playback_cut_request_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 barge_in_epoch = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.barge_in_epoch_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string utterance_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_utterance_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.PlaybackCut.utterance_id"));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 chunk_index = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.chunk_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 response_sequence = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          _impl_.response_sequence_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 written_audio_us = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
+          _impl_.written_audio_us_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 queued_audio_us = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
+          _impl_.queued_audio_us_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool queued_audio_estimated = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 64)) {
+          _impl_.queued_audio_estimated_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 cut_monotonic_ns = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 72)) {
+          _impl_.cut_monotonic_ns_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool remainder_held = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 80)) {
+          _impl_.remainder_held_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* PlaybackCut::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ondewo.csi.PlaybackCut)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 playback_cut_request_id = 1;
+  if (this->_internal_playback_cut_request_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_playback_cut_request_id(), target);
+  }
+
+  // uint64 barge_in_epoch = 2;
+  if (this->_internal_barge_in_epoch() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_barge_in_epoch(), target);
+  }
+
+  // string utterance_id = 3;
+  if (!this->_internal_utterance_id().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_utterance_id().data(), static_cast<int>(this->_internal_utterance_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.PlaybackCut.utterance_id");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_utterance_id(), target);
+  }
+
+  // int32 chunk_index = 4;
+  if (this->_internal_chunk_index() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_chunk_index(), target);
+  }
+
+  // uint64 response_sequence = 5;
+  if (this->_internal_response_sequence() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(5, this->_internal_response_sequence(), target);
+  }
+
+  // int64 written_audio_us = 6;
+  if (this->_internal_written_audio_us() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(6, this->_internal_written_audio_us(), target);
+  }
+
+  // int64 queued_audio_us = 7;
+  if (this->_internal_queued_audio_us() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(7, this->_internal_queued_audio_us(), target);
+  }
+
+  // bool queued_audio_estimated = 8;
+  if (this->_internal_queued_audio_estimated() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(8, this->_internal_queued_audio_estimated(), target);
+  }
+
+  // int64 cut_monotonic_ns = 9;
+  if (this->_internal_cut_monotonic_ns() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(9, this->_internal_cut_monotonic_ns(), target);
+  }
+
+  // bool remainder_held = 10;
+  if (this->_internal_remainder_held() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(10, this->_internal_remainder_held(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ondewo.csi.PlaybackCut)
+  return target;
+}
+
+size_t PlaybackCut::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ondewo.csi.PlaybackCut)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string utterance_id = 3;
+  if (!this->_internal_utterance_id().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_utterance_id());
+  }
+
+  // uint64 playback_cut_request_id = 1;
+  if (this->_internal_playback_cut_request_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_playback_cut_request_id());
+  }
+
+  // uint64 barge_in_epoch = 2;
+  if (this->_internal_barge_in_epoch() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_barge_in_epoch());
+  }
+
+  // uint64 response_sequence = 5;
+  if (this->_internal_response_sequence() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_response_sequence());
+  }
+
+  // int64 written_audio_us = 6;
+  if (this->_internal_written_audio_us() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_written_audio_us());
+  }
+
+  // int64 queued_audio_us = 7;
+  if (this->_internal_queued_audio_us() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_queued_audio_us());
+  }
+
+  // int32 chunk_index = 4;
+  if (this->_internal_chunk_index() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_chunk_index());
+  }
+
+  // bool queued_audio_estimated = 8;
+  if (this->_internal_queued_audio_estimated() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool remainder_held = 10;
+  if (this->_internal_remainder_held() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // int64 cut_monotonic_ns = 9;
+  if (this->_internal_cut_monotonic_ns() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_cut_monotonic_ns());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PlaybackCut::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    PlaybackCut::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PlaybackCut::GetClassData() const { return &_class_data_; }
+
+
+void PlaybackCut::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PlaybackCut*>(&to_msg);
+  auto& from = static_cast<const PlaybackCut&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ondewo.csi.PlaybackCut)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_utterance_id().empty()) {
+    _this->_internal_set_utterance_id(from._internal_utterance_id());
+  }
+  if (from._internal_playback_cut_request_id() != 0) {
+    _this->_internal_set_playback_cut_request_id(from._internal_playback_cut_request_id());
+  }
+  if (from._internal_barge_in_epoch() != 0) {
+    _this->_internal_set_barge_in_epoch(from._internal_barge_in_epoch());
+  }
+  if (from._internal_response_sequence() != 0) {
+    _this->_internal_set_response_sequence(from._internal_response_sequence());
+  }
+  if (from._internal_written_audio_us() != 0) {
+    _this->_internal_set_written_audio_us(from._internal_written_audio_us());
+  }
+  if (from._internal_queued_audio_us() != 0) {
+    _this->_internal_set_queued_audio_us(from._internal_queued_audio_us());
+  }
+  if (from._internal_chunk_index() != 0) {
+    _this->_internal_set_chunk_index(from._internal_chunk_index());
+  }
+  if (from._internal_queued_audio_estimated() != 0) {
+    _this->_internal_set_queued_audio_estimated(from._internal_queued_audio_estimated());
+  }
+  if (from._internal_remainder_held() != 0) {
+    _this->_internal_set_remainder_held(from._internal_remainder_held());
+  }
+  if (from._internal_cut_monotonic_ns() != 0) {
+    _this->_internal_set_cut_monotonic_ns(from._internal_cut_monotonic_ns());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void PlaybackCut::CopyFrom(const PlaybackCut& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ondewo.csi.PlaybackCut)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PlaybackCut::IsInitialized() const {
+  return true;
+}
+
+void PlaybackCut::InternalSwap(PlaybackCut* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.utterance_id_, lhs_arena,
+      &other->_impl_.utterance_id_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PlaybackCut, _impl_.cut_monotonic_ns_)
+      + sizeof(PlaybackCut::_impl_.cut_monotonic_ns_)
+      - PROTOBUF_FIELD_OFFSET(PlaybackCut, _impl_.playback_cut_request_id_)>(
+          reinterpret_cast<char*>(&_impl_.playback_cut_request_id_),
+          reinterpret_cast<char*>(&other->_impl_.playback_cut_request_id_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PlaybackCut::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[11]);
 }
 
 // ===================================================================
@@ -3687,7 +4524,7 @@ void SetControlStatusResponse::InternalSwap(SetControlStatusResponse* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SetControlStatusResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[11]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[12]);
 }
 
 // ===================================================================
@@ -3974,7 +4811,7 @@ void CallMediaControlLevel::InternalSwap(CallMediaControlLevel* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata CallMediaControlLevel::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[12]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[13]);
 }
 
 // ===================================================================
@@ -4302,7 +5139,1188 @@ void SetCallMediaControlResponse::InternalSwap(SetCallMediaControlResponse* othe
 ::PROTOBUF_NAMESPACE_ID::Metadata SetCallMediaControlResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[13]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[14]);
+}
+
+// ===================================================================
+
+class CallerDtmfRequest::_Internal {
+ public:
+};
+
+CallerDtmfRequest::CallerDtmfRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ondewo.csi.CallerDtmfRequest)
+}
+CallerDtmfRequest::CallerDtmfRequest(const CallerDtmfRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  CallerDtmfRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.call_id_){}
+    , decltype(_impl_.digit_){}
+    , decltype(_impl_.sequence_){}
+    , decltype(_impl_.received_unix_ns_){}
+    , decltype(_impl_.duration_ms_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.call_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.call_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_call_id().empty()) {
+    _this->_impl_.call_id_.Set(from._internal_call_id(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.digit_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.digit_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_digit().empty()) {
+    _this->_impl_.digit_.Set(from._internal_digit(), 
+      _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.sequence_, &from._impl_.sequence_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.duration_ms_) -
+    reinterpret_cast<char*>(&_impl_.sequence_)) + sizeof(_impl_.duration_ms_));
+  // @@protoc_insertion_point(copy_constructor:ondewo.csi.CallerDtmfRequest)
+}
+
+inline void CallerDtmfRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.call_id_){}
+    , decltype(_impl_.digit_){}
+    , decltype(_impl_.sequence_){uint64_t{0u}}
+    , decltype(_impl_.received_unix_ns_){int64_t{0}}
+    , decltype(_impl_.duration_ms_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.call_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.call_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.digit_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.digit_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+CallerDtmfRequest::~CallerDtmfRequest() {
+  // @@protoc_insertion_point(destructor:ondewo.csi.CallerDtmfRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void CallerDtmfRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.call_id_.Destroy();
+  _impl_.digit_.Destroy();
+}
+
+void CallerDtmfRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void CallerDtmfRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:ondewo.csi.CallerDtmfRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.call_id_.ClearToEmpty();
+  _impl_.digit_.ClearToEmpty();
+  ::memset(&_impl_.sequence_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.duration_ms_) -
+      reinterpret_cast<char*>(&_impl_.sequence_)) + sizeof(_impl_.duration_ms_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* CallerDtmfRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string call_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_call_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.CallerDtmfRequest.call_id"));
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 sequence = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.sequence_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string digit = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_digit();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.CallerDtmfRequest.digit"));
+        } else
+          goto handle_unusual;
+        continue;
+      // uint32 duration_ms = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.duration_ms_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 received_unix_ns = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          _impl_.received_unix_ns_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* CallerDtmfRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ondewo.csi.CallerDtmfRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string call_id = 1;
+  if (!this->_internal_call_id().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_call_id().data(), static_cast<int>(this->_internal_call_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.CallerDtmfRequest.call_id");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_call_id(), target);
+  }
+
+  // uint64 sequence = 2;
+  if (this->_internal_sequence() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_sequence(), target);
+  }
+
+  // string digit = 3;
+  if (!this->_internal_digit().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_digit().data(), static_cast<int>(this->_internal_digit().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.CallerDtmfRequest.digit");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_digit(), target);
+  }
+
+  // uint32 duration_ms = 4;
+  if (this->_internal_duration_ms() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(4, this->_internal_duration_ms(), target);
+  }
+
+  // int64 received_unix_ns = 5;
+  if (this->_internal_received_unix_ns() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(5, this->_internal_received_unix_ns(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ondewo.csi.CallerDtmfRequest)
+  return target;
+}
+
+size_t CallerDtmfRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ondewo.csi.CallerDtmfRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string call_id = 1;
+  if (!this->_internal_call_id().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_call_id());
+  }
+
+  // string digit = 3;
+  if (!this->_internal_digit().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_digit());
+  }
+
+  // uint64 sequence = 2;
+  if (this->_internal_sequence() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_sequence());
+  }
+
+  // int64 received_unix_ns = 5;
+  if (this->_internal_received_unix_ns() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_received_unix_ns());
+  }
+
+  // uint32 duration_ms = 4;
+  if (this->_internal_duration_ms() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_duration_ms());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CallerDtmfRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    CallerDtmfRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CallerDtmfRequest::GetClassData() const { return &_class_data_; }
+
+
+void CallerDtmfRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<CallerDtmfRequest*>(&to_msg);
+  auto& from = static_cast<const CallerDtmfRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ondewo.csi.CallerDtmfRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_call_id().empty()) {
+    _this->_internal_set_call_id(from._internal_call_id());
+  }
+  if (!from._internal_digit().empty()) {
+    _this->_internal_set_digit(from._internal_digit());
+  }
+  if (from._internal_sequence() != 0) {
+    _this->_internal_set_sequence(from._internal_sequence());
+  }
+  if (from._internal_received_unix_ns() != 0) {
+    _this->_internal_set_received_unix_ns(from._internal_received_unix_ns());
+  }
+  if (from._internal_duration_ms() != 0) {
+    _this->_internal_set_duration_ms(from._internal_duration_ms());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void CallerDtmfRequest::CopyFrom(const CallerDtmfRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ondewo.csi.CallerDtmfRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CallerDtmfRequest::IsInitialized() const {
+  return true;
+}
+
+void CallerDtmfRequest::InternalSwap(CallerDtmfRequest* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.call_id_, lhs_arena,
+      &other->_impl_.call_id_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.digit_, lhs_arena,
+      &other->_impl_.digit_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(CallerDtmfRequest, _impl_.duration_ms_)
+      + sizeof(CallerDtmfRequest::_impl_.duration_ms_)
+      - PROTOBUF_FIELD_OFFSET(CallerDtmfRequest, _impl_.sequence_)>(
+          reinterpret_cast<char*>(&_impl_.sequence_),
+          reinterpret_cast<char*>(&other->_impl_.sequence_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata CallerDtmfRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[15]);
+}
+
+// ===================================================================
+
+class CallerDtmfResponse::_Internal {
+ public:
+};
+
+CallerDtmfResponse::CallerDtmfResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ondewo.csi.CallerDtmfResponse)
+}
+CallerDtmfResponse::CallerDtmfResponse(const CallerDtmfResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  CallerDtmfResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.reason_){}
+    , decltype(_impl_.accepted_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_reason().empty()) {
+    _this->_impl_.reason_.Set(from._internal_reason(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.accepted_ = from._impl_.accepted_;
+  // @@protoc_insertion_point(copy_constructor:ondewo.csi.CallerDtmfResponse)
+}
+
+inline void CallerDtmfResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.reason_){}
+    , decltype(_impl_.accepted_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.reason_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.reason_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+CallerDtmfResponse::~CallerDtmfResponse() {
+  // @@protoc_insertion_point(destructor:ondewo.csi.CallerDtmfResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void CallerDtmfResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.reason_.Destroy();
+}
+
+void CallerDtmfResponse::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void CallerDtmfResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:ondewo.csi.CallerDtmfResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.reason_.ClearToEmpty();
+  _impl_.accepted_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* CallerDtmfResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool accepted = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.accepted_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string reason = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_reason();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.CallerDtmfResponse.reason"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* CallerDtmfResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ondewo.csi.CallerDtmfResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool accepted = 1;
+  if (this->_internal_accepted() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_accepted(), target);
+  }
+
+  // string reason = 2;
+  if (!this->_internal_reason().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_reason().data(), static_cast<int>(this->_internal_reason().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.CallerDtmfResponse.reason");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_reason(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ondewo.csi.CallerDtmfResponse)
+  return target;
+}
+
+size_t CallerDtmfResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ondewo.csi.CallerDtmfResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string reason = 2;
+  if (!this->_internal_reason().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_reason());
+  }
+
+  // bool accepted = 1;
+  if (this->_internal_accepted() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CallerDtmfResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    CallerDtmfResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CallerDtmfResponse::GetClassData() const { return &_class_data_; }
+
+
+void CallerDtmfResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<CallerDtmfResponse*>(&to_msg);
+  auto& from = static_cast<const CallerDtmfResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ondewo.csi.CallerDtmfResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_reason().empty()) {
+    _this->_internal_set_reason(from._internal_reason());
+  }
+  if (from._internal_accepted() != 0) {
+    _this->_internal_set_accepted(from._internal_accepted());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void CallerDtmfResponse::CopyFrom(const CallerDtmfResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ondewo.csi.CallerDtmfResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CallerDtmfResponse::IsInitialized() const {
+  return true;
+}
+
+void CallerDtmfResponse::InternalSwap(CallerDtmfResponse* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.reason_, lhs_arena,
+      &other->_impl_.reason_, rhs_arena
+  );
+  swap(_impl_.accepted_, other->_impl_.accepted_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata CallerDtmfResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[16]);
+}
+
+// ===================================================================
+
+class WarmTransferOutcomeNotice::_Internal {
+ public:
+};
+
+WarmTransferOutcomeNotice::WarmTransferOutcomeNotice(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ondewo.csi.WarmTransferOutcomeNotice)
+}
+WarmTransferOutcomeNotice::WarmTransferOutcomeNotice(const WarmTransferOutcomeNotice& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  WarmTransferOutcomeNotice* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.request_id_){}
+    , decltype(_impl_.intro_session_){}
+    , decltype(_impl_.callee_display_name_){}
+    , decltype(_impl_.cause_){}
+    , decltype(_impl_.fallback_text_){}
+    , decltype(_impl_.outcome_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.request_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.request_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_request_id().empty()) {
+    _this->_impl_.request_id_.Set(from._internal_request_id(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.intro_session_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.intro_session_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_intro_session().empty()) {
+    _this->_impl_.intro_session_.Set(from._internal_intro_session(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.callee_display_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.callee_display_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_callee_display_name().empty()) {
+    _this->_impl_.callee_display_name_.Set(from._internal_callee_display_name(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.cause_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.cause_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_cause().empty()) {
+    _this->_impl_.cause_.Set(from._internal_cause(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.fallback_text_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.fallback_text_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_fallback_text().empty()) {
+    _this->_impl_.fallback_text_.Set(from._internal_fallback_text(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.outcome_ = from._impl_.outcome_;
+  // @@protoc_insertion_point(copy_constructor:ondewo.csi.WarmTransferOutcomeNotice)
+}
+
+inline void WarmTransferOutcomeNotice::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.request_id_){}
+    , decltype(_impl_.intro_session_){}
+    , decltype(_impl_.callee_display_name_){}
+    , decltype(_impl_.cause_){}
+    , decltype(_impl_.fallback_text_){}
+    , decltype(_impl_.outcome_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.request_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.request_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.intro_session_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.intro_session_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.callee_display_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.callee_display_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.cause_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.cause_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.fallback_text_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.fallback_text_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+WarmTransferOutcomeNotice::~WarmTransferOutcomeNotice() {
+  // @@protoc_insertion_point(destructor:ondewo.csi.WarmTransferOutcomeNotice)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void WarmTransferOutcomeNotice::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.request_id_.Destroy();
+  _impl_.intro_session_.Destroy();
+  _impl_.callee_display_name_.Destroy();
+  _impl_.cause_.Destroy();
+  _impl_.fallback_text_.Destroy();
+}
+
+void WarmTransferOutcomeNotice::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void WarmTransferOutcomeNotice::Clear() {
+// @@protoc_insertion_point(message_clear_start:ondewo.csi.WarmTransferOutcomeNotice)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.request_id_.ClearToEmpty();
+  _impl_.intro_session_.ClearToEmpty();
+  _impl_.callee_display_name_.ClearToEmpty();
+  _impl_.cause_.ClearToEmpty();
+  _impl_.fallback_text_.ClearToEmpty();
+  _impl_.outcome_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* WarmTransferOutcomeNotice::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string request_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_request_id();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.WarmTransferOutcomeNotice.request_id"));
+        } else
+          goto handle_unusual;
+        continue;
+      // .ondewo.csi.WarmTransferOutcome outcome = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_outcome(static_cast<::ondewo::csi::WarmTransferOutcome>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // string intro_session = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_intro_session();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.WarmTransferOutcomeNotice.intro_session"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string callee_display_name = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          auto str = _internal_mutable_callee_display_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.WarmTransferOutcomeNotice.callee_display_name"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string cause = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          auto str = _internal_mutable_cause();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.WarmTransferOutcomeNotice.cause"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string fallback_text = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+          auto str = _internal_mutable_fallback_text();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "ondewo.csi.WarmTransferOutcomeNotice.fallback_text"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* WarmTransferOutcomeNotice::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ondewo.csi.WarmTransferOutcomeNotice)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string request_id = 1;
+  if (!this->_internal_request_id().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_request_id().data(), static_cast<int>(this->_internal_request_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.WarmTransferOutcomeNotice.request_id");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_request_id(), target);
+  }
+
+  // .ondewo.csi.WarmTransferOutcome outcome = 2;
+  if (this->_internal_outcome() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_outcome(), target);
+  }
+
+  // string intro_session = 3;
+  if (!this->_internal_intro_session().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_intro_session().data(), static_cast<int>(this->_internal_intro_session().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.WarmTransferOutcomeNotice.intro_session");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_intro_session(), target);
+  }
+
+  // string callee_display_name = 4;
+  if (!this->_internal_callee_display_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_callee_display_name().data(), static_cast<int>(this->_internal_callee_display_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.WarmTransferOutcomeNotice.callee_display_name");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_callee_display_name(), target);
+  }
+
+  // string cause = 5;
+  if (!this->_internal_cause().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_cause().data(), static_cast<int>(this->_internal_cause().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.WarmTransferOutcomeNotice.cause");
+    target = stream->WriteStringMaybeAliased(
+        5, this->_internal_cause(), target);
+  }
+
+  // string fallback_text = 6;
+  if (!this->_internal_fallback_text().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_fallback_text().data(), static_cast<int>(this->_internal_fallback_text().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "ondewo.csi.WarmTransferOutcomeNotice.fallback_text");
+    target = stream->WriteStringMaybeAliased(
+        6, this->_internal_fallback_text(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ondewo.csi.WarmTransferOutcomeNotice)
+  return target;
+}
+
+size_t WarmTransferOutcomeNotice::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ondewo.csi.WarmTransferOutcomeNotice)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string request_id = 1;
+  if (!this->_internal_request_id().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_request_id());
+  }
+
+  // string intro_session = 3;
+  if (!this->_internal_intro_session().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_intro_session());
+  }
+
+  // string callee_display_name = 4;
+  if (!this->_internal_callee_display_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_callee_display_name());
+  }
+
+  // string cause = 5;
+  if (!this->_internal_cause().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_cause());
+  }
+
+  // string fallback_text = 6;
+  if (!this->_internal_fallback_text().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_fallback_text());
+  }
+
+  // .ondewo.csi.WarmTransferOutcome outcome = 2;
+  if (this->_internal_outcome() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_outcome());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData WarmTransferOutcomeNotice::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    WarmTransferOutcomeNotice::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*WarmTransferOutcomeNotice::GetClassData() const { return &_class_data_; }
+
+
+void WarmTransferOutcomeNotice::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<WarmTransferOutcomeNotice*>(&to_msg);
+  auto& from = static_cast<const WarmTransferOutcomeNotice&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ondewo.csi.WarmTransferOutcomeNotice)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_request_id().empty()) {
+    _this->_internal_set_request_id(from._internal_request_id());
+  }
+  if (!from._internal_intro_session().empty()) {
+    _this->_internal_set_intro_session(from._internal_intro_session());
+  }
+  if (!from._internal_callee_display_name().empty()) {
+    _this->_internal_set_callee_display_name(from._internal_callee_display_name());
+  }
+  if (!from._internal_cause().empty()) {
+    _this->_internal_set_cause(from._internal_cause());
+  }
+  if (!from._internal_fallback_text().empty()) {
+    _this->_internal_set_fallback_text(from._internal_fallback_text());
+  }
+  if (from._internal_outcome() != 0) {
+    _this->_internal_set_outcome(from._internal_outcome());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void WarmTransferOutcomeNotice::CopyFrom(const WarmTransferOutcomeNotice& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ondewo.csi.WarmTransferOutcomeNotice)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool WarmTransferOutcomeNotice::IsInitialized() const {
+  return true;
+}
+
+void WarmTransferOutcomeNotice::InternalSwap(WarmTransferOutcomeNotice* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.request_id_, lhs_arena,
+      &other->_impl_.request_id_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.intro_session_, lhs_arena,
+      &other->_impl_.intro_session_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.callee_display_name_, lhs_arena,
+      &other->_impl_.callee_display_name_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.cause_, lhs_arena,
+      &other->_impl_.cause_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.fallback_text_, lhs_arena,
+      &other->_impl_.fallback_text_, rhs_arena
+  );
+  swap(_impl_.outcome_, other->_impl_.outcome_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata WarmTransferOutcomeNotice::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[17]);
+}
+
+// ===================================================================
+
+class WarmTransferOutcomeNoticeResponse::_Internal {
+ public:
+};
+
+WarmTransferOutcomeNoticeResponse::WarmTransferOutcomeNoticeResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+}
+WarmTransferOutcomeNoticeResponse::WarmTransferOutcomeNoticeResponse(const WarmTransferOutcomeNoticeResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  WarmTransferOutcomeNoticeResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.status_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.status_ = from._impl_.status_;
+  // @@protoc_insertion_point(copy_constructor:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+}
+
+inline void WarmTransferOutcomeNoticeResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.status_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+WarmTransferOutcomeNoticeResponse::~WarmTransferOutcomeNoticeResponse() {
+  // @@protoc_insertion_point(destructor:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void WarmTransferOutcomeNoticeResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void WarmTransferOutcomeNoticeResponse::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void WarmTransferOutcomeNoticeResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.status_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* WarmTransferOutcomeNoticeResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .ondewo.csi.WarmTransferOutcomeNoticeStatus status = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_status(static_cast<::ondewo::csi::WarmTransferOutcomeNoticeStatus>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* WarmTransferOutcomeNoticeResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .ondewo.csi.WarmTransferOutcomeNoticeStatus status = 1;
+  if (this->_internal_status() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_status(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+  return target;
+}
+
+size_t WarmTransferOutcomeNoticeResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .ondewo.csi.WarmTransferOutcomeNoticeStatus status = 1;
+  if (this->_internal_status() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_status());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData WarmTransferOutcomeNoticeResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    WarmTransferOutcomeNoticeResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*WarmTransferOutcomeNoticeResponse::GetClassData() const { return &_class_data_; }
+
+
+void WarmTransferOutcomeNoticeResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<WarmTransferOutcomeNoticeResponse*>(&to_msg);
+  auto& from = static_cast<const WarmTransferOutcomeNoticeResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_status() != 0) {
+    _this->_internal_set_status(from._internal_status());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void WarmTransferOutcomeNoticeResponse::CopyFrom(const WarmTransferOutcomeNoticeResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:ondewo.csi.WarmTransferOutcomeNoticeResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool WarmTransferOutcomeNoticeResponse::IsInitialized() const {
+  return true;
+}
+
+void WarmTransferOutcomeNoticeResponse::InternalSwap(WarmTransferOutcomeNoticeResponse* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.status_, other->_impl_.status_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata WarmTransferOutcomeNoticeResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[18]);
 }
 
 // ===================================================================
@@ -4535,7 +6553,7 @@ void Condition::InternalSwap(Condition* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Condition::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[14]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[19]);
 }
 
 // ===================================================================
@@ -5229,7 +7247,7 @@ void ControlMessageServiceParameters::InternalSwap(ControlMessageServiceParamete
 ::PROTOBUF_NAMESPACE_ID::Metadata ControlMessageServiceParameters::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[15]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[20]);
 }
 
 // ===================================================================
@@ -5487,7 +7505,7 @@ void ControlMessage::InternalSwap(ControlMessage* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ControlMessage::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_getter, &descriptor_table_ondewo_2fcsi_2fconversation_2eproto_once,
-      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[16]);
+      file_level_metadata_ondewo_2fcsi_2fconversation_2eproto[21]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -5538,6 +7556,10 @@ template<> PROTOBUF_NOINLINE ::ondewo::csi::SetControlStatusRequest*
 Arena::CreateMaybeMessage< ::ondewo::csi::SetControlStatusRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ondewo::csi::SetControlStatusRequest >(arena);
 }
+template<> PROTOBUF_NOINLINE ::ondewo::csi::PlaybackCut*
+Arena::CreateMaybeMessage< ::ondewo::csi::PlaybackCut >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ondewo::csi::PlaybackCut >(arena);
+}
 template<> PROTOBUF_NOINLINE ::ondewo::csi::SetControlStatusResponse*
 Arena::CreateMaybeMessage< ::ondewo::csi::SetControlStatusResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ondewo::csi::SetControlStatusResponse >(arena);
@@ -5549,6 +7571,22 @@ Arena::CreateMaybeMessage< ::ondewo::csi::CallMediaControlLevel >(Arena* arena) 
 template<> PROTOBUF_NOINLINE ::ondewo::csi::SetCallMediaControlResponse*
 Arena::CreateMaybeMessage< ::ondewo::csi::SetCallMediaControlResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::ondewo::csi::SetCallMediaControlResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ondewo::csi::CallerDtmfRequest*
+Arena::CreateMaybeMessage< ::ondewo::csi::CallerDtmfRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ondewo::csi::CallerDtmfRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ondewo::csi::CallerDtmfResponse*
+Arena::CreateMaybeMessage< ::ondewo::csi::CallerDtmfResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ondewo::csi::CallerDtmfResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ondewo::csi::WarmTransferOutcomeNotice*
+Arena::CreateMaybeMessage< ::ondewo::csi::WarmTransferOutcomeNotice >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ondewo::csi::WarmTransferOutcomeNotice >(arena);
+}
+template<> PROTOBUF_NOINLINE ::ondewo::csi::WarmTransferOutcomeNoticeResponse*
+Arena::CreateMaybeMessage< ::ondewo::csi::WarmTransferOutcomeNoticeResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::ondewo::csi::WarmTransferOutcomeNoticeResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::ondewo::csi::Condition*
 Arena::CreateMaybeMessage< ::ondewo::csi::Condition >(Arena* arena) {

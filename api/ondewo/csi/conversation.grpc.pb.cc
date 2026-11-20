@@ -33,6 +33,8 @@ static const char* Conversations_method_names[] = {
   "/ondewo.csi.Conversations/GetControlStream",
   "/ondewo.csi.Conversations/SetControlStatus",
   "/ondewo.csi.Conversations/SetCallMediaControl",
+  "/ondewo.csi.Conversations/SetCallerDtmf",
+  "/ondewo.csi.Conversations/DeliverWarmTransferOutcomeNotice",
 };
 
 std::unique_ptr< Conversations::Stub> Conversations::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -52,6 +54,8 @@ Conversations::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_GetControlStream_(Conversations_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SetControlStatus_(Conversations_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_SetCallMediaControl_(Conversations_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetCallerDtmf_(Conversations_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DeliverWarmTransferOutcomeNotice_(Conversations_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status Conversations::Stub::CreateS2sPipeline(::grpc::ClientContext* context, const ::ondewo::csi::S2sPipeline& request, ::google::protobuf::Empty* response) {
@@ -270,6 +274,52 @@ void Conversations::Stub::async::SetCallMediaControl(::grpc::ClientContext* cont
   return result;
 }
 
+::grpc::Status Conversations::Stub::SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::ondewo::csi::CallerDtmfResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SetCallerDtmf_, context, request, response);
+}
+
+void Conversations::Stub::async::SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetCallerDtmf_, context, request, response, std::move(f));
+}
+
+void Conversations::Stub::async::SetCallerDtmf(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetCallerDtmf_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>* Conversations::Stub::PrepareAsyncSetCallerDtmfRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ondewo::csi::CallerDtmfResponse, ::ondewo::csi::CallerDtmfRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SetCallerDtmf_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ondewo::csi::CallerDtmfResponse>* Conversations::Stub::AsyncSetCallerDtmfRaw(::grpc::ClientContext* context, const ::ondewo::csi::CallerDtmfRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSetCallerDtmfRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status Conversations::Stub::DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DeliverWarmTransferOutcomeNotice_, context, request, response);
+}
+
+void Conversations::Stub::async::DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeliverWarmTransferOutcomeNotice_, context, request, response, std::move(f));
+}
+
+void Conversations::Stub::async::DeliverWarmTransferOutcomeNotice(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeliverWarmTransferOutcomeNotice_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* Conversations::Stub::PrepareAsyncDeliverWarmTransferOutcomeNoticeRaw(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::ondewo::csi::WarmTransferOutcomeNoticeResponse, ::ondewo::csi::WarmTransferOutcomeNotice, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DeliverWarmTransferOutcomeNotice_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::ondewo::csi::WarmTransferOutcomeNoticeResponse>* Conversations::Stub::AsyncDeliverWarmTransferOutcomeNoticeRaw(::grpc::ClientContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncDeliverWarmTransferOutcomeNoticeRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 Conversations::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       Conversations_method_names[0],
@@ -371,6 +421,26 @@ Conversations::Service::Service() {
              ::ondewo::csi::SetCallMediaControlResponse* resp) {
                return service->SetCallMediaControl(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Conversations_method_names[10],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Conversations::Service, ::ondewo::csi::CallerDtmfRequest, ::ondewo::csi::CallerDtmfResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Conversations::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ondewo::csi::CallerDtmfRequest* req,
+             ::ondewo::csi::CallerDtmfResponse* resp) {
+               return service->SetCallerDtmf(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Conversations_method_names[11],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Conversations::Service, ::ondewo::csi::WarmTransferOutcomeNotice, ::ondewo::csi::WarmTransferOutcomeNoticeResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Conversations::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::ondewo::csi::WarmTransferOutcomeNotice* req,
+             ::ondewo::csi::WarmTransferOutcomeNoticeResponse* resp) {
+               return service->DeliverWarmTransferOutcomeNotice(ctx, req, resp);
+             }, this)));
 }
 
 Conversations::Service::~Service() {
@@ -439,6 +509,20 @@ Conversations::Service::~Service() {
 }
 
 ::grpc::Status Conversations::Service::SetCallMediaControl(::grpc::ServerContext* context, const ::ondewo::csi::CallMediaControlLevel* request, ::ondewo::csi::SetCallMediaControlResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Conversations::Service::SetCallerDtmf(::grpc::ServerContext* context, const ::ondewo::csi::CallerDtmfRequest* request, ::ondewo::csi::CallerDtmfResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status Conversations::Service::DeliverWarmTransferOutcomeNotice(::grpc::ServerContext* context, const ::ondewo::csi::WarmTransferOutcomeNotice* request, ::ondewo::csi::WarmTransferOutcomeNoticeResponse* response) {
   (void) context;
   (void) request;
   (void) response;
